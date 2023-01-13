@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 //Exercise Two - Ask for a number and the user chooses for sum or product
 using Session_05;
-
+/*
 ExerciseTwo exerciseTwo = new ExerciseTwo();
 Console.WriteLine("Give me a number:");
 int number = Convert.ToInt32(Console.ReadLine());
@@ -22,4 +22,19 @@ else if (option == 2)
 {
     Console.WriteLine("The product is: " + exerciseTwo.GetProduct(number));
 }
+*/
+//Exercise Three - Give a number and find all the prime number from 1 to n
 
+Console.WriteLine("Give a number :");
+int number2 = Convert.ToInt32(Console.ReadLine());
+while (number2 < 2)
+{
+    Console.WriteLine("Please give a valid number. ");
+    number2 = Convert.ToInt32(Console.ReadLine());
+}
+ExerciseThree exerciseThree= new ExerciseThree();
+for (int j = 1; j <= number2; j++)
+{
+    exerciseThree.findPrimes(j);
+}
+Console.ReadLine();
