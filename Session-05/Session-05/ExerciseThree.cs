@@ -21,7 +21,7 @@ namespace Session_05
                 }
                 if (a == 2)
                 {
-                    Console.Write(j);
+                    Console.Write(j+ " ");
                     
                 }
                 
