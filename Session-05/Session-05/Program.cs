@@ -1,9 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Session_05;
+using System.Xml.Linq;
+//Exrcise One - Give a name and print the reverse
 ExerciseOne exerciseOne = new ExerciseOne();
 Console.WriteLine("Give me a name:");
 string name = Console.ReadLine();
-Console.WriteLine(exerciseOne.convertName(name));
+string s = string.Format("The reversed name is : {0}", exerciseOne.convertName(name));
+Console.WriteLine(s);
 
 //Exercise Two - Ask for a number and the user chooses for sum or product
 ExerciseTwo exerciseTwo = new ExerciseTwo();
@@ -19,16 +22,18 @@ while (option != 1 && option != 2)
 }
 if (option == 1)
 {
-    Console.WriteLine("The sum is: "+exerciseTwo.GetSum(number));
+    s = string.Format("The sum is: : {0}", exerciseTwo.GetSum(number));
+    Console.WriteLine(s);
 }
 else if (option == 2)
 {
-    Console.WriteLine("The product is: " + exerciseTwo.GetProduct(number));
+    s = string.Format("The product is:  {0}", exerciseTwo.GetProduct(number));
+    Console.WriteLine(s);
 }
 
 //Exercise Three - Give a number and find all the prime number from 1 to n
 
-Console.WriteLine("Give a number :");
+Console.Write("Give a number :");
 int number2 = Convert.ToInt32(Console.ReadLine());
 while (number2 < 2)
 {
@@ -36,6 +41,7 @@ while (number2 < 2)
     number2 = Convert.ToInt32(Console.ReadLine());
 }
 ExerciseThree exerciseThree= new ExerciseThree();
+Console.WriteLine("The prime numbers are :");
 for (int j = 1; j <= number2; j++)
 {
     exerciseThree.findPrimes(j);
@@ -60,14 +66,16 @@ for (int i = 0; i < array1.Length; i++)
 Console.WriteLine("The new array is: ");
 foreach (int num in array3)
 {
-    Console.WriteLine(num + " ");
+    Console.WriteLine(num+ " ");
 }
+
 
 //Exercise Five - Bubble sort int array
 
     int[] array4= { 0, -2, 1, 20, -31, 50, -4, 17, 89, 100 };
 ExerciseFive exerciseFive = new ExerciseFive();
 exerciseFive.bubbleSort(array4);
+Console.Write("The sorted array is : ");
 foreach (int num in array4)
     Console.Write(num + " ");
 Console.ReadLine();

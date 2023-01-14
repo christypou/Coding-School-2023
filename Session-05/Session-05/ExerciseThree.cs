@@ -10,7 +10,7 @@ namespace Session_05
     {
         public void findPrimes(int j)
         {
-           
+              
                 int a = 0;
                 for (int i = 1; i <= j; i++)
                 {
@@ -19,9 +19,10 @@ namespace Session_05
                         a++;
                     }
                 }
+                
                 if (a == 2)
                 {
-                    Console.Write(j+ " ");
+                    Console.WriteLine(j);
                     
                 }
                 
