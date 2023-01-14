@@ -40,7 +40,7 @@ for (int j = 1; j <= number2; j++)
 Console.ReadLine();
 */
 // Exercise Four - Multiply array1 and array2 and save result to array3
-ExerciseFour exerciseFour = new ExerciseFour();
+/*ExerciseFour exerciseFour = new ExerciseFour();
 int[] array1 =  { 2, 4, 9, 12 };
 int[] array2 =  { 1, 3, 7, 10 };
 int arrayLength = array1.Length*array2.Length;
@@ -60,4 +60,12 @@ foreach (int number in array3)
 {
     Console.Write(number + " ");
 }
+Console.ReadLine();
+*/
+//Exercise Five - Bubble sort int array
+int[] array4= { 0, -2, 1, 20, -31, 50, -4, 17, 89, 100 };
+ExerciseFive exerciseFive = new ExerciseFive();
+exerciseFive.bubbleSort(array4);
+foreach (int number in array4)
+    Console.Write(number + " ");
 Console.ReadLine();
