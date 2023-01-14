@@ -24,7 +24,7 @@ else if (option == 2)
 }
 */
 //Exercise Three - Give a number and find all the prime number from 1 to n
-
+/*
 Console.WriteLine("Give a number :");
 int number2 = Convert.ToInt32(Console.ReadLine());
 while (number2 < 2)
@@ -36,5 +36,28 @@ ExerciseThree exerciseThree= new ExerciseThree();
 for (int j = 1; j <= number2; j++)
 {
     exerciseThree.findPrimes(j);
+}
+Console.ReadLine();
+*/
+// Exercise Four - Multiply array1 and array2 and save result to array3
+ExerciseFour exerciseFour = new ExerciseFour();
+int[] array1 =  { 2, 4, 9, 12 };
+int[] array2 =  { 1, 3, 7, 10 };
+int arrayLength = array1.Length*array2.Length;
+int[] array3 = new int[arrayLength];
+int counter = 0;
+
+for (int i = 0; i < array1.Length; i++)
+{
+    for (int j = 0; j < array2.Length; j++)
+    {
+        array3[counter] = exerciseFour.multiplyNumber(array1[i] , array2[j]);
+        counter++;
+    }
+    
+}
+foreach (int number in array3)
+{
+    Console.Write(number + " ");
 }
 Console.ReadLine();

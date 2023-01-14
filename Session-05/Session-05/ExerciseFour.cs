@@ -8,5 +8,9 @@ namespace Session_05
 {
     internal class ExerciseFour
     {
+        public int multiplyNumber(int number1, int number2)
+        {
+            return number1 * number2;
+        }
     }
 }
