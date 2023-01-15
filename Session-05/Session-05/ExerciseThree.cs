@@ -8,9 +8,12 @@ namespace Session_05
 {
     internal class ExerciseThree
     {
-        public void findPrimes(int j)
+        public string findPrimes(int number)
         {
-              
+            StringBuilder sb = new StringBuilder();
+            for (int j = 1; j <= number; j++)
+            {
+                
                 int a = 0;
                 for (int i = 1; i <= j; i++)
                 {
@@ -19,16 +22,19 @@ namespace Session_05
                         a++;
                     }
                 }
-                
+
                 if (a == 2)
                 {
-                    Console.WriteLine(j);
-                    
-                }
-                
-            }
-          
-        
+                    sb.Append(j+" ");
+                    //Console.WriteLine(j);
 
+                }
+
+            }
+            string primes = sb.ToString();
+            return primes;
+            //Console.WriteLine(sb);
+        }
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Session_05;
 using System.Xml.Linq;
+
 //Exrcise One - Give a name and print the reverse
 ExerciseOne exerciseOne = new ExerciseOne();
 Console.WriteLine("Give me a name:");
@@ -41,6 +42,10 @@ while (number2 < 2)
     number2 = Convert.ToInt32(Console.ReadLine());
 }
 ExerciseThree exerciseThree= new ExerciseThree();
+string primes = exerciseThree.findPrimes(number2);
+
+Console.WriteLine(string.Format("The primes are : {0}", primes));   
+
 Console.WriteLine("The prime numbers are :");
 for (int j = 1; j <= number2; j++)
 {
@@ -78,4 +83,5 @@ exerciseFive.bubbleSort(array4);
 Console.Write("The sorted array is : ");
 foreach (int num in array4)
     Console.Write(num + " ");
+
 Console.ReadLine();
