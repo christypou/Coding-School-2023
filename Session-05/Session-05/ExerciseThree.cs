@@ -26,14 +26,13 @@ namespace Session_05
                 if (a == 2)
                 {
                     sb.Append(j+" ");
-                    //Console.WriteLine(j);
+                    
 
                 }
 
             }
             string primes = sb.ToString();
             return primes;
-            //Console.WriteLine(sb);
         }
         
     }

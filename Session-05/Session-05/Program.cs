@@ -46,13 +46,6 @@ string primes = exerciseThree.findPrimes(number2);
 
 Console.WriteLine(string.Format("The primes are : {0}", primes));   
 
-Console.WriteLine("The prime numbers are :");
-for (int j = 1; j <= number2; j++)
-{
-    exerciseThree.findPrimes(j);
-}
-
-
 // Exercise Four - Multiply array1 and array2 and save result to array3
 ExerciseFour exerciseFour = new ExerciseFour();
 int[] array1 =  { 2, 4, 9, 12 };
