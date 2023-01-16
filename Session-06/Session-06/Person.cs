@@ -12,6 +12,24 @@ namespace Session_06
         public string? Name { get; set; }
         public int Age { get; set; }
 
+        public Person() { 
+        
+        }
+        public Person(int id)
+        {
+            Id = id;
+        }
+        public Person(int id, string name)
+        {
+            Id = id;
+            Name= name;
+        }
+        public Person(int id, string? name, int age)
+        {
+            Id = id;
+            Name = name;
+            Age = age;
+        }
 
         public void GetName()
         {
