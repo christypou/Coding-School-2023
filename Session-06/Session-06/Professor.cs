@@ -11,7 +11,16 @@ namespace Session_06
 
         public string Rank { get; set; }
         public Courses[] Courses { get; set; }
-
+        public Professor() { }
+        public Professor(string rank, Courses[] courses)
+        {
+            Rank = rank;
+            Courses = courses;
+        }
+        public Professor(string rank)
+        {
+            Rank = rank;
+        }
         public Professor(int id) : base(id) { 
         }
         public Professor(int id, string name) : base(id, name)
