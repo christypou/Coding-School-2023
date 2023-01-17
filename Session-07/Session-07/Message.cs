@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Session_07
 {
-    internal class Messages
+    internal class Message
     {
         public Guid ID { set; get; }
         public DateTime TimeStamp { set; get; }
-        public string? Message { set; get; }
+        public string? Messages { set; get; }
     }
 }

@@ -10,10 +10,15 @@ namespace Session_07
     internal class ActionResolver
     {
         public MessageLogger Logger { get; set; }
-        
 
+        public ActionResolver()
+        {
+            Logger = new MessageLogger();
+        }
         public ActionResponse Execute(ActionRequest request)
         {
+            Message message = new Message();
+            StringBuilder str=new StringBuilder();
             switch (request.Action)
             {
                 case ActionEnum.Convert:
@@ -33,18 +38,24 @@ namespace Session_07
                         }
                         binary = Convert.ToString(num) + binary;
                         ActionResponse response1 = new ActionResponse(Guid.NewGuid(), binary, request.RequestId);
+                        str.Append("The number is decimal and the binary is :" + binary);
+                        message.Messages=str.ToString();
                         return response1;
                     }
                     else if(int.TryParse(request.Input, out integer))
                     {
                         string binary = Convert.ToString(integer);
                         ActionResponse response2 = new ActionResponse(Guid.NewGuid(), binary, request.RequestId);
+                        str.Append("The number is integer and the binary is :" + binary);
+                        message.Messages = str.ToString();
                         return response2;
                     }
                     else
                     {
-                        //Console.WriteLine($"Attempted conversion of '{value ?? "<null>"}' failed.");
+                      
                         return null;
+                        str.Append("Wrong input!");
+                        message.Messages = str.ToString();
                     }
                    
                     break;
@@ -62,6 +73,8 @@ namespace Session_07
                     }
                     string upperCaseWord = result[wordnumber];
                     ActionResponse response3 = new ActionResponse(Guid.NewGuid(),upperCaseWord.ToUpper(), request.RequestId);
+                    str.Append("The new text is :" + upperCaseWord);
+                    message.Messages = str.ToString();
                     return response3;
                     break;
                 case ActionEnum.Reverse:
@@ -74,6 +87,8 @@ namespace Session_07
                         reversedString += charArray[i];
                     }
                     ActionResponse response4 = new ActionResponse(Guid.NewGuid(),reversedString, request.RequestId);
+                    str.Append("The reversed text is :" + reversedString);
+                    message.Messages = str.ToString();
                     return response4;
                     break;
                 default:
