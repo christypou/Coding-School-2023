@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Session_07
 {
-    internal class ActionRequest
+    internal class ActionRequest:Action
     {
-        public Guid RequestID { get; set; }
         public String Input { get; set; }
         public ActionEnum Action { get; set; }
 
-        public ActionRequest(ActionEnum action, string text) {
-            RequestID= Guid.NewGuid();
+        public ActionRequest(Guid RequestId, ActionEnum action, string text):base(RequestId){
+            //RequestId= Guid.NewGuid();
             Input = text;
             Action = action;
         }

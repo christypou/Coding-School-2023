@@ -22,7 +22,7 @@ namespace Session_07
                     if (success)
                     {
                         //Console.WriteLine($"Converted '{value}' to {number}.");
-                        ActionResponse response3 = new ActionResponse(number, request.RequestID);
+                        ActionResponse response3 = new ActionResponse(Guid.NewGuid(),number, request.RequestId);
                         return response3;
                     }
                     else
@@ -46,7 +46,7 @@ namespace Session_07
                         }
                     }
                     string upperCaseWord = result[wordnumber];
-                    ActionResponse response = new ActionResponse(upperCaseWord.ToUpper(), request.RequestID);
+                    ActionResponse response = new ActionResponse(Guid.NewGuid(),upperCaseWord.ToUpper(), request.RequestId);
                     return response;
                     break;
                 case ActionEnum.Reverse:
@@ -58,7 +58,7 @@ namespace Session_07
                     {
                         reversedString += charArray[i];
                     }
-                    ActionResponse response2 = new ActionResponse(reversedString, request.RequestID);
+                    ActionResponse response2 = new ActionResponse(Guid.NewGuid(),reversedString, request.RequestId);
                     return response2;
                     break;
                 default:

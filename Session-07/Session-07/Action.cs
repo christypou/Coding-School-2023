@@ -8,5 +8,14 @@ namespace Session_07
 {
     internal class Action
     {
+        public Guid RequestId { get; set; }
+
+        public Action() {
+        RequestId= Guid.NewGuid();
+        }
+        public Action(Guid requestId)
+        {
+            RequestId = requestId;
+        }
     }
 }
