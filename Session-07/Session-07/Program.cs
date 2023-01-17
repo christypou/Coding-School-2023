@@ -3,7 +3,7 @@
 
 using Session_07;
 
-ActionRequest request = new ActionRequest(Guid.NewGuid(),ActionEnum.Uppercase, "yuut hjddhg hjg");
+ActionRequest request = new ActionRequest(Guid.NewGuid(),ActionEnum.Convert, "8");
 
 ActionResponse response = new ActionResponse();
 
