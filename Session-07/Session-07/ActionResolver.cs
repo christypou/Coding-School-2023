@@ -17,8 +17,11 @@ namespace Session_07
         }
         public ActionResponse Execute(ActionRequest request)
         {
-            Message message = new Message();
-            StringBuilder str=new StringBuilder();
+            ActionResponse response = new ActionResponse();
+            response.RequestId = request.RequestId;
+            response.ResponseID = Guid.NewGuid();
+            //Message message = new Message();
+            //StringBuilder str=new StringBuilder();
             switch (request.Action)
             {
                 case ActionEnum.Convert:
@@ -37,25 +40,25 @@ namespace Session_07
                             num /= 2;
                         }
                         binary = Convert.ToString(num) + binary;
-                        ActionResponse response1 = new ActionResponse(Guid.NewGuid(), binary, request.RequestId);
-                        str.Append("The number is decimal and the binary is :" + binary);
-                        message.Messages=str.ToString();
-                        return response1;
+                        //ActionResponse response1 = new ActionResponse(Guid.NewGuid(), binary, request.RequestId);
+                        //str.Append("The number is decimal and the binary is :" + binary);
+                        //message.Messages=str.ToString();
+                        return null;
                     }
                     else if(int.TryParse(request.Input, out integer))
                     {
                         string binary = Convert.ToString(integer);
-                        ActionResponse response2 = new ActionResponse(Guid.NewGuid(), binary, request.RequestId);
-                        str.Append("The number is integer and the binary is :" + binary);
-                        message.Messages = str.ToString();
-                        return response2;
+                        //ActionResponse response2 = new ActionResponse(Guid.NewGuid(), binary, request.RequestId);
+                        //str.Append("The number is integer and the binary is :" + binary);
+                        //message.Messages = str.ToString();
+                        return null;
                     }
                     else
                     {
                       
                         return null;
-                        str.Append("Wrong input!");
-                        message.Messages = str.ToString();
+                        //str.Append("Wrong input!");
+                        //message.Messages = str.ToString();
                     }
                    
                     break;
@@ -72,10 +75,10 @@ namespace Session_07
                         }
                     }
                     string upperCaseWord = result[wordnumber];
-                    ActionResponse response3 = new ActionResponse(Guid.NewGuid(),upperCaseWord.ToUpper(), request.RequestId);
-                    str.Append("The new text is :" + upperCaseWord);
-                    message.Messages = str.ToString();
-                    return response3;
+                    //ActionResponse response3 = new ActionResponse(Guid.NewGuid(),upperCaseWord.ToUpper(), request.RequestId);
+                    //str.Append("The new text is :" + upperCaseWord);
+                    //message.Messages = str.ToString();
+                    return null;
                     break;
                 case ActionEnum.Reverse:
                     char[] charArray = request.Input.ToCharArray();
@@ -86,10 +89,10 @@ namespace Session_07
                     {
                         reversedString += charArray[i];
                     }
-                    ActionResponse response4 = new ActionResponse(Guid.NewGuid(),reversedString, request.RequestId);
-                    str.Append("The reversed text is :" + reversedString);
-                    message.Messages = str.ToString();
-                    return response4;
+                    //ActionResponse response4 = new ActionResponse(Guid.NewGuid(),reversedString, request.RequestId);
+                    //str.Append("The reversed text is :" + reversedString);
+                    //message.Messages = str.ToString();
+                    return null;
                     break;
                 default:
                     return null;
