@@ -20,36 +20,36 @@ namespace Session_07
             ActionResponse response = new ActionResponse();
             response.RequestId = request.RequestId;
             response.ResponseID = Guid.NewGuid();
+            Log("Program started");
             try
             {
                 switch (request.Action)
                 {
                     case ActionEnum.Convert:
+                        Log("Convert");
                         response.Output = Convert(request.Input);
-                        
-                        return null;
-                      
-
                         break;
                     case ActionEnum.Uppercase:
+                        Log("Uppercase");
                         response.Output = Uppercase(request.Input);
-                        
-                        return null;
                         break;
                     case ActionEnum.Reverse:
+                        Log("Reverse");
                         response.Output = Reverse(request.Input);
-                        
-                        return null;
                         break;
                     default:
-                        return null;
+                        Log("Something went wrong!");
                         break;
 
                 }
             }
-            catch (Exception ex) { }
-            finally { }
-            return null;
+            catch (Exception ex) {
+                Log(ex.Message);
+            }
+            finally {
+                Log("Programm end");
+            }
+            return response; ;
         }
 
 
@@ -64,21 +64,17 @@ namespace Session_07
 
         public string Uppercase(string input)
         {
-            // “Uppercase” you must check if the Input is a string and has more than
-            // one words(separated by a space), then find the longest word in the
-            // Input string and convert it to uppercase.
-
-
-
-            return input.ToUpper();
-        }
+            StringUppercase upperCase= new StringUppercase();
+            upperCase.Text = input;
+            return upperCase.Manipulate();
+           }
 
         public string Reverse(string input)
         {
-            // “Reverse” you must check if the Input is a string and reverse it.
 
-            return string.Empty;
-
+            StringReverse reverse = new StringReverse();
+            reverse.Text = input;
+            return reverse.Manipulate();
         }
 
         private void Log(string text)
