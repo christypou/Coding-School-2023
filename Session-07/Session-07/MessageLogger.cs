@@ -8,24 +8,36 @@ namespace Session_07
 {
     internal class MessageLogger
     {
+        public Message[] Messages { get; set; }
 
-        public Message[] messages = new Message[10000];
+        private int _messageCounter = 0;
 
+        public MessageLogger()
+        {
+            Messages = new Message[1000];
+        }
 
         public void ReadAll()
         {
-            foreach (var item in messages)
+            foreach (Message message in Messages)
             {
-                Console.WriteLine(item);
+
+                if (message != null)
+                {
+                    Console.WriteLine(message.Text);
+                }
+
             }
         }
         public void Clear()
         {
-            messages = new Message[10000];
+            Messages = new Message[1000];
+            _messageCounter = 0;
         }
         public void Write(Message message)
         {
-
+            Messages[_messageCounter] = message;
+            _messageCounter++;
         }
 
 
