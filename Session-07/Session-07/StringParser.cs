@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Session_07
 {
@@ -26,43 +27,41 @@ namespace Session_07
         public override string Manipulate()
         {
 
-            // “Convert” you must check if the Input is a decimal number and convert it to binary.
-            // ...
-            //decimal dec;
-            //int integer;
-            //if (Decimal.TryParse(request.Input, out dec))
-            //{
-            //    string binary;
-            //    int num = Convert.ToInt32(dec);
-            //    binary = "";
-            //    while (num > 1)
-            //    {
+            decimal dec;
+            int integer;
+            if (Decimal.TryParse(Text, out dec))
+            {
+                string binary;
+                int num = Convert.ToInt32(dec);
+                binary = "";
+                while (num > 1)
+                {
 
-            //        int remainder = num % 2;
-            //        binary = Convert.ToString(remainder) + binary;
-            //        num /= 2;
-            //    }
-            //    binary = Convert.ToString(num) + binary;
-            //str.Append("The number is decimal and the binary is :" + binary);
-            //message.Messages=str.ToString();
+                    int remainder = num % 2;
+                    binary = Convert.ToString(remainder) + binary;
+                    num /= 2;
+                }
+                binary = Convert.ToString(num) + binary;
+                string mess = "The number is decimal and the binary is :" + binary;
+                return mess;
+                }
+            else if (int.TryParse(Text, out integer))
+            {
+                string binary = Convert.ToString(integer);
+                //str.Append("The number is integer and the binary is :" + binary);
+                //message.Messages = str.ToString();
+                string mess = "The number is integer and the binary is :" + binary;
+                return mess;
+            }
+            else
+            {
+                string mess = "Wrong input!";
+                return mess;
+                
+                
+            }
 
-            //}
-            //else if(int.TryParse(request.Input, out integer))
-            //{
-            //    string binary = Convert.ToString(integer);
-            //    //str.Append("The number is integer and the binary is :" + binary);
-            //    //message.Messages = str.ToString();
-            //    return null;
-            //}
-            //else
-            //{
-
-            //    return null;
-            //    //str.Append("Wrong input!");
-            //    //message.Messages = str.ToString();
-            //}
-
-            return string.Empty;
+         
         }
     }
 
@@ -71,17 +70,16 @@ namespace Session_07
 
         public override string Manipulate()
         {
-            //char[] charArray = request.Input.ToCharArray();
+            char[] charArray = Text.ToCharArray();
 
-            //string reversedString = String.Empty;
+            string reversedString = String.Empty;
 
-            //for (int i = charArray.Length - 1; i > -1; i--)
-            //{
-            //    reversedString += charArray[i];
-            //}
-            //str.Append("The reversed text is :" + reversedString);
-            //message.Messages = str.ToString();
-            return string.Empty;
+            for (int i = charArray.Length - 1; i > -1; i--)
+            {
+                reversedString += charArray[i];
+            }
+            string mess = "The reversed text is :" + reversedString;
+            return mess;
         }
 
     }
@@ -91,21 +89,22 @@ namespace Session_07
 
         public override string Manipulate()
         {
-            //int max = 0;
-            //int wordnumber = 0;
-            //string[] result = request.Input.Split(" ");
-            //for (int i = 0; i < result.Length; i++)
-            //{
-            //    if (result[i].Length > max)
-            //    {
-            //        max = result[i].Length;
-            //        wordnumber = i;
-            //    }
-            //}
-            //string upperCaseWord = result[wordnumber];
-            //str.Append("The new text is :" + upperCaseWord);
-            //message.Messages = str.ToString();
-            return string.Empty;
+            
+            int max = 0;
+            int wordnumber = 0;
+            string[] result = Text.Split(" ");
+            for (int i = 0; i < result.Length; i++)
+            {
+                if (result[i].Length > max)
+                {
+                    max = result[i].Length;
+                    wordnumber = i;
+                }
+            }
+            string upperCaseWord = result[wordnumber];
+            string mess = "The new text is :" + upperCaseWord.ToUpper();
+
+            return mess;
         }
     }
 }
