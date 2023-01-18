@@ -17,12 +17,7 @@ namespace Session_07
             Output = text;
             
         }
-        public ActionResponse(Guid Id, int number, Guid RequestId) : base(RequestId)
-        {
-            ResponseID = Guid.NewGuid();
-            Output2 = number;
-           
-        }
+        
 
     }
 }
