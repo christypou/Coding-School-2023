@@ -28,14 +28,17 @@ namespace Session_07
                     case ActionEnum.Convert:
                         Log("Convert");
                         response.Output = Convert(request.Input);
+                        Log(response.Output);
                         break;
                     case ActionEnum.Uppercase:
                         Log("Uppercase");
                         response.Output = Uppercase(request.Input);
+                        Log(response.Output);
                         break;
                     case ActionEnum.Reverse:
                         Log("Reverse");
                         response.Output = Reverse(request.Input);
+                        Log(response.Output);
                         break;
                     default:
                         Log("Something went wrong!");
