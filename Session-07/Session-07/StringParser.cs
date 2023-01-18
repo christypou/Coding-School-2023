@@ -48,8 +48,6 @@ namespace Session_07
             else if (int.TryParse(Text, out integer))
             {
                 string binary = Convert.ToString(integer);
-                //str.Append("The number is integer and the binary is :" + binary);
-                //message.Messages = str.ToString();
                 string mess = "The number is integer and the binary is :" + binary;
                 return mess;
             }
