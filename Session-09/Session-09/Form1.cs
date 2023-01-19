@@ -1,3 +1,6 @@
+using CalculationLibrary;
+using static CalculationLibrary.Substraction;
+
 namespace Session_09
 {
     public partial class Form1 : Form
@@ -10,6 +13,7 @@ namespace Session_09
         {
             Addition,
             Multiplication,
+            Substraction,
             Division,
             Power
         }
@@ -60,39 +64,31 @@ namespace Session_09
             switch (_calcOperation)
             {
                 case CalcOperation.Addition:
-                    result = value1 + value2;
-                    
+                    //result = value1 + value2;
+                    Addition addition = new Addition();
+                    result = addition.Do(value1, value2);
+                    break;
+                case CalcOperation.Substraction:
+                    //result = value1 - value2;
+                    Substraction substraction = new Substraction();
+                    result = substraction.Do(value1, value2);
                     break;
 
-                default:
-                    break;
+
                 case CalcOperation.Multiplication:
-                    result = value1 * value2;
-
+                    //result = value1 * value2;
+                    Multiplication multiplication = new Multiplication();
+                    result = multiplication.Do(value1, value2);
                     break;
                 case CalcOperation.Division:
-                    //Δοκίμασα try catch αλλα δεν το ετρεχε
-                    //try
-                    //{
-                    if (value2==0)
-                    {
-                        ctrlDisplay.Text = "Not able to do this division. Restart program!";
-                    }
-                    else
-                    {
-                        result = value1 / value2;
-                    }
-                        
-                    //}
-                    //catch (Exception em)
-                    //{
-                    //    ctrlDisplay.Text += em.ToString();
-                    //    throw;
-                    //}
+                    Division division = new Division();
+                    result = division.Do(value1, value2);
 
                     break;
                 case CalcOperation.Power:
-                    result = (decimal?) Math.Pow( (double) value1, (double) value2); 
+                    //result = (decimal?) Math.Pow( (double) value1, (double) value2); 
+                    Power power = new Power();
+                    result = power.Do(value1, value2);
                     break;
                 
 
@@ -188,6 +184,12 @@ namespace Session_09
         {
             ctrlDisplay.Text += " ^ ";
             _calcOperation = CalcOperation.Power;
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            ctrlDisplay.Text += " - ";
+            _calcOperation = CalcOperation.Substraction;
         }
     }
 }
