@@ -9,9 +9,11 @@ namespace Session_09
         enum CalcOperation
         {
             Addition,
-            Multiplication
+            Multiplication,
+            Division,
+            Power
         }
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -68,6 +70,32 @@ namespace Session_09
                     result = value1 * value2;
 
                     break;
+                case CalcOperation.Division:
+                    //Δοκίμασα try catch αλλα δεν το ετρεχε
+                    //try
+                    //{
+                    if (value2==0)
+                    {
+                        ctrlDisplay.Text = "Not able to do this division. Restart program!";
+                    }
+                    else
+                    {
+                        result = value1 / value2;
+                    }
+                        
+                    //}
+                    //catch (Exception em)
+                    //{
+                    //    ctrlDisplay.Text += em.ToString();
+                    //    throw;
+                    //}
+
+                    break;
+                case CalcOperation.Power:
+                    result = (decimal?) Math.Pow( (double) value1, (double) value2); 
+                    break;
+                
+
             }
             ctrlDisplay.Text += result;
         }
@@ -131,13 +159,35 @@ namespace Session_09
 
         private void button11_Click(object sender, EventArgs e)
         {
-
+            ctrlDisplay.Text += (char)0x221A;
+            result = (decimal?)Math.Sqrt((double)value1);
+            
+            ctrlDisplay.Text += " ="+ result;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             ctrlDisplay.Text += " * ";
             _calcOperation = CalcOperation.Multiplication;
+        }
+
+        private void button10_Click_1(object sender, EventArgs e)
+        {
+            ctrlDisplay.Text += " / ";
+            _calcOperation = CalcOperation.Division;
+            
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            AssignNumber(0);
+            ctrlDisplay.Text += 0;
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            ctrlDisplay.Text += " ^ ";
+            _calcOperation = CalcOperation.Power;
         }
     }
 }
