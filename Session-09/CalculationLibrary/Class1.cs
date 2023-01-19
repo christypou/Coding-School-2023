@@ -68,8 +68,17 @@
 
                 if (x != null && y != null)
                 {
-                 
-                    ret =x.Value/y.Value;
+                    // Χρειαζεται try catch αλλα δεν ξερω που να εμφανισει το μηνυμα
+                    try
+                    {
+                        ret = x.Value / y.Value;
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        
+                        throw;
+                    }
+                    
                 }
 
                 return ret;

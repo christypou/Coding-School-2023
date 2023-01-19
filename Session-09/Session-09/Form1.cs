@@ -17,18 +17,11 @@ namespace Session_09
             Division,
             Power
         }
-        
+
         public Form1()
         {
             InitializeComponent();
         }
-
-
-
-
-
-
-
         private void button10_Click(object sender, EventArgs e)
         {
             ctrlDisplay.Text += " + ";
@@ -64,19 +57,16 @@ namespace Session_09
             switch (_calcOperation)
             {
                 case CalcOperation.Addition:
-                    //result = value1 + value2;
-                    Addition addition = new Addition();
+                     Addition addition = new Addition();
                     result = addition.Do(value1, value2);
                     break;
                 case CalcOperation.Substraction:
-                    //result = value1 - value2;
                     Substraction substraction = new Substraction();
                     result = substraction.Do(value1, value2);
                     break;
 
 
                 case CalcOperation.Multiplication:
-                    //result = value1 * value2;
                     Multiplication multiplication = new Multiplication();
                     result = multiplication.Do(value1, value2);
                     break;
@@ -86,7 +76,6 @@ namespace Session_09
 
                     break;
                 case CalcOperation.Power:
-                    //result = (decimal?) Math.Pow( (double) value1, (double) value2); 
                     Power power = new Power();
                     result = power.Do(value1, value2);
                     break;
@@ -190,6 +179,11 @@ namespace Session_09
         {
             ctrlDisplay.Text += " - ";
             _calcOperation = CalcOperation.Substraction;
+        }
+
+        private void ctrlDisplay_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
