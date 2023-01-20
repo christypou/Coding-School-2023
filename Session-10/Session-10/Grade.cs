@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Session_10
 {
-    internal class Grade
+    public class Grade
     {
         public Guid Id { get; set; }
         public Guid StudentId { get; set; }

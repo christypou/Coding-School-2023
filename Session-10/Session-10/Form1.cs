@@ -2,10 +2,8 @@ namespace Session_10
 {
     public partial class Form1 : Form
     {
-        List<Student> students;
-        List<Grade> grades;
-        List<Course> courses;
-        List<Schedule> schedules;
+        University uni1= new University();
+        
         public Form1()
         {
             InitializeComponent();
@@ -14,7 +12,7 @@ namespace Session_10
         private void PopulateStudents()
         {
 
-            students = new List<Student>();
+            uni1.Student = new List<Student>();
 
             Student student1 = new Student()
             {
@@ -22,7 +20,7 @@ namespace Session_10
                 Surname = "Raptodimos",
                 
             };
-            students.Add(student1);
+            uni1.Student.Add(student1);
 
             Student student2 = new Student()
             {
@@ -30,14 +28,14 @@ namespace Session_10
                 Surname = "Chrysoulas",
               
             };
-            students.Add(student2);
+            uni1.Student.Add(student2);
             GrdStudents.AutoGenerateColumns = false;
-            GrdStudents.DataSource = students;
+            GrdStudents.DataSource = uni1.Student;
         }
         private void PopulateCourses()
         {
 
-            courses = new List<Course>();
+            uni1.Courses = new List<Course>();
             Guid id = Guid.Parse("{72F9974A-370C-4FCE-AD99-9A73FC089E60}");
             Course course1 = new Course()
             {
@@ -46,7 +44,7 @@ namespace Session_10
                 Subject = "Math"
 
             };
-            courses.Add(course1);
+            uni1.Courses.Add(course1);
             id = Guid.Parse("{76F3DD9E-AD79-4F68-9495-583D5ABAAA1A}");
             Course course2 = new Course()
             {
@@ -54,14 +52,14 @@ namespace Session_10
                  Subject = "English"
 
              };
-            courses.Add(course2);
+            uni1.Courses.Add(course2);
             GrdCourse.AutoGenerateColumns = false;
-            GrdCourse.DataSource = courses;
+            GrdCourse.DataSource = uni1.Courses;
         }
         private void PopulateGrades()
         {
             
-            grades = new List<Grade>();
+            uni1.Grades = new List<Grade>();
             Guid id = Guid.Parse("{EBFC3580-0475-42F0-AA76-1D30E740FC3D}");
             Grade grade1 = new Grade()
             {
@@ -70,7 +68,7 @@ namespace Session_10
                 CourseId = Guid.Parse("{A9FED9F2-C650-46E1-BD9E-C0B89E97074C}"),
                 Grades = 4
             };
-            grades.Add(grade1);
+            uni1.Grades.Add(grade1);
             id = Guid.Parse("{D9776111-6E52-4D61-B5E1-DB71952CFBC5}");
             Grade grade2 = new Grade()
             {
@@ -80,14 +78,14 @@ namespace Session_10
                 Grades = 7
 
             };
-            grades.Add(grade2);
+            uni1.Grades.Add(grade2);
             GrdGrade.AutoGenerateColumns = false;
-            GrdGrade.DataSource = grades;
+            GrdGrade.DataSource = uni1.Grades;
         }
         private void PopulateSchedules()
         {
 
-            schedules = new List<Schedule>();
+            uni1.Schedules = new List<Schedule>();
             Guid id = Guid.Parse("{832D991A-D812-4A22-BF80-9E14FC23002B}");
             Schedule schedule1 = new Schedule()
             {
@@ -97,7 +95,7 @@ namespace Session_10
                 Callendar = DateTime.Now
 
             };
-            schedules.Add(schedule1);
+            uni1.Schedules.Add(schedule1);
             id = Guid.Parse("{8336A9B2-A263-4C69-8FC5-76FB37CF05D2}");
             Schedule schedules2 = new Schedule()
             {
@@ -107,20 +105,20 @@ namespace Session_10
                 Callendar = DateTime.Now
 
             };
-            schedules.Add(schedules2);
+            uni1.Schedules.Add(schedules2);
             GrdSchedule.AutoGenerateColumns = false;
-            GrdSchedule.DataSource = schedules;
+            GrdSchedule.DataSource = uni1.Schedules;
         }
 
         private void Students_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-           // bsStudents
+           
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-            //PopulateStudents();
-            //PopulateCourses();
+            PopulateStudents();
+            PopulateCourses();
             PopulateGrades();
             PopulateSchedules();
         }
@@ -133,6 +131,18 @@ namespace Session_10
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void BtnLoad_Click(object sender, EventArgs e)
+        {
+            Serializer serializer = new Serializer();
+            uni1 = serializer.Deserialize<University>("test.json");
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            Serializer serializer = new Serializer();
+            serializer.SerializeToFile(uni1, "university.json");
         }
     }
 }
