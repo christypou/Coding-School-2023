@@ -9,4 +9,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Session-10-Library\Session-10-Library.csproj" />
+  </ItemGroup>
+
 </Project>
