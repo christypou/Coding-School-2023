@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Session_11;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibCarService
 {
-    public class Transaction
+    public class Transactions
     {
         public Guid ID { get; set; }
         public DateTime Date { get; set; }
@@ -20,7 +21,8 @@ namespace LibCarService
         public Customer Customer { get; set; }
         public Car Car { get; set; }
         public Manager Manager { get; set; }
-        public Transaction()
+        public CarServiceCenter CarServiceCenter { get; set; }
+        public Transactions()
         {
             ID = Guid.NewGuid();
         }

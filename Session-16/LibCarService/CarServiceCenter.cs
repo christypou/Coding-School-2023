@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 namespace Session_11 {
     public class CarServiceCenter {
 
+        public Guid ID { get; set; }
         public List<Manager> Managers { get; set; }
         public List<Customer> Customers { get; set; }
         public List<Car> Cars { get; set; }
         public List<ServiceTask> ServiceTasks { get; set; }
         public List<Engineer> Engineers { get; set; }
-        public List<Transaction> Transactions { get; set; }
+        public List<Transactions> Transactions { get; set; }
         public List<TransactionLine> TransactionLines { get; set; }
         public List<MonthlyLedger> MonthlyLedger { get; set; }
         public Settings Settings { get; set; }
@@ -26,7 +27,7 @@ namespace Session_11 {
             Cars = new List<Car>();
             ServiceTasks = new List<ServiceTask>();
             Engineers = new List<Engineer>();
-            Transactions = new List<Transaction>();
+            Transactions = new List<Transactions>();
             TransactionLines = new List<TransactionLine>();
         }
 
@@ -34,7 +35,7 @@ namespace Session_11 {
         // Methods / Business
         public void CreateTransaction(Customer customer, Car car, Manager manager) {
             // basic info
-            Transaction transaction = new Transaction();
+            Transactions transaction = new Transactions();
             transaction.Date = DateTime.Now.Date;
             transaction.CustomerID = customer.ID;
             transaction.CarID = car.ID;
@@ -46,10 +47,10 @@ namespace Session_11 {
         public void AddServiceTask(ServiceTask serviceTask) {
             int engineersSum = Engineers.Count;
 
-            List<Transaction> transactionsToday = Transactions.FindAll(c => c.Date.Date == DateTime.Today).ToList();
+            List<Transactions> transactionsToday = Transactions.FindAll(c => c.Date.Date == DateTime.Today).ToList();
             // Engineer count check
             int tasksToday = 0;
-            foreach(Transaction transaction in transactionsToday) {
+            foreach(Transactions transaction in transactionsToday) {
                 tasksToday += transaction.Lines.Count;
             } 
 
@@ -57,7 +58,7 @@ namespace Session_11 {
             // read today's tasks, can't be more than 8 hrs
             int maxDailyWorkload = Engineers.Count * 8;
             decimal todaysWorkload = 0;
-            foreach(Transaction transaction in transactionsToday) {
+            foreach(Transactions transaction in transactionsToday) {
                 foreach(TransactionLine line in transaction.Lines) {
                     todaysWorkload += line.Hours;
                 }
@@ -79,10 +80,10 @@ namespace Session_11 {
         public bool DailyTasksAvailability() {
             int engineersSum = Engineers.Count;
 
-            List<Transaction> transactionsToday = Transactions.FindAll(c => c.Date.Date == DateTime.Today).ToList();
+            List<Transactions> transactionsToday = Transactions.FindAll(c => c.Date.Date == DateTime.Today).ToList();
             // Engineer count check
             int tasksToday = 0;
-            foreach (Transaction transaction in transactionsToday) {
+            foreach (Transactions transaction in transactionsToday) {
                 tasksToday += transaction.Lines.Count;
             }
 
@@ -93,10 +94,10 @@ namespace Session_11 {
         }
 
         public bool WorkLoadAvailability(decimal taskHours) {
-            List<Transaction> transactionsToday = Transactions.FindAll(c => c.Date.Date == DateTime.Today).ToList();
+            List<Transactions> transactionsToday = Transactions.FindAll(c => c.Date.Date == DateTime.Today).ToList();
             int maxDailyWorkload = Engineers.Count * 8;
             decimal todaysWorkload = 0;
-            foreach (Transaction transaction in transactionsToday) {
+            foreach (Transactions transaction in transactionsToday) {
                 foreach (TransactionLine line in transaction.Lines) {
                     todaysWorkload += line.Hours;
                 }
@@ -126,9 +127,9 @@ namespace Session_11 {
             int year = date.Year;
             decimal incomeSum = 0;
 
-            List<Transaction> transactionsThisMonth = Transactions.FindAll(c => c.Date.Month == month).FindAll(c => c.Date.Year == year).ToList();
+            List<Transactions> transactionsThisMonth = Transactions.FindAll(c => c.Date.Month == month).FindAll(c => c.Date.Year == year).ToList();
 
-            foreach(Transaction transaction in transactionsThisMonth) {
+            foreach(Transactions transaction in transactionsThisMonth) {
                 incomeSum += transaction.TotalPrice;
             }
 

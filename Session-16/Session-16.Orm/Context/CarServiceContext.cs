@@ -1,12 +1,13 @@
 ﻿using LibCarService;
 using Microsoft.EntityFrameworkCore;
+using Session_16.Orm.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Session_16.Orm
+namespace Session_16.Orm.Context
 {
     public class CarServiceContext : DbContext
     {
@@ -15,12 +16,18 @@ namespace Session_16.Orm
         public DbSet<Engineer> Engineer { get; set; }
         public DbSet<Manager> Manager { get; set; }
         public DbSet<ServiceTask> ServiceTask { get; set; }
-        public DbSet<Transaction> Transaction { get; set; }
-        public DbSet<TransactionLine> transactionLine { get; set; }
+        public DbSet<Transactions> Transaction { get; set; }
+        public DbSet<LibCarService.TransactionLine> transactionLine { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new CarConfiguration());
+            modelBuilder.ApplyConfiguration(new EngineerConfiguration());
+            modelBuilder.ApplyConfiguration(new ManagerConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceTaskConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionsConfiguration());
+            //modelBuilder.ApplyConfiguration(new CarServiceCenterConfiguration());
             base.OnModelCreating(modelBuilder);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

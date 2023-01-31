@@ -23,7 +23,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using static LibCarService.ServiceTask;
 using GridView = DevExpress.XtraGrid.Views.Grid.GridView;
-using Transaction = LibCarService.Transaction;
+using Transactions = LibCarService.Transactions;
 
 namespace Session_11 {
     public partial class ManagerForm : Form {
@@ -70,7 +70,7 @@ namespace Session_11 {
             BindingList<ServiceTask> serviceTasks = new BindingList<ServiceTask>(carServiceCenter.ServiceTasks);
             grdServiceTasks.DataSource = new BindingSource() { DataSource = serviceTasks };
 
-            BindingList<LibCarService.Transaction> transactions = new BindingList<LibCarService.Transaction>(carServiceCenter.Transactions);
+            BindingList<LibCarService.Transactions> transactions = new BindingList<LibCarService.Transactions>(carServiceCenter.Transactions);
             grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
 
             BindingList<Car> cars = new BindingList<Car>(carServiceCenter.Cars);
@@ -137,7 +137,7 @@ namespace Session_11 {
             Guid currentTranstactionID = (Guid)grvTransactions.GetRowCellValue(row, "ID");
             List<TransactionLine> currentTransactionLines = new List<TransactionLine>();
             //currentTransactionLines = allTransactionLines.FindAll(c =>c.TransactionID == currentTranstactionID).ToList();
-            Transaction curremtTransaction = carServiceCenter.Transactions.Find(c => c.ID == currentTranstactionID);
+            Transactions curremtTransaction = carServiceCenter.Transactions.Find(c => c.ID == currentTranstactionID);
             
 
             BindingList<TransactionLine> transactionLines = new BindingList<TransactionLine>(curremtTransaction.Lines);

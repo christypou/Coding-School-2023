@@ -96,7 +96,7 @@ namespace Session_11 {
 
         //Guid customerID, Guid managerID, Guid carID ->transaction parameters
         public void Transaction() {
-            Transaction transaction1 = new Transaction();
+            Transactions transaction1 = new Transactions();
             transaction1.Date = DateTime.Now;
             transaction1.CustomerID = Customers[0].ID;
             transaction1.ManagerID = Managers[0].ID;
@@ -105,7 +105,7 @@ namespace Session_11 {
 
             Transactions.Add(transaction1);
 
-            Transaction transaction2 = new Transaction();
+            Transactions transaction2 = new Transactions();
             transaction2.Date = DateTime.Now;
             transaction2.CustomerID = Customers[1].ID;
             transaction2.ManagerID = Managers[1].ID;

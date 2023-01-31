@@ -16,7 +16,7 @@ namespace LibCarService
 
         }
         //relations
-        public Transaction Transaction { get; set; }
+        public Transactions Transaction { get; set; }
 
     }
 }
