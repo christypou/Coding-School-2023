@@ -8,6 +8,8 @@ namespace LibCarService
 {
     public class MonthlyLedger
     {
+        // to delete
+        public Guid ID { get; set; }
         public int Year { get; set; }
 
         public int Month { get; set; }
@@ -17,7 +19,8 @@ namespace LibCarService
         public decimal Expenses { get; set; }
 
         public decimal Total { get; set; }
-
+        //to delete
+        public MonthlyLedger() { }
         // TODO: implement Update() method to update the monthly ledger
         public MonthlyLedger(DateTime date) {
             Year = date.Year;
