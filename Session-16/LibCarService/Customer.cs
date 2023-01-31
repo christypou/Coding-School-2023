@@ -10,7 +10,7 @@ namespace LibCarService
     {
         public string Phone { get; set; }
         public string TIN { get; set; }
-
+        public Transaction transaction { get; set; }
         public Customer() : base()
         {
 

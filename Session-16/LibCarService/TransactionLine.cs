@@ -15,7 +15,10 @@ namespace LibCarService
         public decimal Hours { get; set; }
         public decimal PricePerHour { get; set; }
         public decimal Price { get; set; }
-
+        public Transaction Transaction { get; set; }
+        public ServiceTask ServiceTask { get; set; }
+        public Engineer Engineer { get; set; }
+        
 
         public TransactionLine()
         {

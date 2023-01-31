@@ -22,6 +22,8 @@ namespace LibCarService
 
         public decimal Hours { get; set; }
         public CodeEnum Code { get; set; }
+        public Transaction transaction { get; set; }
+        public List<TransactionLine> Lines { get; set; }
 
 
         public ServiceTask() {

@@ -10,7 +10,8 @@ namespace LibCarService
     {
         // Since the Expenses and the Total in the Monthly Ledger are decimal... It`s better to have decimal SalaryPerMonth
         public decimal SalaryPerMonth { get; set; }
-
+        public Engineer Engineer { get; set; }
+        public Transaction transaction { get; set; }
         public Manager() : base()
         {
 
