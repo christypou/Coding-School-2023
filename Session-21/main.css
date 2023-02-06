@@ -1,0 +1,111 @@
+header{
+    display: flex;
+    justify-content: space-between;
+}
+.logo{
+    width: 100px;
+}
+.nav{
+    display: flex;
+    padding: 0 1em 0 0;
+    width: 75%;
+    list-style: none;
+    align-items: center;
+    gap: 3em;
+    justify-content: flex-end;
+}
+.nav li a{
+    text-decoration: none;
+    color: rgb(22, 168, 107);
+}
+.content{
+    width: 80%;
+    margin: 0 auto;
+}
+.content h1{
+    text-align: left;
+}
+.article{
+    display: flex;
+    justify-content: space-between;
+}
+.article-img img{
+    width:200px
+}
+.main{
+    padding: 0 2em;
+}
+.side{
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+
+
+}
+.side h2{
+    margin-top: 0;
+}
+.side-links a{
+    text-decoration: none;
+    color:rgb(22, 168, 107) ;
+}
+.side-links{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2em;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.form-item{
+    display: flex;
+    flex-direction: column;
+    
+}
+form button{
+    width: 100px;
+    padding: 5px 0px;
+    color: aliceblue;
+    background-color:rgb(22, 168, 107) ;
+    border: none;
+    border-radius: 7%;
+    
+}
+
+@media only screen and (max-width: 600px) {
+header{
+   flex-direction: column; 
+   
+   justify-content: center;
+   align-items: center;
+}
+
+.article{
+    flex-direction: column;
+}
+.content{
+    width: 100%;
+    margin: 0;
+}
+.nav{
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: space-around;
+    
+}
+.main{
+    padding: 0;
+}
+.side{
+    padding: 1.2em 0 0 0 ;
+}
+.article-img img{
+    width: 70%;
+}
+}
