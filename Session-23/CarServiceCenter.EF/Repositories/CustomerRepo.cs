@@ -10,6 +10,7 @@ namespace CarServiceCenter.EF.Repositories
 {
     public class CustomerRepo : IEntityRepo<Customer>
     {
+  
         public void Add(Customer entity)
         {
             using var context = new CarServiceCenterDbContext();
