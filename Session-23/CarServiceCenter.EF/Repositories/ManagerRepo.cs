@@ -13,6 +13,8 @@ namespace CarServiceCenter.EF.Repositories
         public void Add(Manager entity)
         {
             using var context = new CarServiceCenterDbContext();
+            if (entity.Id != 0)
+                throw new ArgumentException("Given entity should not have Id set", nameof(entity));
             context.Add(entity);
             context.SaveChanges();
         }
@@ -20,10 +22,10 @@ namespace CarServiceCenter.EF.Repositories
         public void Delete(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbManager = context.Managers.Where(manager => manager.Id == id).SingleOrDefault();
+            var dbManager = context.Managers.SingleOrDefault(manager => manager.Id == id);
             if (dbManager is null)
             {
-                return;
+                throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
             context.Remove(dbManager);
             context.SaveChanges();
@@ -38,16 +40,16 @@ namespace CarServiceCenter.EF.Repositories
         public Manager? GetById(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            return context.Managers.Where(manager => manager.Id == id).SingleOrDefault();
+            return context.Managers.SingleOrDefault(manager => manager.Id == id);
         }
 
         public void Update(int id, Manager entity)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbManager = context.Managers.Where(manager => manager.Id == id).SingleOrDefault();
+            var dbManager = context.Managers.SingleOrDefault(manager => manager.Id == id);
             if (dbManager is null)
             {
-                return;
+                throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
             dbManager.SalaryPerMonth = entity.SalaryPerMonth;
             dbManager.Surname = entity.Surname;

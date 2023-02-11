@@ -1,5 +1,6 @@
 ﻿using CarServiceCenter.EF.Context;
 using CarServiceCenter.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CarServiceCenter.EF.Repositories
         public void Delete(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbTransaction = context.Transactions.Where(transaction => transaction.Id == id).SingleOrDefault();
+            var dbTransaction = context.Transactions.SingleOrDefault(transaction => transaction.Id == id);
             if (dbTransaction is null)
             {
                 return;
@@ -33,19 +34,31 @@ namespace CarServiceCenter.EF.Repositories
         public IList<Transaction> GetAll()
         {
             using var context = new CarServiceCenterDbContext();
-            return context.Transactions.ToList();
+            return context.Transactions.
+                Include(transaction=>transaction.Customer).
+                Include(transaction => transaction.Manager).
+                Include(transaction => transaction.Car).
+                Include(transaction => transaction.TransactionLines).ToList();
         }
 
         public Transaction? GetById(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            return context.Transactions.Where(transaction => transaction.Id == id).SingleOrDefault();
+            return context.Transactions.
+                Include(transaction => transaction.Customer).
+                Include(transaction => transaction.Manager).
+                Include(transaction => transaction.Car).
+                Include(transaction => transaction.TransactionLines).SingleOrDefault(transaction => transaction.Id == id);
         }
 
         public void Update(int id, Transaction entity)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbTransaction = context.Transactions.Where(transaction => transaction.Id == id).SingleOrDefault();
+            var dbTransaction = context.Transactions.
+                Include(transaction => transaction.Customer).
+                Include(transaction => transaction.Manager).
+                Include(transaction => transaction.Car).
+                Include(transaction => transaction.TransactionLines).SingleOrDefault(transaction => transaction.Id == id);
             if (dbTransaction is null)
             {
                 return;

@@ -13,6 +13,8 @@ namespace CarServiceCenter.EF.Repositories
         public void Add(Car entity)
         {
             using var context = new CarServiceCenterDbContext();
+            if (entity.Id != 0)
+                throw new ArgumentException("Given entity should not have Id set", nameof(entity));
             context.Add(entity);
             context.SaveChanges();
         }
@@ -20,10 +22,10 @@ namespace CarServiceCenter.EF.Repositories
         public void Delete(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbCar = context.Cars.Where(car => car.Id == id).SingleOrDefault();
+            var dbCar = context.Cars.SingleOrDefault(car => car.Id == id);
             if (dbCar is null)
             {
-                return;
+                throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
             context.Remove(dbCar);
             context.SaveChanges();
@@ -38,16 +40,16 @@ namespace CarServiceCenter.EF.Repositories
         public Car? GetById(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            return context.Cars.Where(car => car.Id == id).SingleOrDefault();
+            return context.Cars.SingleOrDefault(car => car.Id == id);
         }
 
         public void Update(int id, Car entity)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbCar = context.Cars.Where(car => car.Id == id).SingleOrDefault();
+            var dbCar = context.Cars.SingleOrDefault(car => car.Id == id);
             if (dbCar is null)
             {
-                return;
+                throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
             dbCar.Brand = entity.Brand;
             dbCar.CarRegistrationNumber = entity.CarRegistrationNumber;

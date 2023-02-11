@@ -1,5 +1,6 @@
 ﻿using CarServiceCenter.EF.Context;
 using CarServiceCenter.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace CarServiceCenter.EF.Repositories
 {
-    public class ServiceTaskRepo : IEntityRepo<ServiceTask>
+    internal class EngineerRepo : IEntityRepo<Engineer>
     {
-        public void Add(ServiceTask entity)
+        public void Add(Engineer entity)
         {
             using var context = new CarServiceCenterDbContext();
             if (entity.Id != 0)
@@ -22,38 +23,38 @@ namespace CarServiceCenter.EF.Repositories
         public void Delete(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbServiceTask = context.ServiceTasks.SingleOrDefault(serviceTask => serviceTask.Id == id);
-            if (dbServiceTask is null)
+            var dbEngineer = context.Engineers.SingleOrDefault(engineer => engineer.Id == id);
+            if (dbEngineer is null)
             {
                 throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
-            context.Remove(dbServiceTask);
+            context.Remove(dbEngineer);
             context.SaveChanges();
         }
 
-        public IList<ServiceTask> GetAll()
+        public IList<Engineer> GetAll()
         {
             using var context = new CarServiceCenterDbContext();
-            return context.ServiceTasks.ToList();
+            return context.Engineers.Include(engineer => engineer.Manager).ToList();
         }
 
-        public ServiceTask? GetById(int id)
+        public Engineer? GetById(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            return context.ServiceTasks.SingleOrDefault(serviceTask => serviceTask.Id == id);
+            return context.Engineers.Include(engineer=>engineer.Manager).SingleOrDefault(engineer => engineer.Id == id);
         }
 
-        public void Update(int id, ServiceTask entity)
+        public void Update(int id, Engineer entity)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbServiceTask = context.ServiceTasks.SingleOrDefault(serviceTask => serviceTask.Id == id);
-            if (dbServiceTask is null)
+            var dbEngineer = context.Engineers.Include(engineer=>engineer.Manager).SingleOrDefault(engineer => engineer.Id == id);
+            if (dbEngineer is null)
             {
                 throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
-            dbServiceTask.Code = entity.Code;
-            dbServiceTask.Description = entity.Description;
-            dbServiceTask.Hours = entity.Hours;
+            dbEngineer.SalaryPerMonth = entity.SalaryPerMonth;
+            dbEngineer.Name = entity.Name;
+            dbEngineer.Surname = entity.Surname;
             context.SaveChanges();
         }
     }

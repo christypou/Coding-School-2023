@@ -14,6 +14,8 @@ namespace CarServiceCenter.EF.Repositories
         public void Add(Customer entity)
         {
             using var context = new CarServiceCenterDbContext();
+            if (entity.Id != 0)
+                throw new ArgumentException("Given entity should not have Id set", nameof(entity));
             context.Add(entity);
             context.SaveChanges();
         }
@@ -21,10 +23,10 @@ namespace CarServiceCenter.EF.Repositories
         public void Delete(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbCustomer = context.Customers.Where(customer => customer.Id == id).SingleOrDefault();
+            var dbCustomer = context.Customers.SingleOrDefault(customer => customer.Id == id);
             if (dbCustomer is null)
             {
-                return;
+                throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
             context.Remove(dbCustomer);
             context.SaveChanges();
@@ -40,17 +42,17 @@ namespace CarServiceCenter.EF.Repositories
         public Customer? GetById(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            return context.Customers.Where(customer => customer.Id== id).SingleOrDefault();
+            return context.Customers.SingleOrDefault(customer => customer.Id == id);
 
         }
 
         public void Update(int id, Customer entity )
         {
             using var context = new CarServiceCenterDbContext();
-            var dbCustomer = context.Customers.Where(customer => customer.Id == id).SingleOrDefault();
+            var dbCustomer = context.Customers.SingleOrDefault(customer => customer.Id == id);
             if(dbCustomer is null)
             {
-                return;
+                throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
             dbCustomer.Phone = entity.Phone;
             dbCustomer.Name = entity.Name;

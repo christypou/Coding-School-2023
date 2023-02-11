@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarServiceCenter.EF.Migrations
 {
     [DbContext(typeof(CarServiceCenterDbContext))]
-    [Migration("20230207160448_Initial")]
+    [Migration("20230210215522_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -66,8 +66,10 @@ namespace CarServiceCenter.EF.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Surname")
                         .IsRequired()

@@ -1,5 +1,6 @@
 ﻿using CarServiceCenter.EF.Context;
 using CarServiceCenter.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CarServiceCenter.EF.Repositories
         public void Delete(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbTransactionLines = context.TransactionLines.Where(transactionLines => transactionLines.Id == id).SingleOrDefault();
+            var dbTransactionLines = context.TransactionLines.SingleOrDefault(transactionLines => transactionLines.Id == id);
             if (dbTransactionLines is null)
             {
                 return;
@@ -32,19 +33,28 @@ namespace CarServiceCenter.EF.Repositories
         public IList<TransactionLine> GetAll()
         {
             using var context = new CarServiceCenterDbContext();
-            return context.TransactionLines.ToList();
+            return context.TransactionLines.
+                Include(transactionLine=>transactionLine.Engineer).
+                Include(transactionLine => transactionLine.Transaction).
+                Include(transactionLine=>transactionLine.ServiceTask).ToList();
         }
 
         public TransactionLine? GetById(int id)
         {
             using var context = new CarServiceCenterDbContext();
-            return context.TransactionLines.Where(transactionLines => transactionLines.Id == id).SingleOrDefault();
+            return context.TransactionLines.
+                Include(transactionLine => transactionLine.Engineer).
+                Include(transactionLine => transactionLine.Transaction).
+                Include(transactionLine => transactionLine.ServiceTask).SingleOrDefault(transactionLines => transactionLines.Id == id);
         }
 
         public void Update(int id, TransactionLine entity)
         {
             using var context = new CarServiceCenterDbContext();
-            var dbTransactionLines = context.TransactionLines.Where(transactionLine => transactionLine.Id == id).SingleOrDefault();
+            var dbTransactionLines = context.TransactionLines.
+                Include(transactionLine => transactionLine.Engineer).
+                Include(transactionLine => transactionLine.Transaction).
+                Include(transactionLine => transactionLine.ServiceTask).SingleOrDefault(transactionLine => transactionLine.Id == id);
             if (dbTransactionLines is null)
             {
                 return;
