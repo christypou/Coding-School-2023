@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace CarServiceCenter.EF.Repositories
 {
-    internal class EngineerRepo : IEntityRepo<Engineer>
+    public class EngineerRepo : IEntityRepo<Engineer>
     {
         public void Add(Engineer entity)
         {
             using var context = new CarServiceCenterDbContext();
             if (entity.Id != 0)
                 throw new ArgumentException("Given entity should not have Id set", nameof(entity));
-            context.Add(entity);
+            context.Engineers.Add(entity);
             context.SaveChanges();
         }
 
@@ -28,7 +28,7 @@ namespace CarServiceCenter.EF.Repositories
             {
                 throw new KeyNotFoundException($"Given id '{id}' was not found in database");
             }
-            context.Remove(dbEngineer);
+            context.Engineers.Remove(dbEngineer);
             context.SaveChanges();
         }
 
@@ -55,6 +55,7 @@ namespace CarServiceCenter.EF.Repositories
             dbEngineer.SalaryPerMonth = entity.SalaryPerMonth;
             dbEngineer.Name = entity.Name;
             dbEngineer.Surname = entity.Surname;
+            dbEngineer.ManagerId = entity.ManagerId;
             context.SaveChanges();
         }
     }

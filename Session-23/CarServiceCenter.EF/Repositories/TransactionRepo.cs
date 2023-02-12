@@ -14,7 +14,7 @@ namespace CarServiceCenter.EF.Repositories
         public void Add(Transaction entity)
         {
             using var context = new CarServiceCenterDbContext();
-            context.Add(entity);
+            context.Transactions.Add(entity);
             context.SaveChanges();
         }
 
@@ -26,7 +26,7 @@ namespace CarServiceCenter.EF.Repositories
             {
                 return;
             }
-            context.Remove(dbTransaction);
+            context.Transactions.Remove(dbTransaction);
             context.SaveChanges();
 
         }
@@ -65,7 +65,10 @@ namespace CarServiceCenter.EF.Repositories
             }
             dbTransaction.TotalPrice = entity.TotalPrice;
             dbTransaction.Date = entity.Date;
-            
+            dbTransaction.CarId= entity.CarId;
+            dbTransaction.CustomerId = entity.CustomerId;
+            dbTransaction.ManagerId = entity.ManagerId;
+            context.SaveChanges();
         }
     }
 }
