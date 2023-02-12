@@ -10,6 +10,10 @@ namespace CarServiceCenterWeb.Mvc.Models.Transaction
         public int CustomerId { get; set; }
         public int ManagerId { get; set; }
         public int CarId { get; set; }
+        public string CustomerName { get; set; }
+        public string ManagerName { get; set; }
+        public string CarName { get; set; }
+
         public List<SelectListItem> Manager { get; } = new List<SelectListItem>();
         public List<SelectListItem> Customer { get; } = new List<SelectListItem>();
         public List<SelectListItem> Car { get; } = new List<SelectListItem>();

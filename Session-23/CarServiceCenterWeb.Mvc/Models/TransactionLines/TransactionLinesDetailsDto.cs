@@ -11,6 +11,9 @@ namespace CarServiceCenterWeb.Mvc.Models.TransactionLines
         public int TransactionId { get; set; }
         public int ServiceTaskId { get; set; }
         public int EngineerId { get; set; }
+        public string EngineerName { get; set; }
+        public DateTime Date { get; set; }
+        public string ServiceTaskName { get; set; }
         public List<SelectListItem> Transaction { get; } = new List<SelectListItem>();
         public List<SelectListItem> ServiceTask { get; } = new List<SelectListItem>();
         public List<SelectListItem> Engineer { get; } = new List<SelectListItem>();

@@ -49,7 +49,11 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 ManagerId = transaction.ManagerId,
                 CarId = transaction.CarId,
                 CustomerId = transaction.CustomerId,
-                Id = transaction.Id
+                Id = transaction.Id,
+                CustomerName = transaction.Customer.Name + " " + transaction.Customer.Surname,
+                CarName = transaction.Car.Model + " " + transaction.Car.Brand,
+                ManagerName = transaction.Manager.Name + " " + transaction.Manager.Surname
+
             };
             transactionDto.Manager.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(manager.Name + " " + manager.Surname, manager.Id.ToString()));
             transactionDto.Car.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(car.CarRegistrationNumber, car.Id.ToString()));
@@ -182,7 +186,10 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 TotalPrice = dbTransaction.TotalPrice,
                 ManagerId = dbTransaction.ManagerId,
                 CustomerId = dbTransaction.CustomerId,
-                CarId = dbTransaction.CarId
+                CarId = dbTransaction.CarId,
+                CustomerName = dbTransaction.Customer.Name + " " + dbTransaction.Customer.Surname,
+                CarName = dbTransaction.Car.Model + " " + dbTransaction.Car.Brand,
+                ManagerName = dbTransaction.Manager.Name + " " + dbTransaction.Manager.Surname
 
             };
             return View(model: viewTransaction);

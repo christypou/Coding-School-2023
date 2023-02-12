@@ -52,7 +52,10 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 TransactionId = transactionLine.TransactionId,
                 ServiceTaskId = transactionLine.ServiceTaskId,
                 EngineerId = transactionLine.EngineerId,
-                Id = transactionLine.Id
+                Id = transactionLine.Id,
+                ServiceTaskName = transactionLine.ServiceTask.Code,
+                EngineerName = transactionLine.Engineer.Name+ " "+ transactionLine.Engineer.Surname,
+                Date = transactionLine.Transaction.Date
             };
             transactionLineDto.Transaction.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(transaction.Date.ToString(), transaction.Id.ToString()));
             transactionLineDto.ServiceTask.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(serviceTask.Code, serviceTask.Id.ToString()));
@@ -228,7 +231,10 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 Hours = dbTransactionLine.Hours,
                 EngineerId = dbTransactionLine.EngineerId,
                 ServiceTaskId = dbTransactionLine.ServiceTaskId,
-                TransactionId = dbTransactionLine.TransactionId
+                TransactionId = dbTransactionLine.TransactionId,
+                ServiceTaskName = dbTransactionLine.ServiceTask.Code,
+                EngineerName = dbTransactionLine.Engineer.Name + " " + dbTransactionLine.Engineer.Surname,
+                Date = dbTransactionLine.Transaction.Date
 
             };
             return View(model: viewTransactionLine);

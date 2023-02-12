@@ -38,7 +38,8 @@ namespace CarServiceCenterWeb.Mvc.Controllers
             {
                 Name = customer.Name,
                 Surname = customer.Surname,
-                Phone = customer.Phone
+                Phone = customer.Phone,
+                Tin = customer.Tin
             };
             return View(model:viewCustomer) ;
         }

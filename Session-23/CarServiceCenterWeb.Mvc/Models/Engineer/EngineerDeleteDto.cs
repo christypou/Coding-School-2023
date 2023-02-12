@@ -9,6 +9,7 @@ namespace CarServiceCenterWeb.Mvc.Models.Engineer
         public string Surname { get; set; } = null!;
         public int SalaryPerMonth { get; set; }
         public int ManagerID { get; set; }
+        public string ManagerName { get; set; }
 
         public List<SelectListItem> Manager { get; } = new List<SelectListItem>();
     }

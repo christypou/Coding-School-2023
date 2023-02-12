@@ -36,13 +36,15 @@ namespace CarServiceCenterWeb.Mvc.Controllers
             {
                 return NotFound();
             }
+           
             var engineerDto = new EngineerDetailsDto
             {
                 Name = engineers.Name,
                 Surname = engineers.Surname,
                 SalaryPerMonth = engineers.SalaryPerMonth,
                 ManagerID = engineers.ManagerId,
-                Id =engineers.Id
+                Id =engineers.Id,
+                ManagerName = engineers.Manager.Name + " " +engineers.Manager.Surname
             };
             engineerDto.Manager.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(manager.Name + " " + manager.Surname, manager.Id.ToString()));
             return View(model :engineerDto);
@@ -151,6 +153,7 @@ namespace CarServiceCenterWeb.Mvc.Controllers
             Surname = dbengineer.Surname,
             SalaryPerMonth = dbengineer.SalaryPerMonth,
             ManagerID = dbengineer.ManagerId,
+            ManagerName = dbengineer.Manager.Name + " " + dbengineer.Manager.Surname
             
             };
             return View(model: viewEngineer);
