@@ -136,7 +136,7 @@ namespace CarServiceCenter.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Hours = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
-                    PricePerHour = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
+                    PricePerHour = table.Column<decimal>(type: "decimal(4,2)", precision: 4, scale: 2, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false),
                     TransactionId = table.Column<int>(type: "int", nullable: false),
                     ServiceTaskId = table.Column<int>(type: "int", nullable: false),

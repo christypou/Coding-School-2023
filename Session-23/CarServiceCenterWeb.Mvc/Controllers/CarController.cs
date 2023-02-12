@@ -57,7 +57,7 @@ namespace CarServiceCenterWeb.Mvc.Controllers
             {
                 return View();
             }
-            var dbCar = new Car(car.Brand, car.CarRegistrationNumber, car.Model);
+            var dbCar = new Car(car.Brand, car.Model, car.CarRegistrationNumber);
             _carRepo.Add(dbCar);
             return RedirectToAction("Index");
         }

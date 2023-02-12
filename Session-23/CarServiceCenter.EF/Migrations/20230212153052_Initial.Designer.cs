@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarServiceCenter.EF.Migrations
 {
     [DbContext(typeof(CarServiceCenterDbContext))]
-    [Migration("20230210215522_Initial")]
+    [Migration("20230212153052_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -225,8 +225,8 @@ namespace CarServiceCenter.EF.Migrations
                         .HasColumnType("decimal(9,2)");
 
                     b.Property<decimal>("PricePerHour")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)");
+                        .HasPrecision(4, 2)
+                        .HasColumnType("decimal(4,2)");
 
                     b.Property<int>("ServiceTaskId")
                         .HasColumnType("int");

@@ -222,8 +222,8 @@ namespace CarServiceCenter.EF.Migrations
                         .HasColumnType("decimal(9,2)");
 
                     b.Property<decimal>("PricePerHour")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)");
+                        .HasPrecision(4, 2)
+                        .HasColumnType("decimal(4,2)");
 
                     b.Property<int>("ServiceTaskId")
                         .HasColumnType("int");

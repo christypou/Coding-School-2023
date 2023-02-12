@@ -92,7 +92,7 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 return View();
             }
 
-            var dbTransactionLine = new TransactionLine(transactionLine.Hours, transactionLine.Price, transactionLine.PricePerHour)
+            var dbTransactionLine = new TransactionLine(transactionLine.Hours)
             {
                 TransactionId = transactionLine.TransactionId,
                 ServiceTaskId = transactionLine.ServiceTaskId,

@@ -17,17 +17,7 @@
                 <label asp-for="Hours" class="control-label"></label>
                 <input asp-for="Hours" class="form-control" />
                 <span asp-validation-for="Hours" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PricePerHour" class="control-label"></label>
-                <input asp-for="PricePerHour" class="form-control" />
-                <span asp-validation-for="PricePerHour" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
+            </div
             <div class="form-group">
                 <label asp-for="TransactionId" class="control-label"></label>
                 <select asp-for="TransactionId" class ="form-control" asp-items="@Model.Transaction"></select>
