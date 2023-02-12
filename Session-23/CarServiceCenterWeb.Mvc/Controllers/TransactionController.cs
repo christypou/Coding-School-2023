@@ -89,7 +89,7 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 return View();
             }
 
-            var dbTransaction = new Transaction(transaction.TotalPrice)
+            var dbTransaction = new Transaction()
             {
                 ManagerId = transaction.ManagerId,
                 CarId= transaction.CarId,

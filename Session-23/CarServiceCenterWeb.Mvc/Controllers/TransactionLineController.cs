@@ -99,6 +99,33 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 EngineerId = transactionLine.EngineerId
                 
             };
+            //var thisTransaction = _transactionRepo.GetById(dbTransactionLine.TransactionId);
+            var taskToday = 0;
+            var transactionsLines = _transactionLineRepo.GetAll();
+            var transactionsLinesList = transactionsLines.ToList();
+            foreach(var transactionLin in transactionsLinesList)
+            {
+               if( transactionLin.Transaction.Date.Day == DateTime.Now.Day)
+                {
+                    taskToday++;
+                }
+            }
+            var countEngineers = _engineerRepo.GetAll().Count();
+            //transactionsLin.
+            //foreach (var transaction in transactions)
+            //{
+            //    if (transaction.Date.Day == DateTime.Now.Day)
+            //    {
+            //        taskToday++;
+            //    }
+            //}
+            //var countEngineers = _engineerRepo.GetAll().Count();
+            if (countEngineers < taskToday)
+            {
+                TempData["msg"] = "<script>alert('Change succesfully');</script>";
+                @Html.Raw(TempData["msg"])
+                return RedirectToAction("Index");
+            }
 
             _transactionLineRepo.Add(dbTransactionLine);
             return RedirectToAction("Index");

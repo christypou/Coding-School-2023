@@ -10,9 +10,11 @@ namespace CarServiceCenterWeb.Mvc.Controllers
     public class ServiceTaskController : Controller
     {
         private readonly IEntityRepo<ServiceTask> _serviceTaskRepo;
+       
         public ServiceTaskController(IEntityRepo<ServiceTask> serviceTaskRepo)
         {
             _serviceTaskRepo = serviceTaskRepo;
+           
         }
         // GET: ServiceTaskController
         public ActionResult Index()
@@ -59,6 +61,7 @@ namespace CarServiceCenterWeb.Mvc.Controllers
                 return View();
             }
             var dbServiceTask = new ServiceTask(serviceTask.Code,serviceTask.Description,serviceTask.Hours);
+           
             _serviceTaskRepo.Add(dbServiceTask);
             return RedirectToAction("Index");
         }

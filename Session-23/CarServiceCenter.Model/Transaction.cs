@@ -2,12 +2,16 @@
 {
     public class Transaction
     {
-        public Transaction(decimal totalPrice)
+        public Transaction()
         {
             Date = DateTime.Now;
-            TotalPrice = totalPrice;
+            TotalPrice = 0;
 
             TransactionLines = new List<TransactionLine>();
+        }
+        public Transaction(DateTime date)
+        {
+            Date= date;
         }
 
         public int Id { get; set; }
