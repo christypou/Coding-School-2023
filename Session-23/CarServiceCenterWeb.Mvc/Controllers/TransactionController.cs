@@ -29,9 +29,32 @@ namespace CarServiceCenterWeb.Mvc.Controllers
         }
 
         // GET: TransactionController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var transaction = _transactionRepo.GetById(id.Value);
+            var manager = _managerRepo.GetById(transaction.ManagerId);
+            var car = _carRepo.GetById(transaction.CarId);
+            var customer = _customerRepo.GetById(transaction.CustomerId);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+            var transactionDto = new TransactionDetailsDto
+            {
+                TotalPrice = transaction.TotalPrice,
+                ManagerId = transaction.ManagerId,
+                CarId = transaction.CarId,
+                CustomerId = transaction.CustomerId,
+                Id = transaction.Id
+            };
+            transactionDto.Manager.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(manager.Name + " " + manager.Surname, manager.Id.ToString()));
+            transactionDto.Car.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(car.CarRegistrationNumber, car.Id.ToString()));
+            transactionDto.Customer.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(customer.Name + " " + customer.Surname, customer.Id.ToString()));
+            return View(model: transactionDto);
         }
 
         // GET: TransactionController/Create

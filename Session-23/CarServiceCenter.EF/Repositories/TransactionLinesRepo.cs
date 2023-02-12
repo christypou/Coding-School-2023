@@ -14,7 +14,7 @@ namespace CarServiceCenter.EF.Repositories
         public void Add(TransactionLine entity)
         {
             using var context = new CarServiceCenterDbContext();
-            context.Add(entity);
+            context.TransactionLines.Add(entity);
             context.SaveChanges();
         }
 
@@ -26,7 +26,7 @@ namespace CarServiceCenter.EF.Repositories
             {
                 return;
             }
-            context.Remove(dbTransactionLines);
+            context.TransactionLines.Remove(dbTransactionLines);
             context.SaveChanges();
         }
 
@@ -62,6 +62,10 @@ namespace CarServiceCenter.EF.Repositories
             dbTransactionLines.PricePerHour = entity.PricePerHour;
             dbTransactionLines.Price = entity.Price;
             dbTransactionLines.Hours = entity.Hours;
+            dbTransactionLines.TransactionId = entity.TransactionId;
+            dbTransactionLines.EngineerId = entity.EngineerId;
+            dbTransactionLines.ServiceTaskId= entity.ServiceTaskId;
+            context.SaveChanges();
         }
     }
 }
