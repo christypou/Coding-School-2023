@@ -103,27 +103,36 @@ namespace CarServiceCenterWeb.Mvc.Controllers
             var taskToday = 0;
             var transactionsLines = _transactionLineRepo.GetAll();
             var transactionsLinesList = transactionsLines.ToList();
-            foreach(var transactionLin in transactionsLinesList)
+            var transactions = _transactionRepo.GetAll().ToList();
+            decimal workload = 0;
+            var countEngineers = _engineerRepo.GetAll().Count();
+            var maxDayWorkload = countEngineers * 8;
+            foreach (var transactionLin in transactionsLinesList)
             {
                if( transactionLin.Transaction.Date.Day == DateTime.Now.Day)
                 {
                     taskToday++;
                 }
             }
-            var countEngineers = _engineerRepo.GetAll().Count();
-            //transactionsLin.
-            //foreach (var transaction in transactions)
-            //{
-            //    if (transaction.Date.Day == DateTime.Now.Day)
-            //    {
-            //        taskToday++;
-            //    }
-            //}
-            //var countEngineers = _engineerRepo.GetAll().Count();
-            if (countEngineers < taskToday)
+           
+            foreach(var transaction in transactions)
             {
-                TempData["msg"] = "<script>alert('Change succesfully');</script>";
-                @Html.Raw(TempData["msg"])
+                if(transaction.Date.Day == DateTime.Now.Day)
+                {
+                    foreach(var transactionLin in transactionsLinesList)
+                    {
+                        workload += transactionLin.Hours;
+                    }
+                }
+            }
+            if (workload+transactionLine.Hours >= maxDayWorkload)
+            {
+                return RedirectToAction("Index");
+            }
+            if (countEngineers <= taskToday)
+            {
+               
+                
                 return RedirectToAction("Index");
             }
 
