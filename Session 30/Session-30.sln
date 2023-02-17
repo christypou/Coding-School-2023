@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuelStation.Model", "Session 30\FuelStation.Model.csproj", "{94369F33-B806-4B64-B568-C3BC6935D500}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94369F33-B806-4B64-B568-C3BC6935D500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94369F33-B806-4B64-B568-C3BC6935D500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94369F33-B806-4B64-B568-C3BC6935D500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94369F33-B806-4B64-B568-C3BC6935D500}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A2F5C3D-FEE5-4157-ABEC-ED2AE0A150AD}
+	EndGlobalSection
+EndGlobal
