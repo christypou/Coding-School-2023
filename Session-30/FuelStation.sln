@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelStation.Model", "FuelStation.Model\FuelStation.Model.csproj", "{CE269244-690C-4EA4-A787-FC89A207D71E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuelStation.EF", "FuelStation.EF\FuelStation.EF.csproj", "{55E3359D-FFF2-4BDE-B4FE-D967885139EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelStation.EF", "FuelStation.EF\FuelStation.EF.csproj", "{55E3359D-FFF2-4BDE-B4FE-D967885139EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
