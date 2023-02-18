@@ -1,4 +1,4 @@
-﻿namespace Session_30
+﻿namespace FuelStation.Model
 {
 	public class Class1
 	{
