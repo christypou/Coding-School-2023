@@ -2,6 +2,7 @@
 @using FuelStation.Model;
 @using FuelStation.Model.Enums;
 @using FuelStation.Web.Blazor.Shared.Customer;
+@inject IJSRuntime jsRuntime
 @inject HttpClient httpClient
 @inject NavigationManager navigationManager
 
@@ -25,8 +26,8 @@
 				<InputText class="form-control" @bind-Value="@Customer.Surname" />
 			</div>
 			<div class="col-md-4">
-				<label class="form-label">Card Number</label>
-				<InputText class="form-control" @bind-Value="@Customer.CardNumber" />
+				<label class="form-label">Card Number</label>					   
+				<InputText class="form-control" @bind-Value="@Customer.CardNumber" @bind-Value:after="@(()=>checkCardNumber(Customer.CardNumber))"/>
 			</div>
 		</div>
 		
@@ -44,6 +45,7 @@
 @code {
 	[Parameter] public int? Id { get; set; }
 	CustomerEditDto Customer { get; set; }
+	private List<CustomerListDto> customersList = new();
 	string? title;
 	protected override async Task OnInitializedAsync() {
 		if (Id == null) {
@@ -53,7 +55,9 @@
 			Customer = await httpClient.GetFromJsonAsync<CustomerEditDto>($"customer/{Id}");
 			title = "Edit Customer";
 		}
+		customersList = await httpClient.GetFromJsonAsync<List<CustomerListDto>>("customer");
 	}
+
 
 	private void OnCancel() {
 		navigationManager.NavigateTo("customerlist");
@@ -69,5 +73,16 @@
 
 		response.EnsureSuccessStatusCode();
 		navigationManager.NavigateTo("customerlist");
+	}
+	async Task checkCardNumber(String cardNumber)
+	{
+		foreach(var customer in customersList)
+		{
+			if(cardNumber == customer.CardNumber)
+			{
+				var confirm = await jsRuntime.InvokeAsync<string>("alert", "This Card Number already exists!");
+				Customer.CardNumber = "";
+			}
+		}
 	}
 }

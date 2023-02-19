@@ -2,6 +2,7 @@
 @using FuelStation.Model;
 @using FuelStation.Model.Enums;
 @using FuelStation.Web.Blazor.Shared.Employee;
+@inject IJSRuntime jsRuntime
 @inject HttpClient httpClient
 @inject NavigationManager navigationManager
 
@@ -29,7 +30,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<label class="form-label">Employee Type</label>
-				<InputSelect class="form-control" @bind-Value="Employee.EmployeeType">
+				<InputSelect class="form-control" @bind-Value="Employee.EmployeeType" @bind-Value:after="@( ()=> checkEmployee(Employee.EmployeeType))">
 					@foreach (var enumValue in Enum.GetValues<EmployeeType>()) {
 						<option value="@enumValue">@enumValue</option>
 					}
@@ -39,7 +40,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<label class="form-label">Salary Per Month</label>
-				<InputNumber class="form-control" @bind-Value="@Employee.SalaryPerMonth" />
+				<InputNumber class="form-control" @bind-Value="@Employee.SalaryPerMonth"  />
 			</div>
 			<div class="col-md-3">
 				<label class="form-label">Start date</label>
@@ -52,7 +53,7 @@
 		</div>
 		<div class="row mt-2">
 			<div class="col">
-				<button class="btn btn-success" type="submit">Save</button>
+				<button class="btn btn-success"  type="submit">Save</button>
 				<button class="btn btn-danger" @onclick="OnCancel">Cancel</button>
 			</div>
 		</div>
@@ -63,7 +64,10 @@
 @code {
 	[Parameter] public int? Id { get; set; }
 	EmployeeEditDto Employee { get; set; }
+
+	private List<EmployeeListDto> employeeList = new();
 	string? title;
+	int countManagers, countStaff, countCashiers=0;
 	protected override async Task OnInitializedAsync() {
 		if (Id == null) {
 			Employee = new();
@@ -71,6 +75,22 @@
 		} else {
 			Employee = await httpClient.GetFromJsonAsync<EmployeeEditDto>($"employee/{Id}");
 			title = "Edit Employee";
+		}
+		employeeList = await httpClient.GetFromJsonAsync<List<EmployeeListDto>>("employee");
+		foreach (var employee in employeeList)
+		{
+			if (employee.EmployeeType.ToString() == "Manager")
+			{
+				countManagers++;
+			}
+			else if (employee.EmployeeType.ToString() == "Staff")
+			{
+				countStaff++;
+			}
+			else if (employee.EmployeeType.ToString() == "Cashier")
+			{
+				countCashiers++;
+			}
 		}
 	}
 
@@ -81,6 +101,7 @@
 	private async Task OnSave() {
 		HttpResponseMessage? response = null;
 		if (Id == null) {
+
 			response = await httpClient.PostAsJsonAsync("employee", Employee);
 		} else {
 			response = await httpClient.PutAsJsonAsync("employee", Employee);
@@ -88,5 +109,33 @@
 
 		response.EnsureSuccessStatusCode();
 		navigationManager.NavigateTo("employeelist");
+	}
+	async Task checkEmployee(EmployeeType type)
+	{
+
+		if (type.ToString() == "Manager")
+		{
+			if (countManagers >= 3)
+			{
+
+				var confirm = await jsRuntime.InvokeAsync<string>("alert", "Too many managers");
+				//navigationManager.NavigateTo("employeelist");
+				
+			}
+		}else if (type.ToString() == "Staff")
+		{
+			if (countStaff >= 10)
+			{
+				var confirm = await jsRuntime.InvokeAsync<string>("alert", "Too many managers");
+				navigationManager.NavigateTo("employeelist");
+			}
+		}else if (type.ToString() == "Cashier")
+		{
+			if (countCashiers >= 4)
+			{
+				var confirm = await jsRuntime.InvokeAsync<string>("alert", "Too many managers");
+				navigationManager.NavigateTo("employeelist");
+			}
+		}
 	}
 }
