@@ -1,0 +1,26 @@
+﻿@page "/managerpage"
+@inject NavigationManager navigationManager
+<h3>ManagerPage</h3>
+<button @onclick="()=>Customer()"> Customers List</button>
+<button @onclick="()=>Items()"> ItemS List</button>
+<button @onclick="()=>Employees()"> Employees List</button>
+<button @onclick="()=>MonthlyLedger()"> Monthly Ledger</button>
+@code {
+
+    private void Customer()
+	{
+		navigationManager.NavigateTo("customerlist");
+	}
+	private void Items()
+	{
+		navigationManager.NavigateTo("itemlist");
+	}
+	private void Employees()
+	{
+		navigationManager.NavigateTo("employeelist");
+	}
+	private void MonthlyLedger()
+	{
+		navigationManager.NavigateTo("monthlyledger");
+	}
+}

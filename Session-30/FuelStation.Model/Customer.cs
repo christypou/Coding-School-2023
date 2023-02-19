@@ -9,6 +9,7 @@ namespace FuelStation.Model
 {
 	public class Customer : Person
 	{
+		public Customer() { }
 		public Customer(string name, string surname, string cardnumber)
 		{
 			Name = name;

@@ -1,0 +1,21 @@
+﻿@page "/"
+@inject NavigationManager navigationManager
+
+<button @onclick="()=>ManagerPage()"> Manager</button>
+<button @onclick="()=>CashierPage()"> Cashier</button>
+<button @onclick="()=>StaffPage()"> Staff</button>
+@code{
+
+	private void ManagerPage()
+	{
+		navigationManager.NavigateTo("managerpage");
+	}
+	private void CashierPage()
+	{
+		navigationManager.NavigateTo("cashier");
+	}
+	private void StaffPage()
+	{
+		navigationManager.NavigateTo("staff");
+	}
+}
