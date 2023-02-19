@@ -3,6 +3,7 @@
 @using FuelStation.Model.Enums;
 @using FuelStation.Web.Blazor.Shared.Item;
 @inject HttpClient httpClient
+@inject IJSRuntime jsRuntime
 @inject NavigationManager navigationManager
 
 <h3>@title</h3>
@@ -17,7 +18,7 @@
 		<div class="row">
 			<div class="col-md-4">
 				<label class="form-label">Code</label>
-				<InputText class="form-control" @bind-Value="@Item.Code" />
+				<InputText class="form-control" @bind-Value="@Item.Code" @bind-Value:after="@(()=>checkItemCode(Item.Code))" />
 			</div>
 		
 			<div class="col-md-4">
@@ -61,6 +62,7 @@
 @code {
 	[Parameter] public int? Id { get; set; }
 	ItemEditDto Item { get; set; }
+	private List<ItemListDto> itemsList = new();
 	string? title;
 	protected override async Task OnInitializedAsync() {
 		if (Id == null) {
@@ -70,6 +72,7 @@
 			Item = await httpClient.GetFromJsonAsync<ItemEditDto>($"item/{Id}");
 			title = "Edit Item";
 		}
+		itemsList = await httpClient.GetFromJsonAsync<List<ItemListDto>>("item");
 	}
 
 	private void OnCancel() {
@@ -86,5 +89,16 @@
 
 		response.EnsureSuccessStatusCode();
 		navigationManager.NavigateTo("itemlist");
+	}
+	async Task checkItemCode(String itemCode)
+	{
+		foreach (var item in itemsList)
+		{
+			if (itemCode == item.Code)
+			{
+				var confirm = await jsRuntime.InvokeAsync<string>("alert", "This Item Code already exists!");
+				Item.Code = "";
+			}
+		}
 	}
 }
