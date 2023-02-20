@@ -72,6 +72,7 @@
 			this.Controls.Add(this.btnToManager);
 			this.Name = "FuelStation";
 			this.Text = "Fuel Station";
+			this.Load += new System.EventHandler(this.FuelStation_Load);
 			this.ResumeLayout(false);
 
 		}

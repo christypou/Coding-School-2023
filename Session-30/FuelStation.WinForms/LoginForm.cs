@@ -19,5 +19,10 @@ namespace FuelStation.WinForms
 			ManagerForm managerForm = new();
 			managerForm.ShowDialog();
 		}
+
+		private void FuelStation_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

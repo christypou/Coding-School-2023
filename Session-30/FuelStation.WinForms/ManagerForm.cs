@@ -16,5 +16,11 @@ namespace FuelStation.WinForms
 		{
 			InitializeComponent();
 		}
+
+		private void btnToCustomers_Click(object sender, EventArgs e)
+		{
+			CustomersForm customersForm = new();
+			customersForm.ShowDialog();
+		}
 	}
 }
