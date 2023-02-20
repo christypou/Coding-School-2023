@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelStation.Web.Blazor.Shar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FuelStation.Web.Blazor", "FuelStation.Web.Blazor", "{9AB1F461-1EF0-4B74-9291-5AD5120FD8D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuelStation.WinForms", "FuelStation.WinForms\FuelStation.WinForms.csproj", "{5F9FECD5-9183-4A38-BA9E-38C64CB222D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{3B4B6425-00DF-4A6D-A5DE-DBDFCDA7EEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B4B6425-00DF-4A6D-A5DE-DBDFCDA7EEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B4B6425-00DF-4A6D-A5DE-DBDFCDA7EEE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F9FECD5-9183-4A38-BA9E-38C64CB222D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F9FECD5-9183-4A38-BA9E-38C64CB222D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F9FECD5-9183-4A38-BA9E-38C64CB222D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F9FECD5-9183-4A38-BA9E-38C64CB222D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

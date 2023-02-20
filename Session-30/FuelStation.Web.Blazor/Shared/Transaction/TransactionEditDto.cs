@@ -1,4 +1,5 @@
 ﻿using FuelStation.Model.Enums;
+using FuelStation.Web.Blazor.Shared.TransactionLine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace FuelStation.Web.Blazor.Shared.Transaction
 		public int CustomerId { get; set; }
 
 		public int EmployeeId { get; set; }
+		public List<TransactionLineListDto> TransactionLines { get; set; } = new();
+
 	}
 }
