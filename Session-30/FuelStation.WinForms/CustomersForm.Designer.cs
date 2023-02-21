@@ -30,12 +30,13 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.grvCustomers = new System.Windows.Forms.DataGridView();
-			this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.CustomerSurname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.CustomerCardNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CustomerBs = new System.Windows.Forms.BindingSource(this.components);
 			this.btnSaveCustomer = new System.Windows.Forms.Button();
 			this.btnDeleteCustomer = new System.Windows.Forms.Button();
+			this.ColId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colSurname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colCardNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grvCustomers)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CustomerBs)).BeginInit();
 			this.SuspendLayout();
@@ -44,36 +45,16 @@
 			// 
 			this.grvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.grvCustomers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.CustomerName,
-            this.CustomerSurname,
-            this.CustomerCardNumber});
+            this.ColId,
+            this.colName,
+            this.colSurname,
+            this.colCardNumber});
 			this.grvCustomers.Location = new System.Drawing.Point(39, 34);
 			this.grvCustomers.Name = "grvCustomers";
 			this.grvCustomers.RowHeadersWidth = 62;
 			this.grvCustomers.RowTemplate.Height = 33;
 			this.grvCustomers.Size = new System.Drawing.Size(717, 380);
 			this.grvCustomers.TabIndex = 0;
-			// 
-			// CustomerName
-			// 
-			this.CustomerName.HeaderText = "Name";
-			this.CustomerName.MinimumWidth = 8;
-			this.CustomerName.Name = "CustomerName";
-			this.CustomerName.Width = 150;
-			// 
-			// CustomerSurname
-			// 
-			this.CustomerSurname.HeaderText = "Surname";
-			this.CustomerSurname.MinimumWidth = 8;
-			this.CustomerSurname.Name = "CustomerSurname";
-			this.CustomerSurname.Width = 150;
-			// 
-			// CustomerCardNumber
-			// 
-			this.CustomerCardNumber.HeaderText = "Card Number";
-			this.CustomerCardNumber.MinimumWidth = 8;
-			this.CustomerCardNumber.Name = "CustomerCardNumber";
-			this.CustomerCardNumber.Width = 150;
 			// 
 			// btnSaveCustomer
 			// 
@@ -93,6 +74,39 @@
 			this.btnDeleteCustomer.TabIndex = 2;
 			this.btnDeleteCustomer.Text = "Delete";
 			this.btnDeleteCustomer.UseVisualStyleBackColor = true;
+			// 
+			// ColId
+			// 
+			this.ColId.DataPropertyName = "Id";
+			this.ColId.HeaderText = "Id";
+			this.ColId.MinimumWidth = 8;
+			this.ColId.Name = "ColId";
+			this.ColId.Visible = false;
+			this.ColId.Width = 150;
+			// 
+			// colName
+			// 
+			this.colName.DataPropertyName = "Name";
+			this.colName.HeaderText = "Name";
+			this.colName.MinimumWidth = 8;
+			this.colName.Name = "colName";
+			this.colName.Width = 150;
+			// 
+			// colSurname
+			// 
+			this.colSurname.DataPropertyName = "Surname";
+			this.colSurname.HeaderText = "Surname";
+			this.colSurname.MinimumWidth = 8;
+			this.colSurname.Name = "colSurname";
+			this.colSurname.Width = 150;
+			// 
+			// colCardNumber
+			// 
+			this.colCardNumber.DataPropertyName = "CardNumber";
+			this.colCardNumber.HeaderText = "Card Number";
+			this.colCardNumber.MinimumWidth = 8;
+			this.colCardNumber.Name = "colCardNumber";
+			this.colCardNumber.Width = 150;
 			// 
 			// CustomersForm
 			// 
@@ -114,9 +128,6 @@
 		#endregion
 
 		private DataGridView grvCustomers;
-		private DataGridViewTextBoxColumn CustomerName;
-		private DataGridViewTextBoxColumn CustomerSurname;
-		private DataGridViewTextBoxColumn CustomerCardNumber;
 		private DataGridViewTextBoxColumn httpContextDataGridViewTextBoxColumn;
 		private DataGridViewTextBoxColumn requestDataGridViewTextBoxColumn;
 		private DataGridViewTextBoxColumn responseDataGridViewTextBoxColumn;
@@ -132,5 +143,9 @@
 		private BindingSource CustomerBs;
 		private Button btnSaveCustomer;
 		private Button btnDeleteCustomer;
+		private DataGridViewTextBoxColumn ColId;
+		private DataGridViewTextBoxColumn colName;
+		private DataGridViewTextBoxColumn colSurname;
+		private DataGridViewTextBoxColumn colCardNumber;
 	}
 }

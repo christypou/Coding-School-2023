@@ -22,5 +22,11 @@ namespace FuelStation.WinForms
 			CustomersForm customersForm = new();
 			customersForm.ShowDialog();
 		}
+
+		private void btnToItems_Click(object sender, EventArgs e)
+		{
+			ItemsForm itemsForm = new();
+			itemsForm.ShowDialog();
+		}
 	}
 }

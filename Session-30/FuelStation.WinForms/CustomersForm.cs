@@ -39,11 +39,14 @@ namespace FuelStation.WinForms
 				var response = await client.GetAsync("https://localhost:7199/customer");
 				var data = await response.Content.ReadAsAsync<IEnumerable<CustomerListDto>>();
 			
-				grvCustomers.DataSource = data;
+				
 
 				CustomerBs.DataSource = data;
-				//customerBindingSource1.DataSource = petShop.Customers;
+				grvCustomers.DataSource = CustomerBs;
+				grvCustomers.AutoGenerateColumns= false;
 				
+				//customerBindingSource1.DataSource = petShop.Customers;
+
 
 
 			}
@@ -60,8 +63,11 @@ namespace FuelStation.WinForms
 
 		private void btnSaveCustomer_Click(object sender, EventArgs e)
 		{
-			CustomerEditDto newcustomer = new CustomerEditDto();
+			CustomerListDto newcustomer = new CustomerListDto();
 			CustomerBs.Add(newcustomer);
+			var d = newcustomer;
+			var num = CustomerBs.Count;
+			var cus = CustomerBs[num-2];
 			addCustomer(CustomerBs);
 
 
@@ -76,6 +82,13 @@ namespace FuelStation.WinForms
 			request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 			HttpResponseMessage response = await httpClient.SendAsync(request);
 		}
+
+		private void grvCustomers_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+		{
+
+		}
+
+	
 	}
 }
 
