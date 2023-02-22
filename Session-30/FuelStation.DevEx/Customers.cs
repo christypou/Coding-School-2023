@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace FuelStation.DevEx
 {
 	public partial class Customers : Form
@@ -21,6 +22,7 @@ namespace FuelStation.DevEx
 		public Customers()
 		{
 			InitializeComponent();
+			
 		}
 
 		private void Customers_Load(object sender, EventArgs e)
@@ -37,27 +39,15 @@ namespace FuelStation.DevEx
 
 				BindingList<CustomerListDto> customers = new BindingList<CustomerListDto>(data);
 				grdCustomers.DataSource = new BindingSource() { DataSource = data };
-				//CustomerBs.DataSource = data;
-				//grvCustomers.DataSource = CustomerBs;
-				//grvCustomers.AutoGenerateColumns = false;
-				//customerBindingSource1.DataSource = petShop.Customers;
+				
 			}
 		}
 
-		private void grvCustomers_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
-		{
-			//var x = sender;
-		}
+	
 
 		private void grvCustomers_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
 		{
-
-			int rowHandle = e.RowHandle;
-			CustomerListDto editedCustomer = (CustomerListDto) grvCustomers.GetRow(rowHandle);
-			//GridView view = sender as GridView;
-			//CustomerEditDto rec = view.GetRow(e.RowHandle) as CustomerEditDto;
-			editCustomer(editedCustomer);
-
+			
 		}
 
 		private async Task editCustomer(CustomerListDto editedCustomer)
@@ -72,10 +62,74 @@ namespace FuelStation.DevEx
 				var response = await client.PutAsync("https://localhost:7199/customer", byteContent);
 				if(response.IsSuccessStatusCode)
 				{
-					var x = 4;
+					PopulateDataGridView();
 				}
 			}
 
+		}
+
+
+
+		private async Task createCustomer(CustomerListDto customerToAdd)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var myContent = JsonConvert.SerializeObject(customerToAdd);
+				var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+				var byteContent = new ByteArrayContent(buffer);
+				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+				var response = await client.PostAsync("https://localhost:7199/customer", byteContent);
+				if (response.IsSuccessStatusCode)
+				{
+					PopulateDataGridView();
+				}
+			}
+		}
+
+		private void grvCustomers_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+		{
+			CustomerListDto editedCustomer = grvCustomers.GetFocusedRow() as CustomerListDto;
+			if (editedCustomer == null)
+			{
+				e.Valid = false;
+				return;
+			}else if (!editedCustomer.CardNumber.StartsWith("A"))
+			{
+				e.Valid = false;
+				grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
+				return;
+			}
+		
+
+			if (editedCustomer.Id == 0)
+			{
+				createCustomer(editedCustomer);
+			}
+			else
+			{
+				editCustomer(editedCustomer);
+				
+			}
+		}
+
+		private void grvCustomers_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
+		{
+			CustomerListDto deletedCustomer = grvCustomers.GetRow(e.RowHandle) as CustomerListDto;
+			deleteCustomer(deletedCustomer.Id);
+
+		}
+		private async Task deleteCustomer(int id)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var uri = "https://localhost:7199/customer/" + id;
+				var response = await client.DeleteAsync(uri);
+				if (response.IsSuccessStatusCode)
+				{
+					// add something
+				}
+			}
 		}
 	}
 }
