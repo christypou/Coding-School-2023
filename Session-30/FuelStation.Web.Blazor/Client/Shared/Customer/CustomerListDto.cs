@@ -6,5 +6,10 @@
 		public string Name { get; set; }
 		public string Surname { get; set; }
 		public string CardNumber { get; set; }
+
+		public static explicit operator CustomerListDto(Model.Customer v)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using FuelStation.EF.Repositories;
 using FuelStation.Model;
+using FuelStation.Web.Blazor.Client.Shared.Customer;
 using FuelStation.Web.Blazor.Shared.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,10 +26,11 @@ namespace FuelStation.Web.Blazor.Server.Controllers
 			{
 				Id = transaction.Id,
 				Date= transaction.Date,
-				CustomerId= transaction.CustomerId,
-				EmployeeId= transaction.EmployeeId,
+				CustomerId= transaction.Customer.Id,
+				EmployeeId= transaction.Employee.Id,
 				PaymentMethod = transaction.PaymentMethod,
 				TotalValue= transaction.TotalValue,
+				
 				
 			});
 		}

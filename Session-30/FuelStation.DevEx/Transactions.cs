@@ -1,4 +1,6 @@
-﻿using FuelStation.Web.Blazor.Client.Shared.Customer;
+﻿using DevExpress.Pdf.Native.BouncyCastle.Asn1.X509;
+using DevExpress.XtraEditors;
+using FuelStation.Web.Blazor.Client.Shared.Customer;
 using FuelStation.Web.Blazor.Shared.Employee;
 using FuelStation.Web.Blazor.Shared.Transaction;
 using Newtonsoft.Json;
@@ -26,6 +28,8 @@ namespace FuelStation.DevEx
 		private void Transactions_Load(object sender, EventArgs e)
 		{
 			PopulateDataGridView();
+			grdTransactions.Visible = false;
+			
 		}
 		private async Task PopulateDataGridView()
 		{
@@ -40,15 +44,17 @@ namespace FuelStation.DevEx
 
 
 				BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(dataTransaction);
-				grdTransactions.DataSource = new BindingSource() { DataSource = dataTransaction };
+				grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
 				
-				repEmployees.DataSource = new BindingSource() { DataSource = dataEmployee };
+				BindingList<EmployeeListDto> employees = new BindingList<EmployeeListDto>(dataEmployee);
+				repEmployees.DataSource = new BindingSource() { DataSource = employees };
 				repEmployees.DisplayMember = "Name";
-				repEmployees.ValueMember = "ID";
-				
-				repCustomers.DataSource = new BindingSource() { DataSource = dataCustomer };
+				repEmployees.ValueMember = "Id";
+
+				BindingList<CustomerListDto> customers = new BindingList<CustomerListDto>(dataCustomer);
+				repCustomers.DataSource = new BindingSource() { DataSource = customers };
 				repCustomers.DisplayMember = "Name";
-				repCustomers.ValueMember = "ID";
+				repCustomers.ValueMember = "Id";
 
 			}
 		}
@@ -129,6 +135,60 @@ namespace FuelStation.DevEx
 		{
 			TransactionListDto deletedTransaction = grvTransactions.GetRow(e.RowHandle) as TransactionListDto;
 			deleteTransaction(deletedTransaction.Id);
+		}
+
+		private void buttonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+		{
+			//buttonEdit1.Properties.NullText = "card";
+			//string cardNumber = buttonEdit1.EditValue.ToString();
+
+
+		}
+
+		private async Task checkCustomerCard(string card)
+		{
+
+			using (HttpClient client = new HttpClient())
+			{
+				var response = await client.GetAsync("https://localhost:7199/customer");
+				var dataCustomer = await response.Content.ReadAsAsync<List<CustomerListDto>>();
+				foreach(var cust in dataCustomer)
+				{
+					if(card == cust.CardNumber)
+					{
+						XtraMessageBox.Show("Found"+cust.Name);
+						grdTransactions.Visible= true;
+						return;
+					}
+				}
+				DialogResult result = XtraMessageBox.Show("Customer not found. Do you want to create a new customer?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				if (result == DialogResult.Yes)
+				{
+					Customers customerForm = new Customers();
+					customerForm.Show();
+				}				
+			}
+		}
+
+		private void buttonEdit1_EditValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void grdTransactions_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void grdTransactionLines_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnCardNumber_Click(object sender, EventArgs e)
+		{
+			string cardNumber = txtCardNumber.Text;
+			checkCustomerCard(cardNumber);
 		}
 	}
 }
