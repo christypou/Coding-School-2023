@@ -22,6 +22,7 @@ namespace FuelStation.DevEx
 		public ViewTransactions()
 		{
 			InitializeComponent();
+			grdTransactions.EmbeddedNavigator.Buttons.Append.Visible = false;
 		}
 
 		private void ViewTransactions_Load(object sender, EventArgs e)
@@ -68,7 +69,7 @@ namespace FuelStation.DevEx
 				var response = await client.PutAsync("https://localhost:7199/transaction", byteContent);
 				if (response.IsSuccessStatusCode)
 				{
-					PopulateDataGridView();
+					updateTransactions();
 				}
 			}
 
@@ -77,30 +78,12 @@ namespace FuelStation.DevEx
 		private void grvTransactions_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
 		{
 			TransactionListDto editedTransaction = grvTransactions.GetFocusedRow() as TransactionListDto;
-			if (editedTransaction == null)
-			{
-				e.Valid = false;
-				return;
-			}
+
 			editTransaction(editedTransaction);
+			
 		}
 
-		private void btnDeleteTransaction_Click(object sender, EventArgs e)
-		{
-			TransactionListDto transactiontoDelete = (TransactionListDto)grvTransactions.GetFocusedRow();
-			deleteTransaction(transactiontoDelete.Id);
-			var selectedRowHandle = grvTransactions.FocusedRowHandle;
-			if (selectedRowHandle >= 0)
-			{
-				var transaction = grvTransactions.GetRow(selectedRowHandle) as Transaction;
-				if (transaction != null)
-				{
-					// Remove the transaction from the grid view's data source
-					grvTransactions.DeleteRow(selectedRowHandle);
-				}
-			}
-
-		}
+	
 		private async Task deleteTransaction(int id)
 		{
 			using (HttpClient client = new HttpClient())
@@ -109,12 +92,28 @@ namespace FuelStation.DevEx
 				var response = await client.DeleteAsync(uri);
 				if (response.IsSuccessStatusCode)
 				{
-					// add something
+					updateTransactions();
 				}
 				
 			}
 		}
 
 	
+		private async Task updateTransactions()
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var response = await client.GetAsync("https://localhost:7199/transaction");
+				var dataTransaction = await response.Content.ReadAsAsync<List<TransactionListDto>>();
+				BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(dataTransaction);
+				grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
+			}
+		}
+
+		private void grvTransactions_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
+		{
+			TransactionListDto deletedTransaction = grvTransactions.GetRow(e.RowHandle) as TransactionListDto;
+			deleteTransaction(deletedTransaction.Id);
+		}
 	}
 }		

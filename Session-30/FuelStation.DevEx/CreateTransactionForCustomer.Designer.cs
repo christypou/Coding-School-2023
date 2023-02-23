@@ -1,6 +1,6 @@
 ﻿namespace FuelStation.DevEx
 {
-	partial class ViewTransactions
+	partial class CreateTransactionForCustomer
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -33,34 +33,27 @@
 			this.colDate = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colEmployee = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.repEmployees = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
-			this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colCustomer = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.repCustomers = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
 			this.repositoryItemGridLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
 			this.colPaymentMethod = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colTotalValue = new DevExpress.XtraGrid.Columns.GridColumn();
-			this.gridControl2 = new DevExpress.XtraGrid.GridControl();
-			this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.btnCreateTransaction = new System.Windows.Forms.Button();
+			this.grdTransactionLines = new DevExpress.XtraGrid.GridControl();
+			this.grvTransactionLines = new DevExpress.XtraGrid.Views.Grid.GridView();
 			((System.ComponentModel.ISupportInitialize)(this.grdTransactions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grvTransactions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repEmployees)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.repCustomers)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridControl2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.grdTransactionLines)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.grvTransactionLines)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// grdTransactions
 			// 
-			this.grdTransactions.Location = new System.Drawing.Point(12, 42);
+			this.grdTransactions.Location = new System.Drawing.Point(12, 12);
 			this.grdTransactions.MainView = this.grvTransactions;
 			this.grdTransactions.Name = "grdTransactions";
 			this.grdTransactions.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repCustomers,
             this.repEmployees});
-			this.grdTransactions.Size = new System.Drawing.Size(776, 195);
+			this.grdTransactions.Size = new System.Drawing.Size(776, 206);
 			this.grdTransactions.TabIndex = 0;
 			this.grdTransactions.UseEmbeddedNavigator = true;
 			this.grdTransactions.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -71,7 +64,6 @@
 			this.grvTransactions.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDate,
             this.colEmployee,
-            this.colCustomer,
             this.colPaymentMethod,
             this.colTotalValue});
 			this.grvTransactions.GridControl = this.grdTransactions;
@@ -107,33 +99,7 @@
 			this.repEmployees.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.repEmployees.Name = "repEmployees";
-			this.repEmployees.PopupView = this.gridView1;
-			// 
-			// gridView1
-			// 
-			this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-			this.gridView1.Name = "gridView1";
-			this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
-			this.gridView1.OptionsView.ShowGroupPanel = false;
-			// 
-			// colCustomer
-			// 
-			this.colCustomer.Caption = "Customer";
-			this.colCustomer.ColumnEdit = this.repCustomers;
-			this.colCustomer.FieldName = "CustomerId";
-			this.colCustomer.MinWidth = 30;
-			this.colCustomer.Name = "colCustomer";
-			this.colCustomer.Visible = true;
-			this.colCustomer.VisibleIndex = 2;
-			this.colCustomer.Width = 112;
-			// 
-			// repCustomers
-			// 
-			this.repCustomers.AutoHeight = false;
-			this.repCustomers.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.repCustomers.Name = "repCustomers";
-			this.repCustomers.PopupView = this.repositoryItemGridLookUpEdit1View;
+			this.repEmployees.PopupView = this.repositoryItemGridLookUpEdit1View;
 			// 
 			// repositoryItemGridLookUpEdit1View
 			// 
@@ -144,12 +110,12 @@
 			// 
 			// colPaymentMethod
 			// 
-			this.colPaymentMethod.Caption = "Payment Method";
+			this.colPaymentMethod.Caption = "Payment Type";
 			this.colPaymentMethod.FieldName = "PaymentMethod";
 			this.colPaymentMethod.MinWidth = 30;
 			this.colPaymentMethod.Name = "colPaymentMethod";
 			this.colPaymentMethod.Visible = true;
-			this.colPaymentMethod.VisibleIndex = 3;
+			this.colPaymentMethod.VisibleIndex = 2;
 			this.colPaymentMethod.Width = 112;
 			// 
 			// colTotalValue
@@ -158,54 +124,41 @@
 			this.colTotalValue.FieldName = "TotalValue";
 			this.colTotalValue.MinWidth = 30;
 			this.colTotalValue.Name = "colTotalValue";
-			this.colTotalValue.OptionsColumn.ReadOnly = true;
 			this.colTotalValue.Visible = true;
-			this.colTotalValue.VisibleIndex = 4;
+			this.colTotalValue.VisibleIndex = 3;
 			this.colTotalValue.Width = 112;
 			// 
-			// gridControl2
+			// grdTransactionLines
 			// 
-			this.gridControl2.Location = new System.Drawing.Point(12, 284);
-			this.gridControl2.MainView = this.gridView2;
-			this.gridControl2.Name = "gridControl2";
-			this.gridControl2.Size = new System.Drawing.Size(776, 154);
-			this.gridControl2.TabIndex = 1;
-			this.gridControl2.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView2});
+			this.grdTransactionLines.Location = new System.Drawing.Point(12, 224);
+			this.grdTransactionLines.MainView = this.grvTransactionLines;
+			this.grdTransactionLines.Name = "grdTransactionLines";
+			this.grdTransactionLines.Size = new System.Drawing.Size(776, 223);
+			this.grdTransactionLines.TabIndex = 1;
+			this.grdTransactionLines.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grvTransactionLines});
 			// 
-			// gridView2
+			// grvTransactionLines
 			// 
-			this.gridView2.GridControl = this.gridControl2;
-			this.gridView2.Name = "gridView2";
+			this.grvTransactionLines.GridControl = this.grdTransactionLines;
+			this.grvTransactionLines.Name = "grvTransactionLines";
 			// 
-			// btnCreateTransaction
-			// 
-			this.btnCreateTransaction.Location = new System.Drawing.Point(597, 2);
-			this.btnCreateTransaction.Name = "btnCreateTransaction";
-			this.btnCreateTransaction.Size = new System.Drawing.Size(191, 34);
-			this.btnCreateTransaction.TabIndex = 2;
-			this.btnCreateTransaction.Text = "Create Transaction";
-			this.btnCreateTransaction.UseVisualStyleBackColor = true;
-			// 
-			// ViewTransactions
+			// CreateTransactionForCustomer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.btnCreateTransaction);
-			this.Controls.Add(this.gridControl2);
+			this.Controls.Add(this.grdTransactionLines);
 			this.Controls.Add(this.grdTransactions);
-			this.Name = "ViewTransactions";
-			this.Text = "ViewTransactions";
-			this.Load += new System.EventHandler(this.ViewTransactions_Load);
+			this.Name = "CreateTransactionForCustomer";
+			this.Text = "CreateTransactionForCustomer";
+			this.Load += new System.EventHandler(this.CreateTransactionForCustomer_Load);
 			((System.ComponentModel.ISupportInitialize)(this.grdTransactions)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grvTransactions)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.repEmployees)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.repCustomers)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridControl2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.grdTransactionLines)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.grvTransactionLines)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -216,15 +169,11 @@
 		private DevExpress.XtraGrid.Views.Grid.GridView grvTransactions;
 		private DevExpress.XtraGrid.Columns.GridColumn colDate;
 		private DevExpress.XtraGrid.Columns.GridColumn colEmployee;
-		private DevExpress.XtraGrid.Columns.GridColumn colCustomer;
+		private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repEmployees;
+		private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemGridLookUpEdit1View;
 		private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethod;
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalValue;
-		private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repCustomers;
-		private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemGridLookUpEdit1View;
-		private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repEmployees;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-		private DevExpress.XtraGrid.GridControl gridControl2;
-		private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-		private Button btnCreateTransaction;
+		private DevExpress.XtraGrid.GridControl grdTransactionLines;
+		private DevExpress.XtraGrid.Views.Grid.GridView grvTransactionLines;
 	}
 }

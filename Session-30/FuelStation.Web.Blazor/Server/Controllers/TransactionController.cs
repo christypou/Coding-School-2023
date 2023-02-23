@@ -53,6 +53,8 @@ namespace FuelStation.Web.Blazor.Server.Controllers
 		public async Task Post(TransactionEditDto transaction)
 		{
 			var newTransaction = new Transaction(transaction.PaymentMethod);
+			newTransaction.CustomerId = transaction.CustomerId;
+			newTransaction.EmployeeId = transaction.EmployeeId;
 			_transactionRepo.Add(newTransaction);
 		}
 		[HttpPut]
@@ -60,6 +62,8 @@ namespace FuelStation.Web.Blazor.Server.Controllers
 		{
 			var itemToUpdate = _transactionRepo.GetById(transaction.Id);
 			itemToUpdate.PaymentMethod = transaction.PaymentMethod;
+			itemToUpdate.CustomerId = transaction.CustomerId;
+			itemToUpdate.EmployeeId = transaction.EmployeeId;
 			_transactionRepo.Update(transaction.Id, itemToUpdate);
 		}
 		[HttpDelete("{id}")]
