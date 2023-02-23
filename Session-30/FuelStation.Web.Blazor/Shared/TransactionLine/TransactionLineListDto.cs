@@ -12,7 +12,7 @@ namespace FuelStation.Web.Blazor.Shared.TransactionLine
 		public decimal Quantity { get; set; }
 		public decimal ItemPrice { get; set; }
 		public decimal NetValue { get; set; }
-		public decimal DisountPercent { get; set; }
+		public decimal DiscountPercent { get; set; }
 		public decimal DiscountValue { get; set; }
 		public decimal TotalValue { get; set; }
 		public int TransactionId { get; set; }
