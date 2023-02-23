@@ -1,4 +1,5 @@
-﻿using FuelStation.Web.Blazor.Client.Shared.Customer;
+﻿using FuelStation.Model;
+using FuelStation.Web.Blazor.Client.Shared.Customer;
 using FuelStation.Web.Blazor.Shared.Employee;
 using FuelStation.Web.Blazor.Shared.Transaction;
 using Newtonsoft.Json;
@@ -88,8 +89,17 @@ namespace FuelStation.DevEx
 		{
 			TransactionListDto transactiontoDelete = (TransactionListDto)grvTransactions.GetFocusedRow();
 			deleteTransaction(transactiontoDelete.Id);
-			grvTransactions.RefreshData();
-			updateTransactions();
+			var selectedRowHandle = grvTransactions.FocusedRowHandle;
+			if (selectedRowHandle >= 0)
+			{
+				var transaction = grvTransactions.GetRow(selectedRowHandle) as Transaction;
+				if (transaction != null)
+				{
+					// Remove the transaction from the grid view's data source
+					grvTransactions.DeleteRow(selectedRowHandle);
+				}
+			}
+
 		}
 		private async Task deleteTransaction(int id)
 		{
@@ -105,16 +115,6 @@ namespace FuelStation.DevEx
 			}
 		}
 
-		private async Task updateTransactions()
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var response = await client.GetAsync("https://localhost:7199/transaction");
-				var dataTransaction = await response.Content.ReadAsAsync<List<TransactionListDto>>();
-				BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(dataTransaction);
-				grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
-				grvTransactions.RefreshData();
-			}
-		}
+	
 	}
 }		
