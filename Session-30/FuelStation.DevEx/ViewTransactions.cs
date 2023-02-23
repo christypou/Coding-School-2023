@@ -88,7 +88,7 @@ namespace FuelStation.DevEx
 		{
 			TransactionListDto transactiontoDelete = (TransactionListDto)grvTransactions.GetFocusedRow();
 			deleteTransaction(transactiontoDelete.Id);
-
+			grvTransactions.RefreshData();
 			updateTransactions();
 		}
 		private async Task deleteTransaction(int id)
@@ -113,7 +113,7 @@ namespace FuelStation.DevEx
 				var dataTransaction = await response.Content.ReadAsAsync<List<TransactionListDto>>();
 				BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(dataTransaction);
 				grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
-				grdTransactions.RefreshDataSource();
+				grvTransactions.RefreshData();
 			}
 		}
 	}
