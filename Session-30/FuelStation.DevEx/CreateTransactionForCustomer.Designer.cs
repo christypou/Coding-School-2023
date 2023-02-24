@@ -167,6 +167,8 @@
             this.colTotal});
 			this.grvTransactionLines.GridControl = this.grdTransactionLines;
 			this.grvTransactionLines.Name = "grvTransactionLines";
+			this.grvTransactionLines.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grvTransactionLines_CellValueChanged);
+			this.grvTransactionLines.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grvTransactionLines_CellValueChanging);
 			this.grvTransactionLines.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvTransactionLines_RowDeleting_1);
 			this.grvTransactionLines.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvTransactionLines_ValidateRow);
 			// 

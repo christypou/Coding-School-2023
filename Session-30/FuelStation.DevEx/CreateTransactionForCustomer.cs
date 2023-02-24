@@ -290,5 +290,16 @@ namespace FuelStation.DevEx
 			}
 
 		}
+
+		private void grvTransactionLines_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+		{
+			TransactionLineListDto editedTransactionLine = grvTransactionLines.GetFocusedRow() as TransactionLineListDto;
+			
+		}
+
+		private void grvTransactionLines_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+		{
+
+		}
 	}
 }

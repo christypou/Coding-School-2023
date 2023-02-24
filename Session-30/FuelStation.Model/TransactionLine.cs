@@ -9,14 +9,13 @@ namespace FuelStation.Model
 	public class TransactionLine
 	{
 
-		public TransactionLine(decimal quantity, decimal itemPrice, decimal netValue,
-			decimal discountPercent, decimal discountValue, decimal totalValue)
+		public TransactionLine(decimal quantity, decimal itemPrice,decimal discountPercent)
 		{
 			Quantity = quantity;
 			ItemPrice = itemPrice;
 			NetValue = quantity * itemPrice;
 			DiscountPercent = discountPercent;
-			DiscountValue = discountPercent/100 * netValue;
+			DiscountValue = discountPercent/100 * NetValue;
 			TotalValue = NetValue - DiscountValue;
 
 		}
