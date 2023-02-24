@@ -38,12 +38,24 @@
 			this.colTotalValue = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.grdTransactionLines = new DevExpress.XtraGrid.GridControl();
 			this.grvTransactionLines = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colTransaction = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colItem = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.repItems = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
+			this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+			this.colQuantity = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colItemPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colNetValue = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDiscountPercent = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colDiscountValue = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colTotal = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grdTransactions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grvTransactions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repEmployees)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grdTransactionLines)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grvTransactionLines)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.repItems)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// grdTransactions
@@ -68,6 +80,7 @@
             this.colTotalValue});
 			this.grvTransactions.GridControl = this.grdTransactions;
 			this.grvTransactions.Name = "grvTransactions";
+			this.grvTransactions.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.grvTransactions_RowClick);
 			this.grvTransactions.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvTransactions_RowDeleting);
 			this.grvTransactions.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvTransactions_ValidateRow);
 			// 
@@ -133,15 +146,125 @@
 			this.grdTransactionLines.Location = new System.Drawing.Point(12, 224);
 			this.grdTransactionLines.MainView = this.grvTransactionLines;
 			this.grdTransactionLines.Name = "grdTransactionLines";
+			this.grdTransactionLines.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repItems});
 			this.grdTransactionLines.Size = new System.Drawing.Size(776, 223);
 			this.grdTransactionLines.TabIndex = 1;
+			this.grdTransactionLines.UseEmbeddedNavigator = true;
 			this.grdTransactionLines.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvTransactionLines});
 			// 
 			// grvTransactionLines
 			// 
+			this.grvTransactionLines.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colTransaction,
+            this.colItem,
+            this.colQuantity,
+            this.colItemPrice,
+            this.colNetValue,
+            this.colDiscountPercent,
+            this.colDiscountValue,
+            this.colTotal});
 			this.grvTransactionLines.GridControl = this.grdTransactionLines;
 			this.grvTransactionLines.Name = "grvTransactionLines";
+			this.grvTransactionLines.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvTransactionLines_RowDeleting_1);
+			this.grvTransactionLines.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvTransactionLines_ValidateRow);
+			// 
+			// colTransaction
+			// 
+			this.colTransaction.Caption = "Transaction";
+			this.colTransaction.FieldName = "TransactionId";
+			this.colTransaction.MinWidth = 30;
+			this.colTransaction.Name = "colTransaction";
+			this.colTransaction.Visible = true;
+			this.colTransaction.VisibleIndex = 0;
+			this.colTransaction.Width = 112;
+			// 
+			// colItem
+			// 
+			this.colItem.Caption = "Item";
+			this.colItem.ColumnEdit = this.repItems;
+			this.colItem.FieldName = "ItemId";
+			this.colItem.MinWidth = 30;
+			this.colItem.Name = "colItem";
+			this.colItem.Visible = true;
+			this.colItem.VisibleIndex = 1;
+			this.colItem.Width = 112;
+			// 
+			// repItems
+			// 
+			this.repItems.AutoHeight = false;
+			this.repItems.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.repItems.Name = "repItems";
+			this.repItems.PopupView = this.gridView2;
+			// 
+			// gridView2
+			// 
+			this.gridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+			this.gridView2.Name = "gridView2";
+			this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
+			this.gridView2.OptionsView.ShowGroupPanel = false;
+			// 
+			// colQuantity
+			// 
+			this.colQuantity.Caption = "Quantity";
+			this.colQuantity.FieldName = "Quantity";
+			this.colQuantity.MinWidth = 30;
+			this.colQuantity.Name = "colQuantity";
+			this.colQuantity.Visible = true;
+			this.colQuantity.VisibleIndex = 2;
+			this.colQuantity.Width = 112;
+			// 
+			// colItemPrice
+			// 
+			this.colItemPrice.Caption = "Item Price";
+			this.colItemPrice.FieldName = "ItemId";
+			this.colItemPrice.MinWidth = 30;
+			this.colItemPrice.Name = "colItemPrice";
+			this.colItemPrice.Visible = true;
+			this.colItemPrice.VisibleIndex = 3;
+			this.colItemPrice.Width = 112;
+			// 
+			// colNetValue
+			// 
+			this.colNetValue.Caption = "Net Value";
+			this.colNetValue.FieldName = "NetValue";
+			this.colNetValue.MinWidth = 30;
+			this.colNetValue.Name = "colNetValue";
+			this.colNetValue.Visible = true;
+			this.colNetValue.VisibleIndex = 4;
+			this.colNetValue.Width = 112;
+			// 
+			// colDiscountPercent
+			// 
+			this.colDiscountPercent.Caption = "Discount %";
+			this.colDiscountPercent.FieldName = "DiscountPercent";
+			this.colDiscountPercent.MinWidth = 30;
+			this.colDiscountPercent.Name = "colDiscountPercent";
+			this.colDiscountPercent.Visible = true;
+			this.colDiscountPercent.VisibleIndex = 5;
+			this.colDiscountPercent.Width = 112;
+			// 
+			// colDiscountValue
+			// 
+			this.colDiscountValue.Caption = "Discount Value";
+			this.colDiscountValue.FieldName = "DiscountValue";
+			this.colDiscountValue.MinWidth = 30;
+			this.colDiscountValue.Name = "colDiscountValue";
+			this.colDiscountValue.Visible = true;
+			this.colDiscountValue.VisibleIndex = 6;
+			this.colDiscountValue.Width = 112;
+			// 
+			// colTotal
+			// 
+			this.colTotal.Caption = "Total";
+			this.colTotal.FieldName = "TotalValue";
+			this.colTotal.MinWidth = 30;
+			this.colTotal.Name = "colTotal";
+			this.colTotal.Visible = true;
+			this.colTotal.VisibleIndex = 7;
+			this.colTotal.Width = 112;
 			// 
 			// CreateTransactionForCustomer
 			// 
@@ -159,6 +282,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit1View)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grdTransactionLines)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.grvTransactionLines)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.repItems)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -175,5 +300,15 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalValue;
 		private DevExpress.XtraGrid.GridControl grdTransactionLines;
 		private DevExpress.XtraGrid.Views.Grid.GridView grvTransactionLines;
+		private DevExpress.XtraGrid.Columns.GridColumn colTransaction;
+		private DevExpress.XtraGrid.Columns.GridColumn colItem;
+		private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repItems;
+		private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+		private DevExpress.XtraGrid.Columns.GridColumn colQuantity;
+		private DevExpress.XtraGrid.Columns.GridColumn colItemPrice;
+		private DevExpress.XtraGrid.Columns.GridColumn colNetValue;
+		private DevExpress.XtraGrid.Columns.GridColumn colDiscountPercent;
+		private DevExpress.XtraGrid.Columns.GridColumn colDiscountValue;
+		private DevExpress.XtraGrid.Columns.GridColumn colTotal;
 	}
 }

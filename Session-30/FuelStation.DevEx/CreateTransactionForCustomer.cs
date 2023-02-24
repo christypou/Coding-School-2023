@@ -1,6 +1,8 @@
 ﻿using FuelStation.Web.Blazor.Client.Shared.Customer;
 using FuelStation.Web.Blazor.Shared.Employee;
+using FuelStation.Web.Blazor.Shared.Item;
 using FuelStation.Web.Blazor.Shared.Transaction;
+using FuelStation.Web.Blazor.Shared.TransactionLine;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,7 @@ namespace FuelStation.DevEx
 	{
 		public CustomerListDto newCustomer;
 		public List<TransactionListDto> transactionForCustomer = new();
+		public int createLineTransaction;
 		public CreateTransactionForCustomer(CustomerListDto customer)
 		{
 			InitializeComponent();
@@ -163,6 +166,129 @@ namespace FuelStation.DevEx
 				grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
 				
 			}
+		}
+
+		private void grvTransactions_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
+		{
+			TransactionListDto chosenTransaction = grvTransactions.GetRow(e.RowHandle) as TransactionListDto;
+			PopulateTransactionLines(chosenTransaction);
+			createLineTransaction = chosenTransaction.Id;
+		}
+		private async Task PopulateTransactionLines(TransactionListDto chosenTransaction)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var response = await client.GetAsync("https://localhost:7199/transactionLine");
+				var dataTransactionLine = await response.Content.ReadAsAsync<List<TransactionLineListDto>>();
+				response = await client.GetAsync("https://localhost:7199/item");
+				var dataItem = await response.Content.ReadAsAsync<List<ItemListDto>>();
+				List<TransactionLineListDto> linesForTransactions = new List<TransactionLineListDto>();
+				foreach (var item in dataTransactionLine)
+				{
+					if (item.TransactionId == chosenTransaction.Id)
+					{
+						linesForTransactions.Add(item);
+					}
+				}
+
+				BindingList<TransactionLineListDto> transactionLines = new BindingList<TransactionLineListDto>(linesForTransactions);
+				grdTransactionLines.DataSource = new BindingSource() { DataSource = transactionLines };
+
+
+				BindingList<ItemListDto> items = new BindingList<ItemListDto>(dataItem);
+				repItems.DataSource = new BindingSource() { DataSource = items };
+				repItems.DisplayMember = "Code";
+				repItems.ValueMember = "Id";
+
+			}
+		}
+
+		private async Task deleteTransactionLine(int id)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var uri = "https://localhost:7199/transactionLine/" + id;
+				var response = await client.DeleteAsync(uri);
+				if (response.IsSuccessStatusCode)
+				{
+					updateTransactionLines();
+				}
+
+			}
+		}
+		private async Task updateTransactionLines()
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var response = await client.GetAsync("https://localhost:7199/transactionLines");
+				var dataTransactionLine = await response.Content.ReadAsAsync<List<TransactionLineListDto>>();
+				BindingList<TransactionLineListDto> transactionLines = new BindingList<TransactionLineListDto>(dataTransactionLine);
+				grdTransactionLines.DataSource = new BindingSource() { DataSource = transactionLines };
+			}
+		}
+
+		private void grvTransactionLines_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+		{
+			TransactionLineListDto editedTransactionLine = grvTransactionLines.GetFocusedRow() as TransactionLineListDto;
+			editedTransactionLine.TransactionId = createLineTransaction;
+			if (editedTransactionLine == null)
+			{
+				e.Valid = false;
+				return;
+			}
+			//else if (!editedCustomer.CardNumber.StartsWith("A"))
+			//{
+			//	e.Valid = false;
+			//	grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
+			//	return;
+			//}
+			if (editedTransactionLine.Id == 0)
+			{
+				createTransactionLine(editedTransactionLine);
+			}
+			else
+			{
+				editTransactionLine(editedTransactionLine);
+			}
+		}
+
+		private void grvTransactionLines_RowDeleting_1(object sender, DevExpress.Data.RowDeletingEventArgs e)
+		{
+			TransactionLineListDto deletedTransactionLine = grvTransactionLines.GetRow(e.RowHandle) as TransactionLineListDto;
+			deleteTransactionLine(deletedTransactionLine.Id);
+		}
+		private async Task createTransactionLine(TransactionLineListDto transactionLineToAdd)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var myContent = JsonConvert.SerializeObject(transactionLineToAdd);
+				var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+				var byteContent = new ByteArrayContent(buffer);
+				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+				var response = await client.PostAsync("https://localhost:7199/transactionLine", byteContent);
+				if (response.IsSuccessStatusCode)
+				{
+					updateTransactionLines();
+				}
+			}
+		}
+		private async Task editTransactionLine(TransactionLineListDto editedTransactionLine)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var myContent = JsonConvert.SerializeObject(editedTransactionLine);
+				var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+				var byteContent = new ByteArrayContent(buffer);
+				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+				var response = await client.PutAsync("https://localhost:7199/transactionLine", byteContent);
+				if (response.IsSuccessStatusCode)
+				{
+					updateTransactionLines();
+				}
+			}
+
 		}
 	}
 }
