@@ -38,7 +38,7 @@
 			this.colTotalValue = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.grdTransactionLines = new DevExpress.XtraGrid.GridControl();
 			this.grvTransactionLines = new DevExpress.XtraGrid.Views.Grid.GridView();
-			this.colTransaction = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colTransactionId = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colItem = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.repItems = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
 			this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -48,6 +48,7 @@
 			this.colDiscountPercent = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colDiscountValue = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.colTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+			this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
 			((System.ComponentModel.ISupportInitialize)(this.grdTransactions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.grvTransactions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repEmployees)).BeginInit();
@@ -157,7 +158,8 @@
 			// grvTransactionLines
 			// 
 			this.grvTransactionLines.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colTransaction,
+            this.colId,
+            this.colTransactionId,
             this.colItem,
             this.colQuantity,
             this.colItemPrice,
@@ -172,15 +174,13 @@
 			this.grvTransactionLines.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvTransactionLines_RowDeleting_1);
 			this.grvTransactionLines.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvTransactionLines_ValidateRow);
 			// 
-			// colTransaction
+			// colTransactionId
 			// 
-			this.colTransaction.Caption = "Transaction";
-			this.colTransaction.FieldName = "TransactionId";
-			this.colTransaction.MinWidth = 30;
-			this.colTransaction.Name = "colTransaction";
-			this.colTransaction.Visible = true;
-			this.colTransaction.VisibleIndex = 0;
-			this.colTransaction.Width = 112;
+			this.colTransactionId.Caption = "Transaction Id";
+			this.colTransactionId.FieldName = "TransactionId";
+			this.colTransactionId.MinWidth = 30;
+			this.colTransactionId.Name = "colTransactionId";
+			this.colTransactionId.Width = 112;
 			// 
 			// colItem
 			// 
@@ -221,7 +221,7 @@
 			// colItemPrice
 			// 
 			this.colItemPrice.Caption = "Item Price";
-			this.colItemPrice.FieldName = "ItemId";
+			this.colItemPrice.FieldName = "ItemPrice";
 			this.colItemPrice.MinWidth = 30;
 			this.colItemPrice.Name = "colItemPrice";
 			this.colItemPrice.Visible = true;
@@ -268,6 +268,16 @@
 			this.colTotal.VisibleIndex = 7;
 			this.colTotal.Width = 112;
 			// 
+			// colId
+			// 
+			this.colId.Caption = "Id";
+			this.colId.FieldName = "Id";
+			this.colId.MinWidth = 30;
+			this.colId.Name = "colId";
+			this.colId.Visible = true;
+			this.colId.VisibleIndex = 0;
+			this.colId.Width = 112;
+			// 
 			// CreateTransactionForCustomer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -302,7 +312,6 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colTotalValue;
 		private DevExpress.XtraGrid.GridControl grdTransactionLines;
 		private DevExpress.XtraGrid.Views.Grid.GridView grvTransactionLines;
-		private DevExpress.XtraGrid.Columns.GridColumn colTransaction;
 		private DevExpress.XtraGrid.Columns.GridColumn colItem;
 		private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit repItems;
 		private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
@@ -312,5 +321,7 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colDiscountPercent;
 		private DevExpress.XtraGrid.Columns.GridColumn colDiscountValue;
 		private DevExpress.XtraGrid.Columns.GridColumn colTotal;
+		private DevExpress.XtraGrid.Columns.GridColumn colTransactionId;
+		private DevExpress.XtraGrid.Columns.GridColumn colId;
 	}
 }
