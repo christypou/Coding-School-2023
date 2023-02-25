@@ -1,6 +1,6 @@
 ﻿using FuelStation.EF.Repositories;
 using FuelStation.Model;
-using FuelStation.Web.Blazor.Client.Shared.Customer;
+
 using FuelStation.Web.Blazor.Shared.Transaction;
 using Microsoft.AspNetCore.Mvc;
 

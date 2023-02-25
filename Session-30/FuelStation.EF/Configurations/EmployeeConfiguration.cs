@@ -19,7 +19,7 @@ namespace FuelStation.EF.Configurations
 			builder.Property(t => t.Name).HasMaxLength(50).IsRequired();
 			builder.Property(t => t.Surname).HasMaxLength(100).IsRequired();
 			builder.Property(t => t.HireDateStart).IsRequired();
-			builder.Property(t => t.HireDateEnd).IsRequired();
+			builder.Property(t => t.HireDateEnd);
 			builder.Property(t => t.SalaryPerMonth).IsRequired();
 			builder.Property(t => t.EmployeeType).IsRequired();
 

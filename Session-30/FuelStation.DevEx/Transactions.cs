@@ -1,6 +1,7 @@
 ﻿using DevExpress.Pdf.Native.BouncyCastle.Asn1.X509;
 using DevExpress.XtraEditors;
-using FuelStation.Web.Blazor.Client.Shared.Customer;
+
+using FuelStation.Web.Blazor.Shared.Customer;
 using FuelStation.Web.Blazor.Shared.Employee;
 using FuelStation.Web.Blazor.Shared.Transaction;
 using Newtonsoft.Json;

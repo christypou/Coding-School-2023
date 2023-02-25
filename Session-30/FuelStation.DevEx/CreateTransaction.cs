@@ -1,6 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using FuelStation.Model;
-using FuelStation.Web.Blazor.Client.Shared.Customer;
+using FuelStation.Web.Blazor.Shared.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

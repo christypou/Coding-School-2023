@@ -69,6 +69,7 @@ namespace FuelStation.Web.Blazor.Server.Controllers
 			itemToUpdate.TotalValue = transactionLine.TotalValue;
 			itemToUpdate.NetValue = transactionLine.NetValue;
 			itemToUpdate.ItemId= transactionLine.ItemId;
+			itemToUpdate.Quantity= transactionLine.Quantity;
 			itemToUpdate.TransactionId= transactionLine.TransactionId;
 			_transactionLineRepo.Update(transactionLine.Id, itemToUpdate);
 		}

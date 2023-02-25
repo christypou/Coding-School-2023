@@ -1,5 +1,5 @@
 ﻿using FuelStation.Model;
-using FuelStation.Web.Blazor.Client.Shared.Customer;
+using FuelStation.Web.Blazor.Shared.Customer;
 using FuelStation.Web.Blazor.Shared.Employee;
 using FuelStation.Web.Blazor.Shared.Item;
 using FuelStation.Web.Blazor.Shared.Transaction;
