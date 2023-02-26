@@ -28,6 +28,7 @@ namespace FuelStation.DevEx
         public int createLineTransaction;
         decimal quantity = 0;
         bool itemFuel = false;
+        List<EmployeeListDto> dataEmployee = new();
         public CreateTransactionForCustomer(CustomerListDto customer)
         {
             InitializeComponent();
@@ -89,7 +90,15 @@ namespace FuelStation.DevEx
                 var response = await client.GetAsync("https://localhost:7199/transaction");
                 var dataTransaction = await response.Content.ReadAsAsync<List<TransactionListDto>>();
                 response = await client.GetAsync("https://localhost:7199/employee");
-                var dataEmployee = await response.Content.ReadAsAsync<List<EmployeeListDto>>();
+                var allEmployees = await response.Content.ReadAsAsync<List<EmployeeListDto>>();
+                foreach(var employee in allEmployees)
+                {
+                    if ((employee.HireDateEnd > DateTime.Now) && (employee.HireDateStart<DateTime.Now))
+                    {
+                        dataEmployee.Add(employee);
+                    }
+                }
+                
                 response = await client.GetAsync("https://localhost:7199/customer");
                 var dataCustomer = await response.Content.ReadAsAsync<List<CustomerListDto>>();
                 List<TransactionListDto> transactionForCustomer = new();

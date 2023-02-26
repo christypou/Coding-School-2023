@@ -37,7 +37,7 @@
 }
 
 @code {
-	
+
 	private List<EmployeeListDto> Employees = new();
 	private List<ItemListDto> Items = new();
 	private List<TransactionListDto> Transactions = new();
@@ -69,7 +69,7 @@
 		isLoading = false;
 	}
 	private async Task LoadItemsFromServer() {
-		Transactions = await httpClient.GetFromJsonAsync<List<TransactionListDto>>("monthlyledger");
+		Transactions = await httpClient.GetFromJsonAsync<List<TransactionListDto>>("transaction");
 		Employees = await httpClient.GetFromJsonAsync<List<EmployeeListDto>>("employee");
 		Items = await httpClient.GetFromJsonAsync<List<ItemListDto>>("item");
 	}
@@ -88,7 +88,7 @@
 		int year = date.Year;
 		decimal salaries=0;
 		decimal itemCostSum = 0;
-		
+
 
 		List<TransactionListDto> transactionsThisMonth2 = Transactions.FindAll(c => c.Date.Month == month).FindAll(c => c.Date.Year == year).ToList();
 		foreach (var item in Items) {
@@ -96,7 +96,12 @@
 		}
 		foreach (var employee in Employees)
 		{
-			salaries += employee.SalaryPerMonth;
+
+			if ((employee.HireDateStart < date) && (date < employee.HireDateEnd))
+			{
+				salaries += employee.SalaryPerMonth;
+			}
+			
 		}
 		return itemCostSum + 5000 + salaries ;
 	}

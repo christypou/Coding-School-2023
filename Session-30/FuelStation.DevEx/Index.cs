@@ -19,7 +19,17 @@ namespace FuelStation.DevEx
 
         private void Index_Load(object sender, EventArgs e)
         {
+            btnToManagers.Left = (this.ClientSize.Width - btnToManagers.Width) / 3;
+            btnToManagers.Top = (2 * this.ClientSize.Width) / 3;
+            btnToStaff.Left = (this.ClientSize.Width - btnToStaff.Width) / 2;
+            btnToStaff.Top = (2 * this.ClientSize.Width) / 3;
+            btnToCashier.Left = ((this.ClientSize.Width - btnToCashier.Width) *2) / 3;
+            btnToCashier.Top = (2 * this.ClientSize.Width) / 3;
 
+            // Anchor the buttons to the form
+            btnToManagers.Anchor = AnchorStyles.None;
+            btnToStaff.Anchor = AnchorStyles.None;
+            btnToCashier.Anchor = AnchorStyles.None;
         }
 
         private void btnToManagers_Click(object sender, EventArgs e)
@@ -45,5 +55,10 @@ namespace FuelStation.DevEx
             cashierForm.ShowDialog();
             this.Close();
         }
-    }
+
+		private void label1_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

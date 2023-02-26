@@ -26,6 +26,7 @@ namespace FuelStation.DevEx
         public int createLineTransaction;
         decimal quantity = 0;
         bool itemFuel = false;
+        List<EmployeeListDto> dataEmployee = new();
         public ViewTransactions()
 		{
 			InitializeComponent();
@@ -77,9 +78,15 @@ namespace FuelStation.DevEx
 				response = await client.GetAsync("https://localhost:7199/customer");
 				var dataCustomer = await response.Content.ReadAsAsync<List<CustomerListDto>>();
 				response = await client.GetAsync("https://localhost:7199/employee");
-				var dataEmployee = await response.Content.ReadAsAsync<List<EmployeeListDto>>();
-				
-				BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(dataTransaction);
+				var allEmployees = await response.Content.ReadAsAsync<List<EmployeeListDto>>();
+                foreach (var employee in allEmployees)
+                {
+                    if ((employee.HireDateEnd > DateTime.Now) && (employee.HireDateStart < DateTime.Now))
+                    {
+                        dataEmployee.Add(employee);
+                    }
+                }
+                BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(dataTransaction);
 				grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
 				
 				
