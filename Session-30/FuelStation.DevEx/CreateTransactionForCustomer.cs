@@ -32,7 +32,7 @@ namespace FuelStation.DevEx
         {
             InitializeComponent();
             newCustomer = customer;
-
+           
         }
 
         private void CreateTransactionForCustomer_Load(object sender, EventArgs e)
@@ -89,12 +89,28 @@ namespace FuelStation.DevEx
                 {
                     if (item.CustomerId == newCustomer.Id)
                     {
+
                         transactionForCustomer.Add(item);
                     }
                 }
 
                 BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(transactionForCustomer);
                 grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
+                //foreach(var transaction in transactions)
+                //{
+                //    int rowHandle = grvTransactions.LocateByValue("Id", transaction.Id);
+                //    if (transaction.TotalValue > 50)
+                //    {
+                //        grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", PaymentMethod.Cash);
+                //        grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = true;
+                //        grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "Read-only Value");
+                //    }
+                //    else
+                //    {
+                //        grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = false;
+                //        grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "New Value");
+                //    }
+                //}
 
                 BindingList<EmployeeListDto> employees = new BindingList<EmployeeListDto>(dataEmployee);
                 repEmployees.DataSource = new BindingSource() { DataSource = employees };
@@ -460,6 +476,14 @@ namespace FuelStation.DevEx
                grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = true;
                grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "Read-only Value");
             }
+            else
+            {
+                grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = false;
+                grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "New Value");
+            }
+            int rowHandleTransaction = grvTransactions.LocateByValue("Id", createLineTransaction);
+            TransactionListDto transactionToSave = grvTransactions.GetRow(rowHandleTransaction) as TransactionListDto;
+            editTransaction(transactionToSave);
         }
     }
 }

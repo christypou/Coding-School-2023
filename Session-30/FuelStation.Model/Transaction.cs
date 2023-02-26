@@ -9,11 +9,11 @@ namespace FuelStation.Model
 {
 	public class Transaction
 	{
-		public Transaction(PaymentMethod paymentMethod)
+		public Transaction(PaymentMethod paymentMethod, decimal totalValue)
 		{
 			Date = DateTime.Now;
 			PaymentMethod = paymentMethod;
-			TotalValue = 0;
+			TotalValue = totalValue;
 
 			TransactionLines = new List<TransactionLine>();
 		}

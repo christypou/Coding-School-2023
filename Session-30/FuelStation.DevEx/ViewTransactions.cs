@@ -21,7 +21,8 @@ namespace FuelStation.DevEx
 {
 	public partial class ViewTransactions : Form
 	{
-		public ViewTransactions()
+        public int createLineTransaction;
+        public ViewTransactions()
 		{
 			InitializeComponent();
 			grdTransactions.EmbeddedNavigator.Buttons.Append.Visible = false;
@@ -120,7 +121,8 @@ namespace FuelStation.DevEx
 		private void grvTransactions_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
 		{
 			TransactionListDto chosenTransaction = grvTransactions.GetRow(e.RowHandle) as TransactionListDto;
-			PopulateTransactionLines(chosenTransaction);
+            createLineTransaction = chosenTransaction.Id;
+            PopulateTransactionLines(chosenTransaction);
 		}
 
 		private async Task PopulateTransactionLines(TransactionListDto chosenTransaction)
