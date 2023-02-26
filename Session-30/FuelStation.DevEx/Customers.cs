@@ -1,5 +1,8 @@
 ﻿using DevExpress.Emf;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraReports.Design.ParameterEditor;
+using DevExpress.XtraSpreadsheet.TileLayout;
+using FuelStation.Model;
 using FuelStation.Web.Blazor.Shared.Customer;
 using Newtonsoft.Json;
 using System;
@@ -10,7 +13,9 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection.Emit;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -86,11 +91,30 @@ namespace FuelStation.DevEx
 				}
 			}
 		}
-
-		private void grvCustomers_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+		private async Task<List<CustomerListDto>> getCustomers()
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var response = await client.GetAsync("https://localhost:7199/customer");
+				var data = await response.Content.ReadAsAsync<List<CustomerListDto>>();
+				return data;
+			}
+		}
+		private async void grvCustomers_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
 		{
 			CustomerListDto editedCustomer = grvCustomers.GetFocusedRow() as CustomerListDto;
-			if (editedCustomer == null)
+			List<CustomerListDto> customers = await getCustomers();
+			foreach (var customer in customers)
+            {
+                if (customer.CardNumber == editedCustomer.CardNumber)
+				{
+					grvCustomers.ClearColumnErrors();
+					e.Valid = false;
+                    grvCustomers.SetColumnError(colCardNumber, "Card Number already exists");
+                    return;
+                }
+            }
+            if (editedCustomer == null)
 			{
 				e.Valid = false;
 				return;
@@ -100,9 +124,37 @@ namespace FuelStation.DevEx
 				grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
 				return;
 			}
-		
+            else if (editedCustomer.Name==null)
+            {
+                e.Valid = false;
+                grvCustomers.SetColumnError(colName, "Name can not be empty");
+                return;
+            }else if (editedCustomer.Surname==null)
+            {
+                e.Valid = false;
+                grvCustomers.SetColumnError(colSurname, "Surname can not be empty");
+                return;
+            }
+            else if (Regex.IsMatch(editedCustomer.Surname, @"\d"))
+            {
+                e.Valid = false;
+                grvCustomers.SetColumnError(colSurname, "Surname can not contain numbers");
+                return;
+            }
+            else if (Regex.IsMatch(editedCustomer.Name, @"\d"))
+            {
+                e.Valid = false;
+                grvCustomers.SetColumnError(colName, "Name can not contain numbers");
+                return;
+            }
+            else
+            {
+                grvCustomers.ClearColumnErrors();
+            }
 
-			if (editedCustomer.Id == 0)
+
+
+            if (editedCustomer.Id == 0)
 			{
 				createCustomer(editedCustomer);
 			}
@@ -131,5 +183,13 @@ namespace FuelStation.DevEx
 				}
 			}
 		}
-	}
+
+        private void btnToIndex_Click(object sender, EventArgs e)
+        {
+            Index indexForm = new();
+            this.Hide();
+            indexForm.ShowDialog();
+            this.Close();
+        }
+    }
 }

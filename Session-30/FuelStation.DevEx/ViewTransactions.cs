@@ -40,7 +40,26 @@ namespace FuelStation.DevEx
         private void grvTransactions_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
         {
             TransactionListDto editedTransaction = grvTransactions.GetFocusedRow() as TransactionListDto;
-
+            if (editedTransaction == null)
+            {
+                e.Valid = false;
+                return;
+            }
+            else if ((int)editedTransaction.PaymentMethod == 0)
+            {
+                e.Valid = false;
+                grvTransactions.SetColumnError(colPaymentMethod, "Add Payment Method");
+                return;
+            }
+            else if (editedTransaction.EmployeeId == 0)
+            {
+                e.Valid = false;
+                grvTransactions.SetColumnError(colEmployee, "Add Employee");
+                return;
+            }else
+            {
+                grvTransactionLines.ClearColumnErrors();
+            }
             editTransaction(editedTransaction);
 
         }
@@ -178,8 +197,34 @@ namespace FuelStation.DevEx
         private void grvTransactionLines_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
 		{
 			TransactionLineListDto editedTransactionLine = grvTransactionLines.GetFocusedRow() as TransactionLineListDto;
-
-			editTransactionLine(editedTransactionLine);
+            if (editedTransactionLine == null)
+            {
+                e.Valid = false;
+                return;
+            }
+            else if (editedTransactionLine.ItemId == 0)
+            {
+                e.Valid = false;
+                grvTransactionLines.SetColumnError(colItems, "Choose an Item");
+                return;
+            }
+            else if ((editedTransactionLine.Quantity <= 0) || (editedTransactionLine.Quantity > 99999))
+            {
+                e.Valid = false;
+                grvTransactionLines.SetColumnError(colQuantity, "Quantity must be between 0.1 & 99.999");
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "Quantity", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "NetValue", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "TotalValue", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountPercent", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountValue", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "ItemPrice", 0);
+                return;
+            }
+            else
+            {
+                grvTransactionLines.ClearColumnErrors();
+            }
+            editTransactionLine(editedTransactionLine);
 		}
 
 		private void grvTransactionLines_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
@@ -226,13 +271,13 @@ namespace FuelStation.DevEx
             }
             if (e.Column.Caption == "Quantity")
             {
-                if ((string)e.Value == "")
+                if (e.Value.ToString() == "")
                 {
                     quantity = 0;
                 }
                 else
                 {
-                    quantity = decimal.Parse((string)e.Value);
+                    quantity = decimal.Parse(e.Value.ToString());
                 }
             }
             decimal itemPrice = (decimal)grvTransactionLines.GetRowCellValue(e.RowHandle, "ItemPrice");
@@ -294,6 +339,14 @@ namespace FuelStation.DevEx
             int rowHandleTransaction = grvTransactions.LocateByValue("Id", createLineTransaction);
             TransactionListDto transactionToSave = grvTransactions.GetRow(rowHandleTransaction) as TransactionListDto;
             editTransaction(transactionToSave);
+        }
+
+        private void btnToIndex_Click(object sender, EventArgs e)
+        {
+            Index indexForm = new();
+            this.Hide();
+            indexForm.ShowDialog();
+            this.Close();
         }
     }
 }		

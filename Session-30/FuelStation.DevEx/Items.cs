@@ -25,7 +25,16 @@ namespace FuelStation.DevEx
 		{
 			PopulateDataGridView();
 		}
-		private async Task PopulateDataGridView()
+		private async Task<List<ItemListDto>> getItems()
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				var response = await client.GetAsync("https://localhost:7199/item");
+				var data = await response.Content.ReadAsAsync<List<ItemListDto>>();
+				return data;
+			}
+		}
+            private async Task PopulateDataGridView()
 		{
 			using (HttpClient client = new HttpClient())
 			{
@@ -71,23 +80,66 @@ namespace FuelStation.DevEx
 			}
 		}
 
-		private void grvItems_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+		private async void grvItems_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
 		{
 			ItemListDto editedItem = grvItems.GetFocusedRow() as ItemListDto;
+			List<ItemListDto> items = await getItems();
+			foreach(var item in items)
+			{
+				if (item.Code == editedItem.Code)
+				{
+                    grvItems.ClearColumnErrors();
+                    e.Valid = false;
+                    grvItems.SetColumnError(colCode, "Code already exists");
+                    return;
+                }
+			}
 			if (editedItem == null)
 			{
 				e.Valid = false;
 				return;
-			}
-			//else if (!editedCustomer.CardNumber.StartsWith("A"))
-			//{
-			//	e.Valid = false;
-			//	grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
-			//	return;
-			//}
+			}else if (editedItem.Code == null)
+            {
+                grvItems.ClearColumnErrors();
+                e.Valid = false;
+                grvItems.SetColumnError(colCode, "Code cannot be empty");
+                return;
+            }
+            else if (editedItem.Description == null)
+            {
+                grvItems.ClearColumnErrors();
+                e.Valid = false;
+                grvItems.SetColumnError(colDescription, "Code cannot be empty");
+                return;
+            }
+            else if (editedItem.ItemType == 0)
+            {
+                grvItems.ClearColumnErrors();
+                e.Valid = false;
+                grvItems.SetColumnError(colItemType, "Type cannot be empty");
+                return;
+            }
+            else if ((editedItem.Price <= 0) || (editedItem.Price>99999))
+            {
+                grvItems.ClearColumnErrors();
+                e.Valid = false;
+                grvItems.SetColumnError(colPrice, "Price must be between 0.1 & 99.999");
+                return;
+            }
+            else if ((editedItem.Cost <= 0) || (editedItem.Cost > 99999))
+            {
+                grvItems.ClearColumnErrors();
+                e.Valid = false;
+                grvItems.SetColumnError(colCost, "Cost must be between 0.1 & 99.999");
+                return;
+            }
+            else
+            {
+                grvItems.ClearColumnErrors();
+            }
 
 
-			if (editedItem.Id == 0)
+            if (editedItem.Id == 0)
 			{
 				createItem(editedItem);
 			}
@@ -115,5 +167,13 @@ namespace FuelStation.DevEx
 			ItemListDto deletedItem = grvItems.GetRow(e.RowHandle) as ItemListDto;
 			deleteItem(deletedItem.Id);
 		}
-	}
+
+        private void btnToIndex_Click(object sender, EventArgs e)
+        {
+            Index indexForm = new();
+            this.Hide();
+            indexForm.ShowDialog();
+            this.Close();
+        }
+    }
 }

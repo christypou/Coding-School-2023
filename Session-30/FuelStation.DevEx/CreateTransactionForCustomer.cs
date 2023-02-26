@@ -48,13 +48,21 @@ namespace FuelStation.DevEx
             {
                 e.Valid = false;
                 return;
+            }else if((int)editedTransaction.PaymentMethod == 0) 
+                {
+                e.Valid = false;
+                grvTransactions.SetColumnError(colPaymentMethod, "Add Payment Method");
+                return;
+            }else if (editedTransaction.EmployeeId == 0)
+            {
+                e.Valid = false;
+                grvTransactions.SetColumnError(colEmployee, "Add Employee");
+                return;
+            }else
+            {
+                grvTransactionLines.ClearColumnErrors();
             }
-            //else if (!editedCustomer.CardNumber.StartsWith("A"))
-            //{
-            //	e.Valid = false;
-            //	grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
-            //	return;
-            //}
+
 
 
             if (editedTransaction.Id == 0)
@@ -309,12 +317,26 @@ namespace FuelStation.DevEx
                 e.Valid = false;
                 return;
             }
-            //else if (!editedCustomer.CardNumber.StartsWith("A"))
-            //{
-            //	e.Valid = false;
-            //	grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
-            //	return;
-            //}
+            else if (editedTransactionLine.ItemId==0)
+            {
+                e.Valid = false;
+                grvTransactionLines.SetColumnError(colItem, "Choose an Item");
+                return;
+            }else if ((editedTransactionLine.Quantity <= 0) || (editedTransactionLine.Quantity >99999))
+            {
+                e.Valid = false;
+                grvTransactionLines.SetColumnError(colQuantity, "Quantity must be between 0.1 & 99.999");
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "Quantity", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "NetValue", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "TotalValue", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountPercent", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountValue", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "ItemPrice", 0);
+                return;
+            }else
+            {
+                grvTransactionLines.ClearColumnErrors();
+            }
             if (editedTransactionLine.Id == 0)
             {
                 createTransactionLine(editedTransactionLine);
@@ -395,13 +417,13 @@ namespace FuelStation.DevEx
             }
             if (e.Column.Caption == "Quantity")
             {
-                if ((string)e.Value == "")
+                if (e.Value.ToString() == "")
                 {
                     quantity = 0;
                 }
                 else
                 {
-                    quantity = decimal.Parse((string)e.Value);
+                    quantity = decimal.Parse(e.Value.ToString());
                 }
             }
             decimal itemPrice = (decimal)grvTransactionLines.GetRowCellValue(e.RowHandle, "ItemPrice");
@@ -484,6 +506,14 @@ namespace FuelStation.DevEx
             int rowHandleTransaction = grvTransactions.LocateByValue("Id", createLineTransaction);
             TransactionListDto transactionToSave = grvTransactions.GetRow(rowHandleTransaction) as TransactionListDto;
             editTransaction(transactionToSave);
+        }
+
+        private void btnToIndex_Click(object sender, EventArgs e)
+        {
+            Index indexForm = new();
+            this.Hide();
+            indexForm.ShowDialog();
+            this.Close();
         }
     }
 }

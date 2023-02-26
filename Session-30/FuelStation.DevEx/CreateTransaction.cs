@@ -53,6 +53,12 @@ namespace FuelStation.DevEx
 
 		}
 
-
-	}
+        private void btnToIndex_Click(object sender, EventArgs e)
+        {
+            Index indexForm = new();
+            this.Hide();
+            indexForm.ShowDialog();
+            this.Close();
+        }
+    }
 }

@@ -47,6 +47,7 @@
             this.repItems = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
             this.gridView4 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colQuantity = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemSpinEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
             this.gridItemPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNetValue = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDiscountPercent = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -54,6 +55,7 @@
             this.colTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnCreateTransaction = new System.Windows.Forms.Button();
             this.btnUpdateTotal = new System.Windows.Forms.Button();
+            this.btnToIndex = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repEmployees)).BeginInit();
@@ -64,6 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.grvTransactionLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // grdTransactions
@@ -185,7 +188,8 @@
             this.grdTransactionLines.MainView = this.grvTransactionLines;
             this.grdTransactionLines.Name = "grdTransactionLines";
             this.grdTransactionLines.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repItems});
+            this.repItems,
+            this.repositoryItemSpinEdit1});
             this.grdTransactionLines.Size = new System.Drawing.Size(927, 194);
             this.grdTransactionLines.TabIndex = 1;
             this.grdTransactionLines.UseEmbeddedNavigator = true;
@@ -256,12 +260,20 @@
             // colQuantity
             // 
             this.colQuantity.Caption = "Quantity";
+            this.colQuantity.ColumnEdit = this.repositoryItemSpinEdit1;
             this.colQuantity.FieldName = "Quantity";
             this.colQuantity.MinWidth = 30;
             this.colQuantity.Name = "colQuantity";
             this.colQuantity.Visible = true;
             this.colQuantity.VisibleIndex = 1;
             this.colQuantity.Width = 112;
+            // 
+            // repositoryItemSpinEdit1
+            // 
+            this.repositoryItemSpinEdit1.AutoHeight = false;
+            this.repositoryItemSpinEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemSpinEdit1.Name = "repositoryItemSpinEdit1";
             // 
             // gridItemPrice
             // 
@@ -337,11 +349,22 @@
             this.btnUpdateTotal.UseVisualStyleBackColor = true;
             this.btnUpdateTotal.Click += new System.EventHandler(this.btnUpdateTotal_Click);
             // 
+            // btnToIndex
+            // 
+            this.btnToIndex.Location = new System.Drawing.Point(12, 492);
+            this.btnToIndex.Name = "btnToIndex";
+            this.btnToIndex.Size = new System.Drawing.Size(141, 34);
+            this.btnToIndex.TabIndex = 4;
+            this.btnToIndex.Text = "Back To Home";
+            this.btnToIndex.UseVisualStyleBackColor = true;
+            this.btnToIndex.Click += new System.EventHandler(this.btnToIndex_Click);
+            // 
             // ViewTransactions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(951, 491);
+            this.ClientSize = new System.Drawing.Size(951, 538);
+            this.Controls.Add(this.btnToIndex);
             this.Controls.Add(this.btnUpdateTotal);
             this.Controls.Add(this.btnCreateTransaction);
             this.Controls.Add(this.grdTransactionLines);
@@ -359,6 +382,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.grvTransactionLines)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repItems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -391,5 +415,7 @@
 		private DevExpress.XtraGrid.Columns.GridColumn colTotal;
         private DevExpress.XtraGrid.Columns.GridColumn colId;
         private Button btnUpdateTotal;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit1;
+        private Button btnToIndex;
     }
 }
