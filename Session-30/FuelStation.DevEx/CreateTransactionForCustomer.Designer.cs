@@ -139,6 +139,7 @@
             this.colTotalValue.FieldName = "TotalValue";
             this.colTotalValue.MinWidth = 30;
             this.colTotalValue.Name = "colTotalValue";
+            this.colTotalValue.OptionsColumn.ReadOnly = true;
             this.colTotalValue.Visible = true;
             this.colTotalValue.VisibleIndex = 3;
             this.colTotalValue.Width = 112;
@@ -181,8 +182,6 @@
             this.colId.FieldName = "Id";
             this.colId.MinWidth = 30;
             this.colId.Name = "colId";
-            this.colId.Visible = true;
-            this.colId.VisibleIndex = 1;
             this.colId.Width = 112;
             // 
             // colTransactionId
@@ -191,8 +190,6 @@
             this.colTransactionId.FieldName = "TransactionId";
             this.colTransactionId.MinWidth = 30;
             this.colTransactionId.Name = "colTransactionId";
-            this.colTransactionId.Visible = true;
-            this.colTransactionId.VisibleIndex = 0;
             this.colTransactionId.Width = 112;
             // 
             // colItem
@@ -203,7 +200,7 @@
             this.colItem.MinWidth = 30;
             this.colItem.Name = "colItem";
             this.colItem.Visible = true;
-            this.colItem.VisibleIndex = 2;
+            this.colItem.VisibleIndex = 0;
             this.colItem.Width = 112;
             // 
             // repItems
@@ -228,7 +225,7 @@
             this.colQuantity.MinWidth = 30;
             this.colQuantity.Name = "colQuantity";
             this.colQuantity.Visible = true;
-            this.colQuantity.VisibleIndex = 3;
+            this.colQuantity.VisibleIndex = 1;
             this.colQuantity.Width = 112;
             // 
             // colItemPrice
@@ -237,8 +234,9 @@
             this.colItemPrice.FieldName = "ItemPrice";
             this.colItemPrice.MinWidth = 30;
             this.colItemPrice.Name = "colItemPrice";
+            this.colItemPrice.OptionsColumn.ReadOnly = true;
             this.colItemPrice.Visible = true;
-            this.colItemPrice.VisibleIndex = 4;
+            this.colItemPrice.VisibleIndex = 2;
             this.colItemPrice.Width = 112;
             // 
             // colNetValue
@@ -247,8 +245,9 @@
             this.colNetValue.FieldName = "NetValue";
             this.colNetValue.MinWidth = 30;
             this.colNetValue.Name = "colNetValue";
+            this.colNetValue.OptionsColumn.ReadOnly = true;
             this.colNetValue.Visible = true;
-            this.colNetValue.VisibleIndex = 5;
+            this.colNetValue.VisibleIndex = 3;
             this.colNetValue.Width = 112;
             // 
             // colDiscountPercent
@@ -257,8 +256,9 @@
             this.colDiscountPercent.FieldName = "DiscountPercent";
             this.colDiscountPercent.MinWidth = 30;
             this.colDiscountPercent.Name = "colDiscountPercent";
+            this.colDiscountPercent.OptionsColumn.ReadOnly = true;
             this.colDiscountPercent.Visible = true;
-            this.colDiscountPercent.VisibleIndex = 6;
+            this.colDiscountPercent.VisibleIndex = 4;
             this.colDiscountPercent.Width = 112;
             // 
             // colDiscountValue
@@ -267,8 +267,9 @@
             this.colDiscountValue.FieldName = "DiscountValue";
             this.colDiscountValue.MinWidth = 30;
             this.colDiscountValue.Name = "colDiscountValue";
+            this.colDiscountValue.OptionsColumn.ReadOnly = true;
             this.colDiscountValue.Visible = true;
-            this.colDiscountValue.VisibleIndex = 7;
+            this.colDiscountValue.VisibleIndex = 5;
             this.colDiscountValue.Width = 112;
             // 
             // colTotal
@@ -277,8 +278,9 @@
             this.colTotal.FieldName = "TotalValue";
             this.colTotal.MinWidth = 30;
             this.colTotal.Name = "colTotal";
+            this.colTotal.OptionsColumn.ReadOnly = true;
             this.colTotal.Visible = true;
-            this.colTotal.VisibleIndex = 8;
+            this.colTotal.VisibleIndex = 6;
             this.colTotal.Width = 112;
             // 
             // btnUpdateTotal

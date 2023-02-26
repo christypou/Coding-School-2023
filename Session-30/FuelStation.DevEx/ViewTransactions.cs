@@ -1,4 +1,6 @@
-﻿using FuelStation.Model;
+﻿using DevExpress.XtraGrid.Columns;
+using FuelStation.Model;
+using FuelStation.Model.Enums;
 using FuelStation.Web.Blazor.Shared.Customer;
 using FuelStation.Web.Blazor.Shared.Employee;
 using FuelStation.Web.Blazor.Shared.Item;
@@ -22,6 +24,8 @@ namespace FuelStation.DevEx
 	public partial class ViewTransactions : Form
 	{
         public int createLineTransaction;
+        decimal quantity = 0;
+        bool itemFuel = false;
         public ViewTransactions()
 		{
 			InitializeComponent();
@@ -33,7 +37,19 @@ namespace FuelStation.DevEx
 		{
 			PopulateDataGridView();
 		}
-		private async Task PopulateDataGridView()
+        private void grvTransactions_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+        {
+            TransactionListDto editedTransaction = grvTransactions.GetFocusedRow() as TransactionListDto;
+
+            editTransaction(editedTransaction);
+
+        }
+        private void grvTransactions_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
+        {
+            TransactionListDto deletedTransaction = grvTransactions.GetRow(e.RowHandle) as TransactionListDto;
+            deleteTransaction(deletedTransaction.Id);
+        }
+        private async Task PopulateDataGridView()
 		{
 			using (HttpClient client = new HttpClient())
 			{
@@ -78,16 +94,6 @@ namespace FuelStation.DevEx
 			}
 
 		}
-
-		private void grvTransactions_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
-		{
-			TransactionListDto editedTransaction = grvTransactions.GetFocusedRow() as TransactionListDto;
-
-			editTransaction(editedTransaction);
-			
-		}
-
-	
 		private async Task deleteTransaction(int id)
 		{
 			using (HttpClient client = new HttpClient())
@@ -110,12 +116,6 @@ namespace FuelStation.DevEx
 				BindingList<TransactionListDto> transactions = new BindingList<TransactionListDto>(dataTransaction);
 				grdTransactions.DataSource = new BindingSource() { DataSource = transactions };
 			}
-		}
-
-		private void grvTransactions_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
-		{
-			TransactionListDto deletedTransaction = grvTransactions.GetRow(e.RowHandle) as TransactionListDto;
-			deleteTransaction(deletedTransaction.Id);
 		}
 
 		private void grvTransactions_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
@@ -144,18 +144,38 @@ namespace FuelStation.DevEx
 				BindingList<TransactionLineListDto> transactionLines = new BindingList<TransactionLineListDto>(linesForTransactions);
 				grdTransactionLines.DataSource = new BindingSource() { DataSource = transactionLines };
 
-
 				BindingList<ItemListDto> items = new BindingList<ItemListDto>(dataItem);
 				repItems.DataSource = new BindingSource() { DataSource = items };
 				repItems.DisplayMember = "Code";
 				repItems.ValueMember = "Id";
-
-				
-
 			}
 		}
 
-		private void grvTransactionLines_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+        private async Task deleteTransactionLine(int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var uri = "https://localhost:7199/transactionLine/" + id;
+                var response = await client.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    updateTransactionLines();
+                }
+
+            }
+        }
+        private async Task updateTransactionLines()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync("https://localhost:7199/transactionLines");
+                var dataTransactionLine = await response.Content.ReadAsAsync<List<TransactionLineListDto>>();
+                BindingList<TransactionLineListDto> transactionLines = new BindingList<TransactionLineListDto>(dataTransactionLine);
+                grdTransactionLines.DataSource = new BindingSource() { DataSource = transactionLines };
+            }
+        }
+
+        private void grvTransactionLines_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
 		{
 			TransactionLineListDto editedTransactionLine = grvTransactionLines.GetFocusedRow() as TransactionLineListDto;
 
@@ -167,30 +187,8 @@ namespace FuelStation.DevEx
 			TransactionLineListDto deletedTransactionLine = grvTransactionLines.GetRow(e.RowHandle) as TransactionLineListDto;
 			deleteTransactionLine(deletedTransactionLine.Id);
 		}
-		private async Task deleteTransactionLine(int id)
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var uri = "https://localhost:7199/transactionLine/" + id;
-				var response = await client.DeleteAsync(uri);
-				if (response.IsSuccessStatusCode)
-				{
-					updateTransactionLines();
-				}
-
-			}
-		}
-		private async Task updateTransactionLines()
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var response = await client.GetAsync("https://localhost:7199/transactionLines");
-				var dataTransactionLine = await response.Content.ReadAsAsync<List<TransactionLineListDto>>();
-				BindingList<TransactionLineListDto> transactionLines = new BindingList<TransactionLineListDto>(dataTransactionLine);
-				grdTransactionLines.DataSource = new BindingSource() { DataSource = transactionLines };
-			}
-		}
-
+		
+		
 		private async Task editTransactionLine(TransactionLineListDto editedTransactionLine)
 		{
 			using (HttpClient client = new HttpClient())
@@ -208,5 +206,94 @@ namespace FuelStation.DevEx
 			}
 
 		}
-	}
+
+        private async void grvTransactionLines_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            decimal netValue = 0;
+            decimal discountValue = 0;
+            decimal totalValue = 0;
+            //decimal transactionTotal = 0;
+            quantity = 0;
+            if (e.Column.Caption == "Item")
+            {
+                ItemListDto chosenItem = await getItemAsync((int)e.Value);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "ItemPrice", chosenItem.Price);
+                if ((int)chosenItem.ItemType == 1)
+                {
+                    itemFuel = true;
+                }
+                else { itemFuel = false; }
+            }
+            if (e.Column.Caption == "Quantity")
+            {
+                if ((string)e.Value == "")
+                {
+                    quantity = 0;
+                }
+                else
+                {
+                    quantity = decimal.Parse((string)e.Value);
+                }
+            }
+            decimal itemPrice = (decimal)grvTransactionLines.GetRowCellValue(e.RowHandle, "ItemPrice");
+            netValue = itemPrice * quantity;
+            grvTransactionLines.SetRowCellValue(e.RowHandle, "NetValue", netValue);
+            if (itemFuel && netValue >= 20)
+            {
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountPercent", 10);
+                discountValue = (decimal)0.1 * netValue;
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountValue", discountValue);
+                totalValue = (decimal)0.9 * netValue;
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "TotalValue", totalValue);
+            }
+            else
+            {
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountPercent", 0);
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "DiscountValue", 0);
+                totalValue = netValue;
+                grvTransactionLines.SetRowCellValue(e.RowHandle, "TotalValue", totalValue);
+            }
+        }
+        private async Task<ItemListDto> getItemAsync(int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync("https://localhost:7199/item/" + id);
+                string responseContent = await response.Content.ReadAsStringAsync();
+                ItemListDto dataItem = JsonConvert.DeserializeObject<ItemListDto>(responseContent);
+                return dataItem;
+            }
+        }
+
+        private void btnUpdateTotal_Click(object sender, EventArgs e)
+        {
+            decimal transactionTotal = 0;
+            GridColumn columnTotal = grvTransactionLines.Columns["TotalValue"];
+            for (int i = 0; i < grvTransactionLines.RowCount; i++)
+            {
+                object value = grvTransactionLines.GetRowCellValue(i, columnTotal);
+                if (value != null)
+                {
+                    transactionTotal += (decimal)value;
+                }
+            }
+            //int transactionId = (int)grvTransactionLines.GetRowCellValue(e.RowHandle, "TransactionId");
+            int rowHandle = grvTransactions.LocateByValue("Id", createLineTransaction);
+            grvTransactions.SetRowCellValue(rowHandle, "TotalValue", transactionTotal);
+            if (transactionTotal > 50)
+            {
+                grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", PaymentMethod.Cash);
+                grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = true;
+                grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "Read-only Value");
+            }
+            else
+            {
+                grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = false;
+                grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "New Value");
+            }
+            int rowHandleTransaction = grvTransactions.LocateByValue("Id", createLineTransaction);
+            TransactionListDto transactionToSave = grvTransactions.GetRow(rowHandleTransaction) as TransactionListDto;
+            editTransaction(transactionToSave);
+        }
+    }
 }		
