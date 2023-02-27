@@ -500,19 +500,25 @@ namespace FuelStation.DevEx
             }
             //int transactionId = (int)grvTransactionLines.GetRowCellValue(e.RowHandle, "TransactionId");
             int rowHandle = grvTransactions.LocateByValue("Id", createLineTransaction);
-            grvTransactions.SetRowCellValue(rowHandle, "TotalValue", transactionTotal);
+            
+                grvTransactions.SetRowCellValue(rowHandle, "TotalValue", transactionTotal);
             if (transactionTotal > 50)
             {
-               grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod",PaymentMethod.Cash);
-               grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = true;
-               grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "Read-only Value");
+                grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", PaymentMethod.Cash);
             }
-            else
-            {
-                grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = false;
-                grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "New Value");
-            }
-            int rowHandleTransaction = grvTransactions.LocateByValue("Id", createLineTransaction);
+                //if (transactionTotal > 50)
+                //{
+                //    grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", PaymentMethod.Cash);
+                //    grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = true;
+                //    grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "Read-only Value");
+                //}
+                //else
+                //{
+                //    grvTransactions.Columns["PaymentMethod"].OptionsColumn.ReadOnly = false;
+                //    grvTransactions.SetRowCellValue(rowHandle, "PaymentMethod", "New Value");
+                //}
+
+                int rowHandleTransaction = grvTransactions.LocateByValue("Id", createLineTransaction);
             TransactionListDto transactionToSave = grvTransactions.GetRow(rowHandleTransaction) as TransactionListDto;
             editTransaction(transactionToSave);
         }

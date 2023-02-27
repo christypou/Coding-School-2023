@@ -18,6 +18,6 @@ namespace FuelStation.Web.Blazor.Shared.TransactionLine
 		public int TransactionId { get; set; }
 		public int ItemId { get; set; }
 
-
+		public decimal ItemCost { get; set; }
 	}
 }

@@ -39,7 +39,6 @@
 					<td>@employee.HireDateEnd</td>
 					<td>
 						<button class="btn btn-primary" @onclick="()=> EditItem(employee)">Edit</button>
-						<button class="btn btn-secondary" @onclick="() => DetailsItem(employee)">Details</button>
 						<button class="btn btn-danger" @onclick="()=> DeleteItem(employee)">Delete</button>
 					</td>
 				</tr>
@@ -73,9 +72,7 @@
 		navigationManager.NavigateTo($"employeelist/edit/{employee.Id}");
 	}
 
-	private void DetailsItem(EmployeeListDto employee){
-		navigationManager.NavigateTo($"employeelist/details/{employee.Id}");
-	}
+
 
 	private async Task DeleteItem(EmployeeListDto employee) {
 		

@@ -32,5 +32,16 @@ namespace FuelStation.DevEx
             itemsForm.ShowDialog();
             this.Close();
         }
+
+        private void Staff_Load(object sender, EventArgs e)
+        {
+            label1.Left = (this.ClientSize.Width - label1.Width) / 2;
+            label1.Top = (this.ClientSize.Height - label1.Height / 2) / 8;
+            btnToItems.Top = this.ClientSize.Height / 2;
+            btnToItems.Left = (this.ClientSize.Width - btnToItems.Width) / 2;
+
+            label1.Anchor = AnchorStyles.None;
+            btnToItems.Anchor = AnchorStyles.None;
+        }
     }
 }

@@ -46,13 +46,15 @@
             // 
             // grdItems
             // 
+            this.grdItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdItems.Location = new System.Drawing.Point(23, 30);
             this.grdItems.MainView = this.grvItems;
             this.grdItems.Name = "grdItems";
             this.grdItems.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemSpinEdit1,
             this.repositoryItemSpinEdit2});
-            this.grdItems.Size = new System.Drawing.Size(732, 343);
+            this.grdItems.Size = new System.Drawing.Size(732, 368);
             this.grdItems.TabIndex = 0;
             this.grdItems.UseEmbeddedNavigator = true;
             this.grdItems.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -68,6 +70,7 @@
             this.colCost});
             this.grvItems.GridControl = this.grdItems;
             this.grvItems.Name = "grvItems";
+            this.grvItems.OptionsView.ShowGroupPanel = false;
             this.grvItems.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvItems_RowDeleting);
             this.grvItems.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvItems_ValidateRow);
             // 
@@ -149,7 +152,8 @@
             // 
             // btnToIndex
             // 
-            this.btnToIndex.Location = new System.Drawing.Point(23, 395);
+            this.btnToIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnToIndex.Location = new System.Drawing.Point(23, 404);
             this.btnToIndex.Name = "btnToIndex";
             this.btnToIndex.Size = new System.Drawing.Size(136, 34);
             this.btnToIndex.TabIndex = 1;

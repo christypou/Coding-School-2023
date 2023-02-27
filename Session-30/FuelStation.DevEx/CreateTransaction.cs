@@ -60,5 +60,19 @@ namespace FuelStation.DevEx
             indexForm.ShowDialog();
             this.Close();
         }
+
+        private void CreateTransaction_Load(object sender, EventArgs e)
+        {
+			label1.Left = (this.ClientSize.Width - label1.Width) / 2;
+            label1.Top = this.ClientSize.Height / 5;
+            btnCreateTransaction.Left = (this.ClientSize.Width - btnCreateTransaction.Width) / 2;
+			btnCreateTransaction.Top = 2 * this.ClientSize.Height / 4;
+            txtCardNumber.Top =  this.ClientSize.Height/3;
+            txtCardNumber.Left = (this.ClientSize.Width - txtCardNumber.Width) / 2;
+
+			label1.Anchor = AnchorStyles.None;
+            btnCreateTransaction.Anchor = AnchorStyles.None;
+			txtCardNumber.Anchor = AnchorStyles.None;
+        }
     }
 }

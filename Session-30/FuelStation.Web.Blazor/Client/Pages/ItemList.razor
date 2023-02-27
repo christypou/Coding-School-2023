@@ -43,7 +43,6 @@ else
 
                     <td>
                         <button class="btn btn-primary" @onclick="()=> EditItem(item)">Edit</button>
-                        <button class="btn btn-secondary" @onclick="() => DetailsItem(item)">Details</button>
                         <button class="btn btn-danger" @onclick="()=> DeleteItem(item)">Delete</button>
                     </td>
                 </tr>
@@ -81,10 +80,7 @@ else
         navigationManager.NavigateTo($"itemlist/edit/{item.Id}");
     }
 
-    private void DetailsItem(ItemListDto item)
-    {
-        navigationManager.NavigateTo($"item/details/{item.Id}");
-    }
+   
 
     private async Task DeleteItem(ItemListDto item)
     {

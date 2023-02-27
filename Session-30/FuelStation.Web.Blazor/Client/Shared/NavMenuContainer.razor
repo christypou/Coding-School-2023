@@ -1,16 +1,12 @@
 ﻿<div class="d-flex justify-content-center">
     <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-light" @onclick="ToggleMenuManager">Manager</button>
         <button type="button" class="btn btn-light" @onclick="ToggleMenuCashier">Cashier</button>
         <button type="button" class="btn btn-light" @onclick="ToggleMenuStaff">Staff</button>
+        <button type="button" class="btn btn-light" @onclick="ToggleManager">Manager</button>
     </div>
 </div>
 
-@if (showMain==1)
-{
-  <ManagerNavMenu />
-}
-else if(showMain==2)
+@if(showMain==2)
 {
     <StaffNavMenu />
 }
@@ -18,15 +14,16 @@ else if(showMain==3)
 {
     <CashierNavMenu />
 }
+else if (showMain == 1)
+{
+    <ManagerMenu />
+}
 
 @code {
     int showMain = 0;
 
   
-    void ToggleMenuManager()
-    {
-        showMain = 1;
-    }
+   
     void ToggleMenuCashier()
     {
         showMain = 2;
@@ -34,6 +31,10 @@ else if(showMain==3)
     void ToggleMenuStaff()
     {
         showMain = 3;
+    }
+    void ToggleManager()
+    {
+        showMain = 1;
     }
 
 }

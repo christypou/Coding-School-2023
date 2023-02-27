@@ -71,6 +71,8 @@
             // 
             // grdTransactions
             // 
+            this.grdTransactions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdTransactions.Location = new System.Drawing.Point(12, 42);
             this.grdTransactions.MainView = this.grvTransactions;
             this.grdTransactions.Name = "grdTransactions";
@@ -93,6 +95,7 @@
             this.colTotalValue});
             this.grvTransactions.GridControl = this.grdTransactions;
             this.grvTransactions.Name = "grvTransactions";
+            this.grvTransactions.OptionsView.ShowGroupPanel = false;
             this.grvTransactions.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.grvTransactions_RowClick);
             this.grvTransactions.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvTransactions_RowDeleting);
             this.grvTransactions.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvTransactions_ValidateRow);
@@ -184,6 +187,8 @@
             // 
             // grdTransactionLines
             // 
+            this.grdTransactionLines.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdTransactionLines.Location = new System.Drawing.Point(12, 285);
             this.grdTransactionLines.MainView = this.grvTransactionLines;
             this.grdTransactionLines.Name = "grdTransactionLines";
@@ -210,6 +215,7 @@
             this.colTotal});
             this.grvTransactionLines.GridControl = this.grdTransactionLines;
             this.grvTransactionLines.Name = "grvTransactionLines";
+            this.grvTransactionLines.OptionsView.ShowGroupPanel = false;
             this.grvTransactionLines.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grvTransactionLines_CellValueChanging);
             this.grvTransactionLines.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvTransactionLines_RowDeleting);
             this.grvTransactionLines.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvTransactionLines_ValidateRow);
@@ -341,7 +347,8 @@
             // 
             // btnUpdateTotal
             // 
-            this.btnUpdateTotal.Location = new System.Drawing.Point(708, 245);
+            this.btnUpdateTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdateTotal.Location = new System.Drawing.Point(755, 240);
             this.btnUpdateTotal.Name = "btnUpdateTotal";
             this.btnUpdateTotal.Size = new System.Drawing.Size(184, 34);
             this.btnUpdateTotal.TabIndex = 3;
@@ -351,6 +358,7 @@
             // 
             // btnToIndex
             // 
+            this.btnToIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnToIndex.Location = new System.Drawing.Point(12, 492);
             this.btnToIndex.Name = "btnToIndex";
             this.btnToIndex.Size = new System.Drawing.Size(141, 34);

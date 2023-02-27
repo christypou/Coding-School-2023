@@ -40,6 +40,8 @@
             // 
             // grdCustomers
             // 
+            this.grdCustomers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdCustomers.Location = new System.Drawing.Point(35, 31);
             this.grdCustomers.MainView = this.grvCustomers;
             this.grdCustomers.Name = "grdCustomers";
@@ -57,6 +59,7 @@
             this.colCardNumber});
             this.grvCustomers.GridControl = this.grdCustomers;
             this.grvCustomers.Name = "grvCustomers";
+            this.grvCustomers.OptionsView.ShowGroupPanel = false;
             this.grvCustomers.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grvCustomers_CellValueChanged);
             this.grvCustomers.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvCustomers_RowDeleting);
             this.grvCustomers.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvCustomers_ValidateRow);
@@ -93,6 +96,7 @@
             // 
             // btnToIndex
             // 
+            this.btnToIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnToIndex.Location = new System.Drawing.Point(35, 404);
             this.btnToIndex.Name = "btnToIndex";
             this.btnToIndex.Size = new System.Drawing.Size(139, 34);

@@ -48,5 +48,25 @@ namespace FuelStation.DevEx
             transactionsForm.ShowDialog();
             this.Close();
         }
+
+        private void Cashier_Load(object sender, EventArgs e)
+        {
+            label1.Left = (this.ClientSize.Width - label1.Width) / 2;
+            label1.Top = (this.ClientSize.Height - label1.Height / 2) / 8;
+            btnToCreateTransaction.Left = (this.ClientSize.Width - btnToCreateTransaction.Width) / 3;
+            btnToCreateTransaction.Top = this.ClientSize.Height / 2;
+            btnToCustomers.Top = this.ClientSize.Height / 2;
+            btnToCustomers.Left = ((this.ClientSize.Width - btnToCustomers.Width) * 2) / 3;
+            btnToViewTransactions.Top = 2 * this.ClientSize.Height / 3;
+            btnToViewTransactions.Left = (this.ClientSize.Width - btnToViewTransactions.Width) / 2;
+            //btnBackToIndex.Top = this.ClientSize.Height - (2 * btnBackToIndex.Height);
+            //btnBackToIndex.Left = this.ClientSize.Width/9;
+
+            label1.Anchor = AnchorStyles.None;
+            btnToCreateTransaction.Anchor = AnchorStyles.None;
+            btnToCustomers.Anchor = AnchorStyles.None;
+            btnToViewTransactions.Anchor = AnchorStyles.None;
+            //btnBackToIndex.Anchor = AnchorStyles.None;
+        }
     }
 }
