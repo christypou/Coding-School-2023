@@ -64,7 +64,7 @@
 @code {
 	[Parameter] public int? Id { get; set; }
 	EmployeeEditDto Employee { get; set; }
-
+	int count=0;
 	private List<EmployeeListDto> employeeList = new();
 	string? title;
 	int countManagers, countStaff, countCashiers=0;
@@ -108,7 +108,8 @@
 		if (Employee.HireDateStart > Employee.HireDateEnd)
 		{
 			var confirm = await jsRuntime.InvokeAsync<string>("alert", "End Date must be later than Start Date.");
-			navigationManager.NavigateTo("employeelist");
+			//navigationManager.NavigateTo("employeelist");
+			return;
 		}
 		if (Id == null) {
 
@@ -120,31 +121,54 @@
 		response.EnsureSuccessStatusCode();
 		navigationManager.NavigateTo("employeelist");
 	}
-	async Task checkEmployee(EmployeeType type)
+	async Task checkEmployee(EmployeeType? type)
 	{
 
 		if (type.ToString() == "Manager")
 		{
+
 			if (countManagers >= 3)
 			{
 
 				var confirm = await jsRuntime.InvokeAsync<string>("alert", "Too many managers");
-				navigationManager.NavigateTo("employeelist");
+				Employee.EmployeeType = EmployeeType.Staff;
+				count ++;
+				if (count == 3)
+				{
+					count = 0;
+					navigationManager.NavigateTo("employeelist");
+				}
+				return;
 				
+
 			}
 		}else if (type.ToString() == "Staff")
 		{
 			if (countStaff >= 10)
 			{
 				var confirm = await jsRuntime.InvokeAsync<string>("alert", "Too many managers");
-				navigationManager.NavigateTo("employeelist");
+				type = EmployeeType.Cashier;
+				count++;
+				if (count == 3)
+				{
+					count = 0;
+					navigationManager.NavigateTo("employeelist");
+				}
+				return;
 			}
 		}else if (type.ToString() == "Cashier")
 		{
 			if (countCashiers >= 4)
 			{
 				var confirm = await jsRuntime.InvokeAsync<string>("alert", "Too many managers");
-				navigationManager.NavigateTo("employeelist");
+				type = EmployeeType.Manager;
+				count++;
+				if (count == 3)
+				{
+					count = 0;
+					navigationManager.NavigateTo("employeelist");
+				}
+				return;
 			}
 		}
 	}

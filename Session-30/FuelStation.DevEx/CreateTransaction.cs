@@ -38,7 +38,7 @@ namespace FuelStation.DevEx
 					if (card == cust.CardNumber)
 					{
 						DialogResult result2 = XtraMessageBox.Show("Found");
-						CreateTransactionForCustomer form = new CreateTransactionForCustomer(cust);
+						Transaction form = new Transaction(cust);
 						form.ShowDialog();
 						return;
 					}
@@ -55,7 +55,7 @@ namespace FuelStation.DevEx
 
         private void btnToIndex_Click(object sender, EventArgs e)
         {
-            Index indexForm = new();
+            Home indexForm = new();
             this.Hide();
             indexForm.ShowDialog();
             this.Close();

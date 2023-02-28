@@ -19,7 +19,7 @@ namespace FuelStation.DevEx
 
         private void btnBackToIndex_Click(object sender, EventArgs e)
         {
-            Index indexForm = new();
+            Home indexForm = new();
             this.Hide();
             indexForm.ShowDialog();
             this.Close();
@@ -43,7 +43,7 @@ namespace FuelStation.DevEx
 
         private void btnToViewTransactions_Click(object sender, EventArgs e)
         {
-            ViewTransactions transactionsForm = new();
+            History transactionsForm = new();
             this.Hide();
             transactionsForm.ShowDialog();
             this.Close();

@@ -1,6 +1,6 @@
 ﻿namespace FuelStation.DevEx
 {
-    partial class Index
+    partial class Home
     {
         /// <summary>
         /// Required designer variable.

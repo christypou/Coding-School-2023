@@ -13,7 +13,7 @@ namespace FuelStation.DevEx
 			ApplicationConfiguration.Initialize();
             //Application.Run(new CreateTransaction());
             //Application.Run(new ViewTransactions());
-            Application.Run(new Index());
+            Application.Run(new Home());
         }
 	}
 }

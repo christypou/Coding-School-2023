@@ -161,7 +161,7 @@ namespace FuelStation.DevEx
 
         private void btnToIndex_Click(object sender, EventArgs e)
         {
-            Index indexForm = new();
+            Home indexForm = new();
             this.Hide();
             indexForm.ShowDialog();
             this.Close();
@@ -169,19 +169,24 @@ namespace FuelStation.DevEx
 
         private async void grvCustomers_BeforeLeaveRow(object sender, DevExpress.XtraGrid.Views.Base.RowAllowEventArgs e)
         {
-            CustomerListDto? editedCustomer = grvCustomers.GetFocusedRow() as CustomerListDto;
-            if ((editedCustomer.Name == null) || (editedCustomer.Surname == null) || (editedCustomer.CardNumber == null))
-            {
-                var result = MessageBox.Show("Some cells are missing values. Discard Changes?", "Confirmation", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    await PopulateDataGridView();
-                }
-                else if (result == DialogResult.No)
-                {
-                    e.Allow = false;
-                }
-            }
+            //CustomerListDto? editedCustomer = grvCustomers.GetFocusedRow() as CustomerListDto;
+            //if ((editedCustomer.Name == null) || (editedCustomer.Surname == null) || (editedCustomer.CardNumber == null))
+            //{
+            //    var result = MessageBox.Show("Some cells are missing values. Discard Changes?", "Confirmation", MessageBoxButtons.YesNo);
+            //    if (result == DialogResult.Yes)
+            //    {
+            //        await PopulateDataGridView();
+            //    }
+            //    else if (result == DialogResult.No)
+            //    {
+            //        e.Allow = false;
+            //    }
+            //}
         }
-    }
+
+		private void grvCustomers_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+		{
+			grvCustomers.ClearColumnErrors();
+		}
+	}
 }

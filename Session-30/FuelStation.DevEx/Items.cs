@@ -152,7 +152,7 @@ namespace FuelStation.DevEx
         }
         private void btnToIndex_Click(object sender, EventArgs e)
         {
-            Index indexForm = new();
+            Home indexForm = new();
             this.Hide();
             indexForm.ShowDialog();
             this.Close();
@@ -160,19 +160,24 @@ namespace FuelStation.DevEx
 
         private async void grvItems_BeforeLeaveRow(object sender, DevExpress.XtraGrid.Views.Base.RowAllowEventArgs e)
         {
-            ItemListDto? editedItem = grvItems.GetFocusedRow() as ItemListDto;
-            if ((editedItem.Code=="") || (editedItem.Description == "")|| (editedItem.ItemType == 0) || (editedItem.Price == 0))
-            {
-                var result = MessageBox.Show("Some cells are missing values. Discard Changes?", "Confirmation", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    await PopulateDataGridView();
-                }
-                else if (result == DialogResult.No)
-                {
-                    e.Allow = false;
-                }
-            }
+            //ItemListDto? editedItem = grvItems.GetFocusedRow() as ItemListDto;
+            //if ((editedItem.Code=="") || (editedItem.Description == "")|| (editedItem.ItemType == 0) || (editedItem.Price == 0))
+            //{
+            //    var result = MessageBox.Show("Some cells are missing values. Discard Changes?", "Confirmation", MessageBoxButtons.YesNo);
+            //    if (result == DialogResult.Yes)
+            //    {
+            //        await PopulateDataGridView();
+            //    }
+            //    else if (result == DialogResult.No)
+            //    {
+            //        e.Allow = false;
+            //    }
+            //}
         }
-    }
+
+		private void grvItems_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+		{
+			grvItems.ClearColumnErrors();
+		}
+	}
 }

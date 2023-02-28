@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FuelStation.DevEx
 {
-    public partial class Index : Form
+    public partial class Home : Form
     {
-        public Index()
+        public Home()
         {
             InitializeComponent();
         }

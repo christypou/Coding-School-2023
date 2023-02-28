@@ -1,0 +1,11 @@
+﻿
+.main-img {
+    max-height: 90vh;
+    margin: 0 auto;
+    display:block;
+    padding-top:20vh;
+}
+
+h1 {
+    text-align:center;
+}
