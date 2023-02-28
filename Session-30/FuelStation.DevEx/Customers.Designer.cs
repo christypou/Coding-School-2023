@@ -60,7 +60,7 @@
             this.grvCustomers.GridControl = this.grdCustomers;
             this.grvCustomers.Name = "grvCustomers";
             this.grvCustomers.OptionsView.ShowGroupPanel = false;
-            this.grvCustomers.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grvCustomers_CellValueChanged);
+            this.grvCustomers.BeforeLeaveRow += new DevExpress.XtraGrid.Views.Base.RowAllowEventHandler(this.grvCustomers_BeforeLeaveRow);
             this.grvCustomers.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvCustomers_RowDeleting);
             this.grvCustomers.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvCustomers_ValidateRow);
             // 

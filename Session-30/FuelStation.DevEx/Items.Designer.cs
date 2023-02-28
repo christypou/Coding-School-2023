@@ -71,6 +71,7 @@
             this.grvItems.GridControl = this.grdItems;
             this.grvItems.Name = "grvItems";
             this.grvItems.OptionsView.ShowGroupPanel = false;
+            this.grvItems.BeforeLeaveRow += new DevExpress.XtraGrid.Views.Base.RowAllowEventHandler(this.grvItems_BeforeLeaveRow);
             this.grvItems.RowDeleting += new DevExpress.Data.RowDeletingEventHandler(this.grvItems_RowDeleting);
             this.grvItems.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.grvItems_ValidateRow);
             // 

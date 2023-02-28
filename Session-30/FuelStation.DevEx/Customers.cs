@@ -1,188 +1,163 @@
-﻿using DevExpress.Emf;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraReports.Design.ParameterEditor;
-using DevExpress.XtraSpreadsheet.TileLayout;
-using FuelStation.Model;
+﻿using DevExpress.XtraSpreadsheet.TileLayout;
 using FuelStation.Web.Blazor.Shared.Customer;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+using FuelStation.Web.Blazor.Shared.Item;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection.Emit;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 
 namespace FuelStation.DevEx
 {
-	public partial class Customers : Form
-	{
-		public Customers()
-		{
-			InitializeComponent();
-			
-		}
+    public partial class Customers : Form
+    {
+        private readonly HttpClient client;
+        string uri = "https://localhost:7199/customer";
+        public Customers()
+        {
+            InitializeComponent();
+            client = new HttpClient();
+        }
+        private async void Customers_Load(object sender, EventArgs e)
+        {
+            await PopulateDataGridView();
+        }
 
-		private void Customers_Load(object sender, EventArgs e)
-		{
-			PopulateDataGridView();
-		}
+        private async Task PopulateDataGridView()
+        {
+            var data = await getCustomers();
+            BindingList<CustomerListDto> customers = new BindingList<CustomerListDto>(data);
+            grdCustomers.DataSource = new BindingSource() { DataSource = data };
+        }
 
-		private async Task PopulateDataGridView()
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var response = await client.GetAsync("https://localhost:7199/customer");
-				var data = await response.Content.ReadAsAsync<List<CustomerListDto>>();
-
-				BindingList<CustomerListDto> customers = new BindingList<CustomerListDto>(data);
-				grdCustomers.DataSource = new BindingSource() { DataSource = data };
-				
-			}
-		}
-
-	
-
-		private void grvCustomers_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
-		{
-			
-		}
-
-		private async Task editCustomer(CustomerListDto editedCustomer)
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var myContent = JsonConvert.SerializeObject(editedCustomer);
-				var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-				var byteContent = new ByteArrayContent(buffer);
-				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-				var response = await client.PutAsync("https://localhost:7199/customer", byteContent);
-				if(response.IsSuccessStatusCode)
-				{
-					PopulateDataGridView();
-				}
-			}
-
-		}
-
-
-
-		private async Task createCustomer(CustomerListDto customerToAdd)
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var myContent = JsonConvert.SerializeObject(customerToAdd);
-				var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-				var byteContent = new ByteArrayContent(buffer);
-				byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-				var response = await client.PostAsync("https://localhost:7199/customer", byteContent);
-				if (response.IsSuccessStatusCode)
-				{
-					PopulateDataGridView();
-				}
-			}
-		}
-		private async Task<List<CustomerListDto>> getCustomers()
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var response = await client.GetAsync("https://localhost:7199/customer");
-				var data = await response.Content.ReadAsAsync<List<CustomerListDto>>();
-				return data;
-			}
-		}
-		private async void grvCustomers_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
-		{
-			CustomerListDto editedCustomer = grvCustomers.GetFocusedRow() as CustomerListDto;
-			List<CustomerListDto> customers = await getCustomers();
-			foreach (var customer in customers)
+        private async Task editCustomer(CustomerListDto editedCustomer)
+        {
+            var response = await client.PutAsJsonAsync(uri, editedCustomer);
+            if (response.IsSuccessStatusCode)
             {
-                if (customer.CardNumber == editedCustomer.CardNumber)
-				{
-					grvCustomers.ClearColumnErrors();
-					e.Valid = false;
-                    grvCustomers.SetColumnError(colCardNumber, "Card Number already exists");
-                    return;
-                }
-            }
-            if (editedCustomer == null)
-			{
-				e.Valid = false;
-				return;
-			}else if (!editedCustomer.CardNumber.StartsWith("A"))
-			{
-				e.Valid = false;
-				grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
-				return;
-			}
-            else if (editedCustomer.Name==null)
-            {
-                e.Valid = false;
-                grvCustomers.SetColumnError(colName, "Name can not be empty");
-                return;
-            }else if (editedCustomer.Surname==null)
-            {
-                e.Valid = false;
-                grvCustomers.SetColumnError(colSurname, "Surname can not be empty");
-                return;
-            }
-            else if (Regex.IsMatch(editedCustomer.Surname, @"\d"))
-            {
-                e.Valid = false;
-                grvCustomers.SetColumnError(colSurname, "Surname can not contain numbers");
-                return;
-            }
-            else if (Regex.IsMatch(editedCustomer.Name, @"\d"))
-            {
-                e.Valid = false;
-                grvCustomers.SetColumnError(colName, "Name can not contain numbers");
-                return;
+                MessageBox.Show("Customer Editted!", "Success Message");
             }
             else
             {
-                grvCustomers.ClearColumnErrors();
+                MessageBox.Show("Something went wrong.", "Alert Message");
+                await PopulateDataGridView();
             }
+        }
+        private async Task createCustomer(CustomerListDto customerToAdd)
+        {
+            var response = await client.PostAsJsonAsync(uri, customerToAdd);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Customer Added!", "Success Message");
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong.", "Alert Message");
+                await PopulateDataGridView();
+            }
+        }
+        private async Task<List<CustomerListDto>> getCustomers()
+        {
+            var response = await client.GetAsync(uri);
+            var data = await response.Content.ReadAsAsync<List<CustomerListDto>>();
+            return data;
+        }
+        private async void grvCustomers_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+        {
 
+            if (grvCustomers.GetFocusedRow != null)
+            {
+                CustomerListDto? editedCustomer = grvCustomers.GetFocusedRow() as CustomerListDto;
+                List<CustomerListDto> customers = await getCustomers();
+                foreach (var customer in customers)
+                {
+                    if ((customer.CardNumber == editedCustomer.CardNumber) && (customer.Id != editedCustomer.Id))
+                    {
+                        grvCustomers.ClearColumnErrors();
+                        e.Valid = false;
+                        grvCustomers.SetColumnError(colCardNumber, "Card Number already exists");
+                        return;
+                    }
+                }
+                if (editedCustomer == null)
+                {
+                    grvCustomers.ClearColumnErrors();
+                    e.Valid = false;
+                    return;
+                }
+                else if (editedCustomer.CardNumber==null)
+                {
+                    grvCustomers.ClearColumnErrors();
+                    e.Valid = false;
+                    grvCustomers.SetColumnError(colCardNumber, "Card Number cannot be empty");
+                    return;
+                }
+                else if (!editedCustomer.CardNumber.StartsWith("A"))
+                {
+                    grvCustomers.ClearColumnErrors();
+                    e.Valid = false;
+                    grvCustomers.SetColumnError(colCardNumber, "Card Number must start with A");
+                    return;
+                }
+                else if (editedCustomer.Name == null)
+                {
+                    grvCustomers.ClearColumnErrors();
+                    e.Valid = false;
+                    grvCustomers.SetColumnError(colName, "Name can not be empty");
+                    return;
+                }
+                else if (editedCustomer.Surname == null)
+                {
+                    grvCustomers.ClearColumnErrors();
+                    e.Valid = false;
+                    grvCustomers.SetColumnError(colSurname, "Surname can not be empty");
+                    return;
+                }
+                else if (Regex.IsMatch(editedCustomer.Surname, @"\d"))
+                {
+                    grvCustomers.ClearColumnErrors();
+                    e.Valid = false;
+                    grvCustomers.SetColumnError(colSurname, "Surname can not contain numbers");
+                    return;
+                }
+                else if (Regex.IsMatch(editedCustomer.Name, @"\d"))
+                {
+                    grvCustomers.ClearColumnErrors();
+                    e.Valid = false;
+                    grvCustomers.SetColumnError(colName, "Name can not contain numbers");
+                    return;
+                }
+                else
+                {
+                    grvCustomers.ClearColumnErrors();
+                }
 
-
-            if (editedCustomer.Id == 0)
-			{
-				createCustomer(editedCustomer);
-			}
-			else
-			{
-				editCustomer(editedCustomer);
-				
-			}
-		}
-
-		private void grvCustomers_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
-		{
-			CustomerListDto deletedCustomer = grvCustomers.GetRow(e.RowHandle) as CustomerListDto;
-			deleteCustomer(deletedCustomer.Id);
-
-		}
-		private async Task deleteCustomer(int id)
-		{
-			using (HttpClient client = new HttpClient())
-			{
-				var uri = "https://localhost:7199/customer/" + id;
-				var response = await client.DeleteAsync(uri);
-				if (response.IsSuccessStatusCode)
-				{
-					// add something
-				}
-			}
-		}
+                if (editedCustomer.Id == 0)
+                {
+                    await createCustomer(editedCustomer);
+                }
+                else
+                {
+                    await editCustomer(editedCustomer);
+                }
+            }
+        }
+        private async void grvCustomers_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
+        {
+            CustomerListDto? deletedCustomer = grvCustomers.GetRow(e.RowHandle) as CustomerListDto;
+            await deleteCustomer(deletedCustomer.Id);
+        }
+        private async Task deleteCustomer(int id)
+        {
+            var response = await client.DeleteAsync(uri + "/" + id);
+            if (response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Customer Deleted!", "Success Message");
+            }
+            else
+            {
+                MessageBox.Show("Cannot delete this customer.");
+                await PopulateDataGridView();
+            }
+        }
 
         private void btnToIndex_Click(object sender, EventArgs e)
         {
@@ -190,6 +165,23 @@ namespace FuelStation.DevEx
             this.Hide();
             indexForm.ShowDialog();
             this.Close();
+        }
+
+        private async void grvCustomers_BeforeLeaveRow(object sender, DevExpress.XtraGrid.Views.Base.RowAllowEventArgs e)
+        {
+            CustomerListDto? editedCustomer = grvCustomers.GetFocusedRow() as CustomerListDto;
+            if ((editedCustomer.Name == null) || (editedCustomer.Surname == null) || (editedCustomer.CardNumber == null))
+            {
+                var result = MessageBox.Show("Some cells are missing values. Discard Changes?", "Confirmation", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    await PopulateDataGridView();
+                }
+                else if (result == DialogResult.No)
+                {
+                    e.Allow = false;
+                }
+            }
         }
     }
 }

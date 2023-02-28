@@ -64,14 +64,14 @@
 @code {
 	[Parameter] public int? Id { get; set; }
 	EmployeeEditDto Employee { get; set; }
-	
+
 	private List<EmployeeListDto> employeeList = new();
 	string? title;
 	int countManagers, countStaff, countCashiers=0;
 	protected override async Task OnInitializedAsync() {
-		
-		
-	
+
+
+
 		if (Id == null) {
 			Employee = new();
 			title = "Create Employee";
@@ -84,15 +84,15 @@
 		Employee.HireDateStart = DateTime.Now;
 		foreach (var employee in employeeList)
 		{
-			if (employee.EmployeeType.ToString() == "Manager")
+			if ((employee.EmployeeType.ToString() == "Manager") && (employee.HireDateStart<=DateTime.Now) && (employee.HireDateEnd>=DateTime.Now))
 			{
 				countManagers++;
 			}
-			else if (employee.EmployeeType.ToString() == "Staff")
+			else if ((employee.EmployeeType.ToString() == "Staff")&& (employee.HireDateStart <= DateTime.Now) && (employee.HireDateEnd >= DateTime.Now))
 			{
 				countStaff++;
 			}
-			else if (employee.EmployeeType.ToString() == "Cashier")
+			else if ((employee.EmployeeType.ToString() == "Cashier")&& (employee.HireDateStart <= DateTime.Now) && (employee.HireDateEnd >= DateTime.Now))
 			{
 				countCashiers++;
 			}
@@ -105,6 +105,11 @@
 
 	private async Task OnSave() {
 		HttpResponseMessage? response = null;
+		if (Employee.HireDateStart > Employee.HireDateEnd)
+		{
+			var confirm = await jsRuntime.InvokeAsync<string>("alert", "End Date must be later than Start Date.");
+			navigationManager.NavigateTo("employeelist");
+		}
 		if (Id == null) {
 
 			response = await httpClient.PostAsJsonAsync("employee", Employee);

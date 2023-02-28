@@ -344,6 +344,7 @@
             this.btnCreateTransaction.TabIndex = 2;
             this.btnCreateTransaction.Text = "Create Transaction";
             this.btnCreateTransaction.UseVisualStyleBackColor = true;
+            this.btnCreateTransaction.Click += new System.EventHandler(this.btnCreateTransaction_Click);
             // 
             // btnUpdateTotal
             // 
