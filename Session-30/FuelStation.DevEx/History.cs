@@ -69,8 +69,14 @@ namespace FuelStation.DevEx
             var data = await response.Content.ReadAsAsync<List<CustomerListDto>>();
             return data;
         }
+		private async Task<TransactionListDto> getTransaction(int id)
+		{
+			var response = await client.GetAsync(uriTransaction + "/" + id);
+			var data = await response.Content.ReadAsAsync<TransactionListDto>();
+			return data;
+		}
 
-        private async void grvTransactions_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
+		private async void grvTransactions_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
         {
             TransactionListDto? editedTransaction = grvTransactions.GetFocusedRow() as TransactionListDto;
             if (editedTransaction == null)
@@ -288,18 +294,18 @@ namespace FuelStation.DevEx
                 grvTransactionLines.SetRowCellValue(e.RowHandle, "ItemPrice", chosenItem.Price);
                 if ((int)chosenItem.ItemType == 1)
                 {
-                    var items = await getItems();
-                    foreach(var item in items)
-                    {
-                        if (item.ItemType == ItemType.Fuel)
-                        {
-                            flag = true;
-                            MessageBox.Show("Cannot add a second fuel");
+					var trans = await getTransaction(createLineTransaction);
+					foreach (var item in trans.TransactionLines)
+					{
+						if (item.ItemType == ItemType.Fuel)
+						{
+							flag = true;
+							MessageBox.Show("Cannot add a second fuel");
 							await PopulateTransactionLines(createLineTransaction);
-                            return;
+							return;
 						}
-                    }
-                    itemFuel = true;
+					}
+					itemFuel = true;
                 }
                 else { itemFuel = false; }
             }

@@ -2,6 +2,7 @@
 using FuelStation.Model;
 
 using FuelStation.Web.Blazor.Shared.Transaction;
+using FuelStation.Web.Blazor.Shared.TransactionLine;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FuelStation.Web.Blazor.Server.Controllers
@@ -11,11 +12,12 @@ namespace FuelStation.Web.Blazor.Server.Controllers
 	public class TransactionController : ControllerBase
 	{
 		private readonly IEntityRepo<Transaction> _transactionRepo;
+		private readonly IEntityRepo<TransactionLine> _transactionLineRepo;
 
-
-		public TransactionController(IEntityRepo<Transaction> transactionRepo)
+		public TransactionController(IEntityRepo<Transaction> transactionRepo, IEntityRepo<TransactionLine> transactionLineRepo)
 		{
 			_transactionRepo = transactionRepo;
+			_transactionLineRepo = transactionLineRepo;
 		}
 
 		[HttpGet]
@@ -39,6 +41,7 @@ namespace FuelStation.Web.Blazor.Server.Controllers
 		public async Task<TransactionEditDto> GetById(int id)
 		{
 			var result = _transactionRepo.GetById(id);
+			var transactionLines = _transactionLineRepo.GetAll();
 			return new TransactionEditDto
 			{
 				Id = id,
@@ -46,7 +49,23 @@ namespace FuelStation.Web.Blazor.Server.Controllers
 				CustomerId = result.CustomerId,
 				EmployeeId = result.EmployeeId,
 				PaymentMethod = result.PaymentMethod,
-				TotalValue = result.TotalValue
+				TotalValue = result.TotalValue,
+				TransactionLines = transactionLines.
+				Where(l => l.TransactionId == id).
+				Select(l => new TransactionLineListDto
+				{
+					Id = l.Id,
+					TransactionId = l.TransactionId,
+					ItemId = l.ItemId,
+					Quantity = l.Quantity,
+					ItemPrice = l.ItemPrice,
+					NetValue = l.NetValue,
+					DiscountPercent = l.DiscountPercent,
+					DiscountValue = l.DiscountValue,
+					TotalValue = l.TotalValue,
+					ItemCost = l.Item.Cost,
+					ItemType = l.Item.ItemType
+				}).ToList()
 			};
 		}
 		[HttpPost]

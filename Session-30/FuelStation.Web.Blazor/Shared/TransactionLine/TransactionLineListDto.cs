@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FuelStation.Model.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace FuelStation.Web.Blazor.Shared.TransactionLine
 		public decimal TotalValue { get; set; }
 		public int TransactionId { get; set; }
 		public int ItemId { get; set; }
+		public ItemType ItemType { get; set; }
 
 		public decimal ItemCost { get; set; }
 	}
